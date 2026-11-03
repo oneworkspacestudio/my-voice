@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "version": "0.1.0-preview.4",
+  "sourceCommit": "2c6f6f7c4596409027cc00fe6b0766ae2011797d",
+  "release": "https://github.com/oneworkspacestudio/my-voice/releases/tag/v0.1.0-preview.4",
+  "channelCommit": "4a7445c",
+  "immutableAssetsVerified": 14,
+  "anonymousPackageExecutablePortableAndSourceVerified": true,
+  "builtOnNativeWindows": true,
+  "githubActionsUsed": false,
+  "executableSHA256": "5f70ec07ca6d71dee84bc584283a97097cbf9a1c5dd0f953188f5a63bc26c25e",
+  "packageSHA256": "2dc243844a067c030a219393c5ba8c0688906ccb0bb3a7c1bb9ea594e641d6b0",
+  "change": "Complete canonical script generation; independent voice preview; optional segment details default collapsed",
+  "validation": [
+    "Six frontend editor regressions",
+    "Full Go tests and vet",
+    "AUI generation, TypeScript and production Vite build",
+    "Native same-data public3 to4 upgrade and actual Pocket full-script, targeted regeneration and main-text replacement",
+    "Real managed public112 setup; current public113 installer normal Voice-only public-channel update2 to4",
+    "Ordinary public component projects116 exact owned files; suite catalog/distribution tests",
+    "Every assembled WAV chunk including final and MP3; managed MyAccounts/proxy speech; desktop and phone viewport review"
+  ],
+  "nativeAcceptance": {
+    "schema": 1,
+    "passed": true,
+    "version": "0.1.0-preview.4",
+    "executableSHA256": "5f70ec07ca6d71dee84bc584283a97097cbf9a1c5dd0f953188f5a63bc26c25e",
+    "previewDidNotReplaceEditorVerifiedInUI": true,
+    "detailsCollapsedByDefaultVerifiedInUI": true,
+    "cases": [
+      {
+        "segments": 3,
+        "fullTextMatchesAllSpokenChunks": true,
+        "finalChunkIncludedInWAV": true,
+        "everyChunkInteriorMatchesFinalAudio": true,
+        "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+        "audioSeconds": 5.992,
+        "wavBytes": 287660,
+        "mp3Bytes": 121484,
+        "inputMode": "text"
+      },
+      {
+        "segments": 15,
+        "fullTextMatchesAllSpokenChunks": true,
+        "finalChunkIncludedInWAV": true,
+        "everyChunkInteriorMatchesFinalAudio": true,
+        "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+        "audioSeconds": 75.32,
+        "wavBytes": 3615404,
+        "mp3Bytes": 1508204,
+        "inputMode": "text"
+      },
+      {
+        "segments": 3,
+        "fullTextMatchesAllSpokenChunks": true,
+        "finalChunkIncludedInWAV": true,
+        "everyChunkInteriorMatchesFinalAudio": true,
+        "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+        "audioSeconds": 6.712,
+        "wavBytes": 322220,
+        "mp3Bytes": 135884,
+        "inputMode": "segments"
+      },
+      {
+        "segments": 4,
+        "fullTextMatchesAllSpokenChunks": true,
+        "finalChunkIncludedInWAV": true,
+        "everyChunkInteriorMatchesFinalAudio": true,
+        "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+        "audioSeconds": 9.589333333333334,
+        "wavBytes": 460332,
+        "mp3Bytes": 193484,
+        "inputMode": "text"
+      }
+    ],
+    "ownerInstallationUsedAsFixture": false,
+    "optionalTargetedRegenerationPreservesOtherSegmentBytes": true,
+    "mainEditorReplacementOverridesSegmentEdits": true
+  },
+  "managedProtectedUpdate": {
+    "verifiedOwnedPayloads": 116,
+    "schema": 1,
+    "mode": "update",
+    "passed": true,
+    "version": "0.1.0-preview.4",
+    "managerAndUnselectedBytesPreserved": true,
+    "accountIdentityAndPathsPreserved": true,
+    "modelsProjectsAndAudioPreserved": true,
+    "backupID": "update-20261103T200320-c505b7c19d32",
+    "recoveryFilesIndependentlyVerified": 22,
+    "exactPublicExecutableVerified": true
+  },
+  "managedPostUpdateSpeech": {
+    "schema": 1,
+    "passed": true,
+    "version": "0.1.0-preview.4",
+    "myAccountsAndManagedProxyVerifiedInUI": true,
+    "detailsCollapsedVerifiedInUI": true,
+    "retainedRecordingOpenedInUI": true,
+    "segments": 3,
+    "audioSeconds": 7.792,
+    "everyChunkIncludingLastVerifiedInAssembledWAV": true,
+    "mp3Present": true,
+    "ownerInstallationUsedAsFixture": false
+  },
+  "primary": {
+    "schema": 1,
+    "target": "primary",
+    "workspace": "0.3.0-preview.113",
+    "voice": "0.1.0-preview.4",
+    "transaction": "complete",
+    "verifiedVoicePayloads": 116,
+    "managerBytesRetained": true,
+    "publicVerificationPending": false,
+    "unselectedAppsAndPackagesPreserved": true,
+    "identitiesAndSecretContentsPreserved": true,
+    "locationsPreserved": true,
+    "verifiedRecoveryRetained": true,
+    "cleanup": "complete",
+    "runningAppCount": 36,
+    "baselineFailures": [],
+    "newFailures": [],
+    "finished": "2026-11-03T20:10:26.6975515Z",
+    "cleanupRetainedRecoveryVerified": true,
+    "cleanupRetiredEligibleCopies": 1,
+    "recoveryID": "update-20261103T200831-b123d40e5377",
+    "servedProductionAssetsMatchTestedBuild": true,
+    "servedAssetNames": [
+      "assets/index-Dngsqq1M.js",
+      "assets/index-CTqy17aT.css"
+    ],
+    "oidcAndWorkspaceBootstrap": true,
+    "actualMyAccountsProxySessionVerifiedInBrowser": true,
+    "detailsCollapsedVerifiedInBrowser": true,
+    "ownerFeatureFixtureCreated": false
+  },
+  "secondary": {
+    "status": "deferred-at-user-request",
+    "installedVoice": "0.1.0-preview.3",
+    "targetVoice": "0.1.0-preview.4",
+    "reason": "Finish the model benchmark first. User reaffirmed deferral after the interrupted benchmark run.",
+    "updateSubmitted": false
+  },
+  "compatibility": {
+    "databaseSchema": 2,
+    "runtimeBytesUnchanged": true,
+    "ownedPackageCount": 116,
+    "managerContractUnchanged": true,
+    "newSuiteOrAndroidReleaseRequired": false
+  },
+  "fixtureCleanup": {
+    "schema": 1,
+    "disposableNTFSFixtureRemoved": true,
+    "taskServicesStopped": true,
+    "ownerDataUsedAsFixture": false,
+    "ownerDataAndRecoveryNotManuallyRemoved": true,
+    "toolingEvidenceRetained": true
+  }
+}

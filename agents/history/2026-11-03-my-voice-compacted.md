@@ -438,3 +438,41 @@ update yet at this checkpoint. Next: immutable4 publication/ordinary channel +
 future Voice pin retaining concurrent Books/Finance/MyAI rows, protected managed
 update/recovery verification, primary4, then deferred PC2; final receipts/history
 and stop/remove only task fixtures. Old tags/assets remain immutable, Actions off.
+
+## Preview4 publication and primary delivery; secondary explicitly deferred
+
+Source2c6f6f7 and immutable app4 release are public. All14 asset size/digests and
+anonymous ZIP/EXE/portable/source archives verify. Public suite channel4a7445c adds
+only app4 and advances ordinary build pin; prior rows/withholdings retained.
+Ordinary component projects all116 exact public files; suite catalog/distribution
+checks pass. Source tag/assets were not moved or replaced; Actions remain off.
+
+Actual public112 managed setup with Voice2 updated through the normal public
+channel using verified current public113 installer. The old112 installer correctly
+required113 to read the latest integration8 catalog; it made no changes. Updated
+Voice4 retains manager112 and Accounts bytes, account identity/paths, models,
+projects and audio; all116 payloads and22 recovery files independently verified.
+The retained recording opens with details collapsed. Fresh MyAccounts/proxy UI
+speech covers all3 sentences:7.792s WAV/MP3, each assembled chunk including final
+matches its source. Post-restart app-opening flow re-established the managed gate.
+
+Primary protected Voice-only update completed on Workspace113. Every unselected
+app/package contract and byte, manager, identity/password fields, existing secret
+contents and locations verified retained;36 services healthy. All116 Voice files
+and served JS index-Dngsqq1M/CSS index-CTqy17aT match tested/public4. Browser opens
+actual MyAccounts/proxy speech editor with Show segment details collapsed. No
+owner speech/model QA fixture was created. Verified recovery retained; normal
+cleanup retired1 eligible older copy, without manual recovery deletion.
+
+PC2 remains Voice3: USER REAFFIRMED KEEP PC2 DEFERRED after the other chat reported
+the model benchmark interrupted and a fresh run pending. No Voice4 apply or restart
+was submitted there. Resume ONLY after the user releases that deferral or its
+benchmark completes; check current versions/operation first, select Voice only,
+preserve unrelated apps/data and verify completion/health/SSO. Do not claim both
+PCs installed. Full privacy-filtered receipt: docs/delivery-preview4.json.
+
+Synthetic sessions signed out, both task controllers stopped, process/reparse/
+resolved-path guards passed and only the named disposable NTFS root removed.
+I tooling/public/private test evidence is retained. Native fixture is stopped;
+the prior checkpoint's running/publication-pending statements are historical.
+No remaining implementation/release/primary work; secondary delivery is deferred.
