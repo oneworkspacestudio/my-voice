@@ -45,18 +45,20 @@ type Asset struct {
 	Gated bool   `json:"gated,omitempty"`
 }
 type Model struct {
-	ID        string   `json:"id"`
-	Name      string   `json:"name"`
-	Version   string   `json:"version"`
-	Languages []string `json:"languages"`
-	License   string   `json:"license"`
-	URL       string   `json:"url"`
-	Runtime   string   `json:"runtime"`
-	Cloning   bool     `json:"cloning"`
-	Installed bool     `json:"installed"`
-	Status    string   `json:"status"`
-	Size      int64    `json:"size"`
-	Assets    []Asset  `json:"assets,omitempty"`
+	ID           string   `json:"id"`
+	Name         string   `json:"name"`
+	Version      string   `json:"version"`
+	Languages    []string `json:"languages"`
+	License      string   `json:"license"`
+	URL          string   `json:"url"`
+	Runtime      string   `json:"runtime"`
+	Cloning      bool     `json:"cloning"`
+	CloningReady bool     `json:"cloningReady"`
+	Installing   bool     `json:"installing"`
+	Installed    bool     `json:"installed"`
+	Status       string   `json:"status"`
+	Size         int64    `json:"size"`
+	Assets       []Asset  `json:"assets,omitempty"`
 }
 
 func modelList() []Model {
@@ -71,11 +73,18 @@ func (a *App) models(w http.ResponseWriter, r *http.Request) {
 	defer a.modelsMu.Unlock()
 	for i := range out {
 		out[i].Installed = a.Engines[out[i].ID].Available()
-		out[i].Cloning = a.Engines[out[i].ID].Cloning()
+		// Capability must remain discoverable before installation. Readiness is
+		// separate: MOSS prepares a real reference state before marking installed.
+		out[i].CloningReady = out[i].Installed && a.Engines[out[i].ID].Cloning()
+		out[i].Cloning = out[i].Cloning || out[i].CloningReady
 		out[i].Status = a.installing[out[i].ID]
+		out[i].Installing = modelInstalling(out[i].Status)
 		out[i].Assets = nil
 	}
 	apphost.JSON(w, 200, out)
+}
+func modelInstalling(status string) bool {
+	return strings.HasPrefix(status, "Downloading") || strings.HasPrefix(status, "Preparing")
 }
 func (a *App) modelDir(id string) string { return a.path("models", id) }
 func (a *App) settings(w http.ResponseWriter, r *http.Request) {
@@ -313,7 +322,7 @@ func (a *App) installModel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	a.modelsMu.Lock()
-	if strings.HasPrefix(a.installing[id], "Downloading") {
+	if modelInstalling(a.installing[id]) {
 		a.modelsMu.Unlock()
 		apphost.Problem(w, 409, "Download already running")
 		return
@@ -437,6 +446,9 @@ func (a *App) downloadModel(ctx context.Context, m Model, token string, cloning 
 		}
 	}
 	if m.ID == "moss" {
+		a.modelsMu.Lock()
+		a.installing[m.ID] = "Preparing cloning model…"
+		a.modelsMu.Unlock()
 		a.inference.Lock()
 		e := a.Engines["moss"].Clone(ctx, filepath.Join(dir, "presets", "open-voice.wav"), filepath.Join(dir, "preset-state"))
 		a.inference.Unlock()
@@ -464,7 +476,7 @@ func (a *App) removeModel(w http.ResponseWriter, r *http.Request) {
 	}
 	a.modelsMu.Lock()
 	defer a.modelsMu.Unlock()
-	if strings.HasPrefix(a.installing[id], "Downloading") {
+	if modelInstalling(a.installing[id]) {
 		apphost.Problem(w, 409, "Wait for the download to finish")
 		return
 	}

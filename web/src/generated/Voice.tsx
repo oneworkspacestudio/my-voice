@@ -314,6 +314,28 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                   <Icon name="ChevronRight" size={16} />
                   <Text>3 · Ready to create</Text>
                 </Row>
+                <Card variant="clone-model-setup">
+                  <Row>
+                    <Icon name="Cpu" size={28} />
+                    <Stack>
+                      <Heading level={2}>{data.cloneSetupTitle}</Heading>
+                      <Text variant="muted">{data.cloneSetupDetail}</Text>
+                    </Stack>
+                    <Spacer />
+                    <Badge>{data.cloneSetupStatus}</Badge>
+                  </Row>
+                  <Select name="cloneModel" label="Cloning model" options={data.cloneOptions} disabled={data.cloneModelDisabled} />
+                  <Section id="clone-model-progress" />
+                  <Row variant="clone-model-actions">
+                    {data.cloneCanInstall && (
+                      <Button onClick={() => onAction("install-cloning-model")} icon="Download" label={data.cloneInstallLabel} variant="primary" />
+                    )}
+                    {data.cloneNeedsOwner && (
+                      <Text variant="caption">Ask the Workspace owner to install this model. You can record once it is ready.</Text>
+                    )}
+                    <Button onClick={() => onAction("refresh-models")} icon="RefreshCw" label="Refresh models" variant="text" />
+                  </Row>
+                </Card>
                 <Card variant="clone-card">
                   <Row>
                     <Icon name="Fingerprint" size={32} />
@@ -324,20 +346,19 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                   </Row>
                   <Section id="upload" />
                   <Row variant="record-actions">
-                    <Button onClick={() => onAction("record")} icon="Mic" label={data.recordLabel} variant="secondary" />
+                    <Button onClick={() => onAction("record")} icon="Mic" label={data.recordLabel} variant="secondary" disabled={data.cloneRecordDisabled} />
                     <Text variant="caption">WAV, MP3, M4A · up to 25 MB</Text>
                   </Row>
                   <Section id="reference-audio" />
                   <Grid variant="two">
                     <Input name="cloneName" label="Voice name" placeholder="Give your voice a name" />
-                    <Select name="cloneModel" label="Cloning model" options={data.cloneOptions} />
                     <Select name="cloneLanguage" label="Reference language" options={data.cloneLanguages} />
                   </Grid>
                   <Input name="cloneTags" label="Tags" placeholder="Warm, storytelling, my voice…" />
                   <Checkbox name="consent" label="I own this voice, or have explicit permission from the speaker to clone and use it." />
                   <Text variant="caption">Your reference and model-specific voice state stay private. Share use only with people you explicitly choose.</Text>
                   <Row>
-                    <Button onClick={() => onAction("save-clone")} icon="Fingerprint" label="Create my voice" variant="primary" disabled={data.savingClone} />
+                    <Button onClick={() => onAction("save-clone")} icon="Fingerprint" label="Create my voice" variant="primary" disabled={data.cloneCreateDisabled} />
                     <Text variant="caption">{data.cloneStatus}</Text>
                   </Row>
                   {data.cloneCreated && (
@@ -512,7 +533,7 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                         <Input name="hfToken" type="password" label="Hugging Face read token (sent only to Hugging Face; never saved)" placeholder="hf_…" />
                       </>
                     )}
-                    <Button onClick={() => onAction("confirm-install")} icon="Download" label="Download model" variant="primary" />
+                    <Button onClick={() => onAction("confirm-install")} icon="Download" label="Download model" variant="primary" disabled={data.installDisabled} />
                   </>
                 )}
                 {data.manageModal && (

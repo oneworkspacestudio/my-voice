@@ -1,5 +1,26 @@
 # Native Windows test report
 
+## Preview5 cloning setup before capture
+
+Fresh native Windows model-manager download of763,682,544 pinned public MOSS
+bytes completes in89.9s on this host, including real reference preparation.
+An uninstalled model is visible in Voice Cloning with inline installation;
+recording/upload remain disabled through download and preparation. A synthetic
+network failure shows a retry action. Removing only the synthetic readiness
+marker locks capture/creation while preserving the chosen reference and name;
+restoring readiness unlocks them. A public CC0 ten-second reference is cloned
+through the UI. The exact final executable retains that clone and generates
+new two-segment speech:19.8605s WAV plus MP3 on CPU. No physical microphone or
+owner reference/installation was a feature fixture.
+
+Eleven frontend regressions, full Go tests/vet and final AUI/TypeScript/Vite build
+pass. Native API checks preserve preinstall capability discovery and block
+concurrent install/removal during preparation. Desktop and phone-width controls
+are reviewed without horizontal overflow. A temporary Windows text-encoding
+build error was corrected before final compilation; no failed artifact shipped.
+Runtime/model bytes, database schema and116-package managed contract are unchanged.
+Publication/managed-update/owner-target receipts follow separately after release.
+
 ## Preview4 full-script and preview isolation repair
 
 The public3 bug was reproduced with synthetic data: preview replaced the draft,

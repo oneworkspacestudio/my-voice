@@ -234,6 +234,22 @@ Page Voice
             Text "2 · Test your voice"
             Icon name=ChevronRight size=16
             Text "3 · Ready to create"
+          Card variant=clone-model-setup
+            Row
+              Icon name=Cpu size=28
+              Stack
+                Heading level=2 $cloneSetupTitle
+                Text variant=muted $cloneSetupDetail
+              Spacer
+              Badge $cloneSetupStatus
+            Select name=cloneModel label="Cloning model" options=$cloneOptions disabled=$cloneModelDisabled
+            Section id=clone-model-progress
+            Row variant=clone-model-actions
+              If condition=$cloneCanInstall
+                Button action=install-cloning-model icon=Download label=$cloneInstallLabel variant=primary
+              If condition=$cloneNeedsOwner
+                Text variant=caption "Ask the Workspace owner to install this model. You can record once it is ready."
+              Button action=refresh-models icon=RefreshCw label="Refresh models" variant=text
           Card variant=clone-card
             Row
               Icon name=Fingerprint size=32
@@ -242,18 +258,17 @@ Page Voice
                 Text variant=muted "3–30 seconds of clear, natural speech works best."
             Section id=upload
             Row variant=record-actions
-              Button action=record icon=Mic label=$recordLabel variant=secondary
+              Button action=record icon=Mic label=$recordLabel variant=secondary disabled=$cloneRecordDisabled
               Text variant=caption "WAV, MP3, M4A · up to 25 MB"
             Section id=reference-audio
             Grid variant=two
               Input name=cloneName label="Voice name" placeholder="Give your voice a name"
-              Select name=cloneModel label="Cloning model" options=$cloneOptions
               Select name=cloneLanguage label="Reference language" options=$cloneLanguages
             Input name=cloneTags label="Tags" placeholder="Warm, storytelling, my voice…"
             Checkbox name=consent label="I own this voice, or have explicit permission from the speaker to clone and use it."
             Text variant=caption "Your reference and model-specific voice state stay private. Share use only with people you explicitly choose."
             Row
-              Button action=save-clone icon=Fingerprint label="Create my voice" variant=primary disabled=$savingClone
+              Button action=save-clone icon=Fingerprint label="Create my voice" variant=primary disabled=$cloneCreateDisabled
               Text variant=caption $cloneStatus
             If condition=$cloneCreated
               Card variant=clone-success
@@ -379,7 +394,7 @@ Page Voice
             If condition=$pocketInstall
               Checkbox name=enableCloning label="Enable Pocket voice cloning (requires authorised Hugging Face access)."
               Input name=hfToken type=password label="Hugging Face read token (sent only to Hugging Face; never saved)" placeholder="hf_…"
-            Button action=confirm-install icon=Download label="Download model" variant=primary
+            Button action=confirm-install icon=Download label="Download model" variant=primary disabled=$installDisabled
           If condition=$manageModal
             Input name=editName label="Voice name"
             Input name=editTags label="Tags"

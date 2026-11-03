@@ -1,5 +1,14 @@
 # Changes
 
+## 0.1.0-preview.5
+
+Voice Cloning now shows installable models before they are installed. Install the
+open MOSS model on this screen, watch download and preparation progress, and retry
+setup without losing your reference or voice details. Recording and reference
+upload unlock only when the selected cloning model is ready. Model readiness is
+checked again before opening the microphone, accepting an upload or creating a
+voice. The model list can be refreshed here; non-owners see owner-install guidance.
+
 ## 0.1.0-preview.4
 
 Generate speech now uses the complete current script after editing or reopening

@@ -34,6 +34,13 @@ users; standalone local users require the apphost owner's explicit action.
 | GET exports/zip?ids=ID,ID | Up to 20 complete owner recordings |
 | GET / PATCH settings | Performance/storage details; owner-only thread update |
 
+Model discovery keeps `cloning` (capability) separate from `cloningReady`
+(installed and usable). `installing` remains true throughout transfer and reference
+preparation; `status` describes progress or a retryable failure. An uninstalled
+MOSS model is discoverable as cloning-capable. Readiness is reported only after
+all pinned files verify and the native reference encoder prepares successfully.
+Installing remains an owner-only explicit action after licence acknowledgement.
+
 Speech request:
 
 ```json

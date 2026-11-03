@@ -122,6 +122,26 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	_, raw, _ := call("GET", "/api/me", "", cookie, "")
 	var session apphost.Session
 	_ = json.Unmarshal(raw, &session)
+	_, raw, _ = call("GET", "/api/models", "", cookie, "")
+	var models []Model
+	if e := json.Unmarshal(raw, &models); e != nil {
+		t.Fatal(e)
+	}
+	for _, model := range models {
+		if model.ID == "moss" && (!model.Cloning || model.CloningReady || model.Installed) {
+			t.Fatal("uninstalled MOSS must advertise capability separately from readiness", model)
+		}
+	}
+	// Preparation can take longer than the transfer. Neither another installer
+	// nor removal may race the first real model/reference preparation.
+	a.installing["moss"] = "Preparing cloning model…"
+	if c, _, _ := call("POST", "/api/models/moss/install", `{"license":true}`, cookie, session.CSRF); c != 409 {
+		t.Fatal("concurrent preparation install", c)
+	}
+	if c, _, _ := call("DELETE", "/api/models/moss", "", cookie, session.CSRF); c != 409 {
+		t.Fatal("concurrent preparation removal", c)
+	}
+	delete(a.installing, "moss")
 	if c, _, _ := call("GET", "/api/voices", "", "", ""); c != 401 {
 		t.Fatal("anonymous voice library", c)
 	}

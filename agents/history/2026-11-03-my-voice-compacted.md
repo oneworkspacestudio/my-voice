@@ -476,3 +476,41 @@ resolved-path guards passed and only the named disposable NTFS root removed.
 I tooling/public/private test evidence is retained. Native fixture is stopped;
 the prior checkpoint's running/publication-pending statements are historical.
 No remaining implementation/release/primary work; secondary delivery is deferred.
+
+## Preview5 cloning-model readiness and inline installation checkpoint
+
+User requests a usable cloning model before recording, with installation on the
+cloning screen. Root cause: GET models replaced static cloning capability with
+current engine readiness, hiding uninstalled MOSS; the screen filtered installed
+cloning models only and permitted unusable recording. Capability and readiness
+are now separate (`cloning`, `cloningReady`, `installing`). MOSS stays discoverable
+before installation; preparation is a busy phase that rejects duplicate install
+or removal. AUI model setup card precedes capture, shows progress/failure/retry,
+owner-install guidance and refresh. Recording/upload/create gate readiness; fresh
+checks happen before microphone access, accepting a file and cloning. Existing
+reference/name remain when model availability changes; pending actions are guarded.
+
+Eleven frontend regressions, full Go tests/vet, AUI/TS/Vite and exact native5 pass.
+Fresh public763,682,544-byte MOSS download+real reference preparation succeeds in
+89.9s. Synthetic offline failure/retry and marker-loss preservation verified in
+UI. A public CC0 ten-second reference genuinely clones; exact final5 retains it
+across restart and generates19.8605s two-segment WAV/MP3 on CPU. EXE SHA
+b795db672a314bf40110d1556a6ccd6ded32dddd4ff66d659d82bb80df2c72b4.
+A Windows text-encoding build error was caught, source restored/reapplied as UTF8,
+all final sources validated and rebuilt; no failed artifact shipped. Desktop and
+phone-width controls reviewed; a screenshot timeout left emulation on a test tab,
+so override was cleared and that tab closed; fresh test tab is normal1614px.
+No physical microphone/owner feature fixture or owner's licence acceptance used.
+
+Artifacts: tooling/my-voice-cloning-20261103 on I project storage; disposable NTFS
+C:/Projects/.cache/my-voice-cloning-20261103. Native29580 running exact final5.
+Actual public112 managed Accounts+Voice2 fixture40820 is running with a copy of
+the freshly verified synthetic MOSS cache. Track fixture-process.json and managed-
+process.json; finish normal public5 update, model/data/identity/recovery checks,
+then primary Voice4→5 using current verified113 updater if still appropriate.
+Schema2/runtime/model bytes/integration7/116 package ownership unchanged; no new
+suite/Android release needed. Publish immutable5 and promote only its channel/pin,
+retaining concurrent releases. PC2 remains EXPLICITLY DEFERRED until its model
+benchmark completes or user reprioritizes; no restart/update there. Leave existing
+owner recording tabs alone. Final receipts, histories and guarded fixture cleanup
+follow after delivery; no owner update or public5 yet at this checkpoint.

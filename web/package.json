@@ -1,13 +1,13 @@
 {
   "name": "@oneworkspacestudio/my-voice",
-  "version": "0.1.0-preview.4",
+  "version": "0.1.0-preview.5",
   "private": true,
   "type": "module",
   "scripts": {
     "generate": "node scripts/generate.mjs",
     "build": "npm run generate && tsc --noEmit && vite build",
     "dev": "vite --host 127.0.0.1",
-    "test": "node --test test/editor.test.ts"
+    "test": "node --test test/*.test.ts"
   },
   "dependencies": {
     "@codedia/parser": "0.2.1",

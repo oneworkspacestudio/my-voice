@@ -371,5 +371,63 @@
     "desktopAndPhoneVisualReviewPassed": true,
     "runtimePayloadUnchanged": true,
     "ownerInstallationUsedAsFixture": false
+  },
+  "cloningReadinessRepairPreview5": {
+    "frontendTests": 11,
+    "goTestsAndVet": true,
+    "productionBuild": true,
+    "acceptance": {
+      "schema": 1,
+      "passed": true,
+      "version": "0.1.0-preview.5",
+      "executableSHA256": "b795db672a314bf40110d1556a6ccd6ded32dddd4ff66d659d82bb80df2c72b4",
+      "freshOpenMossInstall": {
+        "schema": 1,
+        "passed": true,
+        "model": "moss",
+        "publicPinnedDownloadBytes": 763682544,
+        "freshDownloadVerified": true,
+        "cloningCapabilityVisibleBeforeInstall": true,
+        "referencePreparationSucceeded": true,
+        "cloningReady": true,
+        "seconds": 89.9,
+        "statusPhases": [
+          "Downloading 87%",
+          "Downloading 99%",
+          "Downloading 57%",
+          "Downloading 93%",
+          "Ready",
+          "Downloading 88%",
+          "Preparing cloning model\u2026",
+          "Downloading 94%",
+          "Downloading 0%"
+        ],
+        "ownerInstallationUsedAsFixture": false
+      },
+      "syntheticDownloadFailureRetryVerified": true,
+      "uninstalledCloningModelVisibleInUI": true,
+      "inlineInstallDialogVerifiedInUI": true,
+      "recordAndUploadLockedBeforeReadinessVerifiedInUI": true,
+      "modelLossPreservesReferenceAndNameVerifiedInUI": true,
+      "readyModelUnlocksCaptureVerifiedInUI": true,
+      "referenceSeconds": 10,
+      "realCloneCreatedFromPublicCC0ReferenceInUI": true,
+      "savedClonedVoiceRetainedAcrossFinalExecutableRestart": true,
+      "finalSavedCloneGeneration": {
+        "model": "moss",
+        "segments": 2,
+        "durationSeconds": 19.8605,
+        "generationSeconds": 33.902113,
+        "wavBytes": 953348,
+        "mp3Bytes": 398924
+      },
+      "ownerInstallationUsedAsFixture": false,
+      "physicalMicrophoneCaptureTested": false,
+      "finalProductionBundleRenderedInUI": true,
+      "desktopAndPhoneControlsReviewed": true,
+      "phoneHorizontalOverflow": false
+    },
+    "runtimeAndModelBytesUnchanged": true,
+    "ownerInstallationUsedAsFixture": false
   }
 }
