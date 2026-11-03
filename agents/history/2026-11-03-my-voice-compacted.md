@@ -555,3 +555,45 @@ benchmark finishes or they reprioritize. No apply/restart submitted there. Check
 current installed/public versions and active operations before resuming; use the
 normal Voice-only updater and verify recovery/completion/health/SSO. Do not claim
 both PCs updated. All implementation/publication/primary/cleanup work is complete.
+
+## Preview6 automatic audio preparation checkpoint
+
+User asks the app to clean up references and continue after the combined3–30s/
+quiet/clipping warning. Public5 is reproduced rejecting a recoverable26s quiet
+44.1kHz stereo CC0 reference with silence. New bounded decode (first120s), DC/
+low-drift removal, envelope trim/pause compaction, safe gain and <=30s excerpt
+selection prepare the model copy while preserving original bytes. Silence,
+insufficient speech and severe clipping have distinct explanations. No missing
+speech is fabricated. UI shows preparation summary and a playable prepared copy.
+
+Six reference-regression groups (including DC padding, clipped/unclipped and3s
+boundaries), full Go tests/vet,11 frontend tests and AUI/TS/Vite pass. A DC test's
+initial fixed RMS target was corrected for the intentional peak-limited gain;
+that case is audible/trimmed with safe peaks. Exact release6 EXE SHA
+ e160a57fc276b9f4836223e681fca3e699e8e79bfd8db1372344922291f0fe74.
+Real MOSS tests: identical retained5 browser file retries without reload/reselect,
+prepares6.38s mono24kHz at RMS.0661 with original bytes exact;50s selects30s and
+encodes; silence gets specific rejection; saved prepared clone generates7.381s
+WAV/MP3. Original/prepared players ready in UI at26s/6.38s; desktop/phone reviewed,
+mobile submit row wraps rather than squeezing its button. No owner fixture/audio.
+
+Artifacts: I:/Projects/tooling/my-voice-audio-prep-20261103. Disposable NTFS root
+C:/Projects/.cache/my-voice-audio-prep-20261103. Native29680 runs MyVoice-release6.
+Fresh actual public114 managed Voice5 fixture40920 is running with isolated,
+verified model/runtime caches. Track both process JSONs. Official cached114 setup
+SHA208be163bf3b3180eb9e1e80916226448c68219b0ece319b92f9878634f4e125 verified;
+primary is now114/Voice5. Do not use the old113-only owner delivery guard.
+
+IMPORTANT USER OVERRIDE: user chose PRIORITIZE THIS REPAIR. PC2 deferral is lifted
+for this repair after tests. Read-only PC2 existing cloning tab is Voice5/MOSS
+ready, failed with the old warning and retains its selected reference. Preserve
+that tab and input; do not reload/navigate it. After public6/managed checks, normal
+Voice-only update both PCs and retry the user's existing Create my voice once as
+actual recovery, not as a test fixture. No fake owner recording/export needed.
+
+Next: immutable6 publication and pin/channel retaining concurrent releases;
+managed5→6 update/data/identity/recovery and prepared-reference UI acceptance;
+normal primary114 and PC2 app-only6 delivery, existing-reference recovery, final
+receipts/histories and guarded fixture cleanup. No public6 or owner6 yet at this
+checkpoint. Runtime/model bytes, schema2, min111/integration7 and116 owned paths
+unchanged; no new suite/Android release. Actions stay disabled; assets immutable.

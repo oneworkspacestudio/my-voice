@@ -231,14 +231,16 @@ func (a *App) createVoice(w http.ResponseWriter, r *http.Request) {
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Minute)
 	defer cancel()
-	reference := filepath.Join(dir, "reference.wav")
-	if e = a.ffmpeg(ctx, "-i", source, "-t", "31", "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", reference); e != nil {
+	decoded := filepath.Join(dir, "decoded.wav")
+	if e = a.ffmpeg(ctx, "-i", source, "-t", "120", "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", decoded); e != nil {
 		apphost.Problem(w, 400, "This file does not contain supported audio")
 		return
 	}
-	info, e := inspectWAV(reference)
-	if e != nil || info.Duration < 3 || info.Duration > 30.25 || info.RMS < .005 || info.Clipped > .03 {
-		apphost.Problem(w, 400, "Use 3–30 seconds of clear speech without silence or heavy clipping")
+	reference := filepath.Join(dir, "reference.wav")
+	info, preparation, e := prepareReference(decoded, reference)
+	_ = os.Remove(decoded)
+	if e != nil {
+		apphost.Problem(w, 400, e.Error())
 		return
 	}
 	v := Voice{ID: id, Name: name, Engine: model, Language: language, Tags: r.FormValue("tags"), Owner: uid(r), Consent: now(), Reference: "reference.wav"}
@@ -257,5 +259,5 @@ func (a *App) createVoice(w http.ResponseWriter, r *http.Request) {
 	}
 	saved = true
 	a.H.Audit(uid(r), "voice-consent-save", id)
-	apphost.JSON(w, 201, map[string]any{"voice": v, "audio": info})
+	apphost.JSON(w, 201, map[string]any{"voice": v, "audio": info, "preparation": preparation})
 }

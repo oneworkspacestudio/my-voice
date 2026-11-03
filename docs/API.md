@@ -34,6 +34,19 @@ users; standalone local users require the apphost owner's explicit action.
 | GET exports/zip?ids=ID,ID | Up to 20 complete owner recordings |
 | GET / PATCH settings | Performance/storage details; owner-only thread update |
 
+Voice creation decodes up to120 seconds to mono24kHz16-bit PCM, automatically
+trims silence/long pauses, removes DC drift, safely balances volume and selects
+at most30 seconds of useful reference audio. Too little audible signal and severe
+clipping return distinct explanations rather than one combined quality error.
+No speech is repeated or fabricated. The original source file stays private and
+unchanged alongside the prepared reference and encoder state.
+
+The successful `{voice,audio}` response remains compatible and adds `preparation`:
+`{inputSeconds,usedSeconds,trimmedSilence,selectedExcerpt,levelAdjusted,summary}`.
+`inputSeconds` describes the decoded/analysed part (at most120 seconds). `audio`
+describes the prepared reference. `GET voices/{id}/reference` plays that prepared
+copy, with the existing owner check. Models/storage schema/consent are unchanged.
+
 Model discovery keeps `cloning` (capability) separate from `cloningReady`
 (installed and usable). `installing` remains true throughout transfer and reference
 preparation; `status` describes progress or a retryable failure. An uninstalled

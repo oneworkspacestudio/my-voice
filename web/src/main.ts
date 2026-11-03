@@ -128,7 +128,7 @@ function App(){
 
   }
 
-  if(id==='save-clone'){if(savingClone)return;setSavingClone(true);setCloneStatus('Checking cloning model…');try{await ensureCloneReady();if(!reference)throw Error('Record or choose a reference first');const form=new FormData();form.set('audio',reference);form.set('name',fields.cloneName||'');form.set('tags',fields.cloneTags||'');form.set('consent',String(!!fields.consent));form.set('model',state.current.fields.cloneModel);form.set('language',fields.cloneLanguage||'en');setCloneStatus('Analysing reference and preparing voice…');const result=await api('voices','POST',form);setCloneCreated(result.voice.id);setCloneStatus(result.audio.duration.toFixed(1)+'s reference · saved privately');await refresh()}finally{setSavingClone(false)}}
+  if(id==='save-clone'){if(savingClone)return;setError('');setSavingClone(true);setCloneStatus('Checking cloning model…');try{await ensureCloneReady();if(!reference)throw Error('Record or choose a reference first');const form=new FormData();form.set('audio',reference);form.set('name',fields.cloneName||'');form.set('tags',fields.cloneTags||'');form.set('consent',String(!!fields.consent));form.set('model',state.current.fields.cloneModel);form.set('language',fields.cloneLanguage||'en');setCloneStatus('Analysing reference and preparing voice…');const result=await api('voices','POST',form);setCloneCreated(result.voice.id);setCloneStatus(result.audio.duration.toFixed(1)+'s reference · '+(result.preparation?.summary||'saved privately'));await refresh()}finally{setSavingClone(false)}}
 
   if(id==='test-clone'){const j=await api('voices/'+cloneCreated+'/preview','POST',{});setPreviewJob(j)}
   if(id==='close-preview')setPreviewJob(null);
@@ -224,6 +224,8 @@ function App(){
  'clone-model-progress':cloneSetup.busy?h('progress',{max:100,value:cloneSetup.progress,'aria-label':cloneSetup.progress===undefined?'Preparing cloning model':'Cloning model download progress'}):null,
 
  'reference-audio':referenceURL?h('audio',{controls:true,src:referenceURL,'aria-label':'Original voice reference'}):null,
+
+ 'prepared-reference-audio':cloneCreated?h('audio',{key:cloneCreated,controls:true,src:'./api/voices/'+cloneCreated+'/reference','aria-label':'Prepared voice reference'}):null,
 
  'clone-test-audio':previewJob?.script?.voice===cloneCreated?(previewJob.status==='complete'?h('audio',{controls:true,src:'./api/outputs/'+previewJob.id,'aria-label':'Cloned voice test sample'}):h('span',{className:'text text--caption'},previewJob.error||'Preparing test sample · '+previewJob.status)):null
 

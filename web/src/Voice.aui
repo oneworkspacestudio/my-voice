@@ -255,7 +255,8 @@ Page Voice
               Icon name=Fingerprint size=32
               Stack
                 Heading level=2 "Every great voice starts with a sample."
-                Text variant=muted "3–30 seconds of clear, natural speech works best."
+                Text variant=muted "Speak naturally. We trim silence, balance volume and choose a 3–30 second reference automatically."
+            Text variant=caption "For longer uploads, put the speech you want to use in the first two minutes."
             Section id=upload
             Row variant=record-actions
               Button action=record icon=Mic label=$recordLabel variant=secondary disabled=$cloneRecordDisabled
@@ -267,14 +268,16 @@ Page Voice
             Input name=cloneTags label="Tags" placeholder="Warm, storytelling, my voice…"
             Checkbox name=consent label="I own this voice, or have explicit permission from the speaker to clone and use it."
             Text variant=caption "Your reference and model-specific voice state stay private. Share use only with people you explicitly choose."
-            Row
+            Row variant=clone-submit
               Button action=save-clone icon=Fingerprint label="Create my voice" variant=primary disabled=$cloneCreateDisabled
               Text variant=caption $cloneStatus
             If condition=$cloneCreated
               Card variant=clone-success
                 Icon name=CircleCheck size=28
                 Heading level=2 "Your voice is ready."
-                Text "Compare your original reference with a generated sample before using it."
+                Text "Your original recording is kept. Listen to the prepared reference, then compare it with your generated voice."
+                Text variant=caption "Prepared reference"
+                Section id=prepared-reference-audio
                 Button action=test-clone icon=Play label="Generate a test sample" variant=secondary
                 Section id=clone-test-audio
                 Button action=use-clone icon=ArrowRight label="Use this voice" variant=primary

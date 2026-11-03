@@ -1,5 +1,24 @@
 # Native Windows test report
 
+## Preview6 automatic reference preparation
+
+Public5 rejects a recoverable26-second,44.1kHz stereo upload containing quiet
+public CC0 speech and silence with the reported combined quality error. After
+starting exact6 on the same synthetic saved data, the existing5 browser page
+retries the identical selected file without reload/reselection and creates a
+real clone. Original bytes remain exact; prepared audio is mono24kHz,6.38s,
+RMS0.0661 with no clipped samples. A50-second reference prepares a valid30-second
+excerpt and real clone. Silent input returns a specific explanation.
+
+Exact6 synthesizes new two-segment speech from the prepared saved clone:7.381s
+WAV and MP3. Six native preparation regressions cover quiet/padded audio, pauses,
+excerpt selection, DC drift, severe clipping/silence/short input and near-fullscale
+unclipped audio at the three-second boundary; originals are checked byte-for-byte.
+Full Go tests/vet,11 frontend regressions and final AUI/TS/Vite build pass.
+Native reference format conversion and real MOSS encoding are tested, without
+owner recordings or physical microphone capture as fixtures. Runtime/model bytes,
+schema2 and116 managed owned files are unchanged. Delivery checks follow release.
+
 ## Preview5 cloning setup before capture
 
 Fresh native Windows model-manager download of763,682,544 pinned public MOSS

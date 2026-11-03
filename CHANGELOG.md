@@ -1,5 +1,18 @@
 # Changes
 
+## 0.1.0-preview.6
+
+Voice references are prepared automatically before cloning: convert the format,
+trim silence and long pauses, balance volume safely and choose a useful excerpt
+up to30 seconds. The original file is retained. The cloning screen explains the
+changes and plays the prepared reference separately. Up to the first two minutes
+of an uploaded file are analysed.
+
+Quiet or longer usable recordings can continue without being recorded again.
+Silence, insufficient speech and severe clipping now give specific guidance.
+Preparation does not invent missing speech or reconstruct clipped peaks. An
+existing browser reference can be retried after the update without reselecting it.
+
 ## 0.1.0-preview.5
 
 Voice Cloning now shows installable models before they are installed. Install the

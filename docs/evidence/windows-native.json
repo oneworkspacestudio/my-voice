@@ -429,5 +429,60 @@
     },
     "runtimeAndModelBytesUnchanged": true,
     "ownerInstallationUsedAsFixture": false
+  },
+  "automaticReferencePreparationPreview6": {
+    "preparationRegressionGroups": 6,
+    "frontendTests": 11,
+    "goTestsAndVet": true,
+    "productionBuild": true,
+    "nativeAcceptance": {
+      "schema": 1,
+      "passed": true,
+      "version": "0.1.0-preview.6",
+      "executableSHA256": "e160a57fc276b9f4836223e681fca3e699e8e79bfd8db1372344922291f0fe74",
+      "public5FailureReproduced": true,
+      "retainedPublic5BrowserRetrySucceededWithoutReloadOrReselect": true,
+      "retainedBrowserPreparedSeconds": 6.38,
+      "quietStereoPaddedCase": {
+        "inputChannels": 2,
+        "inputRate": 44100,
+        "preparation": {
+          "inputSeconds": 26,
+          "usedSeconds": 6.38,
+          "trimmedSilence": true,
+          "selectedExcerpt": false,
+          "levelAdjusted": true,
+          "summary": "Automatically trimmed silence, balanced volume"
+        },
+        "preparedRMS": 0.0661037933186319,
+        "preparedPeak": 0.5738525390625,
+        "originalBytesPreserved": true
+      },
+      "longCase": {
+        "inputSeconds": 50,
+        "usedSeconds": 30,
+        "trimmedSilence": true,
+        "selectedExcerpt": true,
+        "levelAdjusted": true,
+        "summary": "Automatically trimmed silence, selected a 30-second excerpt, balanced volume"
+      },
+      "silenceRejectedWithSpecificExplanation": true,
+      "silenceMessage": "There is not enough audible speech to prepare a reference. Check the microphone and record at least 3 seconds of clear speech; your reference is still here",
+      "genuineMossCloneAndSpeech": {
+        "segments": 2,
+        "durationSeconds": 7.381375,
+        "generationSeconds": 37.8196106,
+        "wavBytes": 354350,
+        "mp3Bytes": 149324
+      },
+      "runtimeAndModelBytesUnchanged": true,
+      "publicCC0SyntheticFixturesOnly": true,
+      "ownerInstallationUsedAsFixture": false,
+      "preparedAndOriginalPlayersVerifiedInUI": true,
+      "preparedPlayerDuration": 6.38,
+      "originalPlayerDuration": 25.999977,
+      "desktopAndPhoneControlsReviewed": true
+    },
+    "ownerInstallationUsedAsFixture": false
   }
 }

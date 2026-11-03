@@ -341,9 +341,10 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                     <Icon name="Fingerprint" size={32} />
                     <Stack>
                       <Heading level={2}>Every great voice starts with a sample.</Heading>
-                      <Text variant="muted">3–30 seconds of clear, natural speech works best.</Text>
+                      <Text variant="muted">Speak naturally. We trim silence, balance volume and choose a 3–30 second reference automatically.</Text>
                     </Stack>
                   </Row>
+                  <Text variant="caption">For longer uploads, put the speech you want to use in the first two minutes.</Text>
                   <Section id="upload" />
                   <Row variant="record-actions">
                     <Button onClick={() => onAction("record")} icon="Mic" label={data.recordLabel} variant="secondary" disabled={data.cloneRecordDisabled} />
@@ -357,7 +358,7 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                   <Input name="cloneTags" label="Tags" placeholder="Warm, storytelling, my voice…" />
                   <Checkbox name="consent" label="I own this voice, or have explicit permission from the speaker to clone and use it." />
                   <Text variant="caption">Your reference and model-specific voice state stay private. Share use only with people you explicitly choose.</Text>
-                  <Row>
+                  <Row variant="clone-submit">
                     <Button onClick={() => onAction("save-clone")} icon="Fingerprint" label="Create my voice" variant="primary" disabled={data.cloneCreateDisabled} />
                     <Text variant="caption">{data.cloneStatus}</Text>
                   </Row>
@@ -365,7 +366,9 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                     <Card variant="clone-success">
                       <Icon name="CircleCheck" size={28} />
                       <Heading level={2}>Your voice is ready.</Heading>
-                      <Text>Compare your original reference with a generated sample before using it.</Text>
+                      <Text>Your original recording is kept. Listen to the prepared reference, then compare it with your generated voice.</Text>
+                      <Text variant="caption">Prepared reference</Text>
+                      <Section id="prepared-reference-audio" />
                       <Button onClick={() => onAction("test-clone")} icon="Play" label="Generate a test sample" variant="secondary" />
                       <Section id="clone-test-audio" />
                       <Button onClick={() => onAction("use-clone")} icon="ArrowRight" label="Use this voice" variant="primary" />
