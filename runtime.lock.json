@@ -70,5 +70,17 @@
       "sha256": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5"
     }
   ],
-  "mossRuntimeSHA256": "99477efaff28c12c0c8e16a6b4aab4e880a70851693fa303d932415ba180cbd5"
+  "mossRuntimeSHA256": "99477efaff28c12c0c8e16a6b4aab4e880a70851693fa303d932415ba180cbd5",
+  "pocketPortable": {
+    "url": "https://github.com/oneworkspacestudio/my-voice/releases/download/v0.1.0-preview.3/pocket-portable-runtime.zip",
+    "size": 7952296,
+    "sha256": "3cc83166be4ae324abe98ddc4cf6d2f107e1b090dacc0cfc3d535ca46cbfa8a2",
+    "executableSHA256": "15e9fa45b6e5bcedde1a8de56c3a5fdcbbc6611bf0373c5bdf85e056b1093352",
+    "sourceCommit": "a922b912dfa366975294afb568d815b305acde5d",
+    "cargoLockSHA256": "3f2c5396eaaad4c64258ae724e012fdaa0c7b3e71165bcf0ef2c6b0641d18d27",
+    "rust": "1.99.1 (58cf8f9c3 2026-10-13)",
+    "target": "x86_64-pc-windows-msvc",
+    "rustflags": "-C target-cpu=x86-64 -C target-feature=+crt-static",
+    "recipe": "scripts/build-pocket-runtime.py"
+  }
 }

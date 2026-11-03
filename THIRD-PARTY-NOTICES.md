@@ -10,7 +10,7 @@ No model weights or personal reference recordings are bundled in the executable.
 | React / React DOM / scheduler | 19.3.1 / 19.3.1 / 0.28.0 | MIT; licenses/web |
 | Lucide | 0.577.0 | ISC; licenses/web |
 | Codedia AUI compiler | 0.2.1, build tool | MIT; licenses/web |
-| Pocket native Rust CPU runtime | official v4.0.1 archive, CLI3.3.0 | MIT; licenses/Pocket-MIT.txt |
+| Pocket native Rust CPU runtime | official v4.0.1 archive, CLI3.3.0; baseline x86-64 build of the same pinned source | MIT; licenses/Pocket-MIT.txt |
 | MOSS CPU runtime source | 8b7bcc9341b3b4ef3a3a58ba1338a7d85ff133eb | Apache-2.0; licenses/MOSS-Apache-2.0.txt |
 | CPython embedded x64 | 3.12.10 | PSF and incorporated notices; licenses/Python-3.12.txt |
 | NumPy | 2.4.4 | BSD and incorporated numerical-library notices; licenses/python |
@@ -48,3 +48,11 @@ dependency source beside this release. Test audio and model files are excluded;
 the original upstream URLs and archive digests are included. This is in addition
 to the separate LGPL FFmpeg/LAME source archive. The MPL-covered files remain
 available under their original licence; the enclosing My Voice code stays MIT.
+
+The additional portable Pocket executable is built on native Windows/MSVC from
+the same source commit and Cargo.lock. Its flags are `-C target-cpu=x86-64
+-C target-feature=+crt-static`, overriding upstream's x86-64-v3 default.
+`scripts/build-pocket-runtime.py` is the exact offline build recipe; its source
+archive contains that recipe, the original upstream source and all locked crate
+archives. The recipe only normalizes the Git dependency's workspace manifest
+inheritance for Cargo's vendored source format; library code remains unchanged.

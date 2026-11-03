@@ -16,6 +16,8 @@ def fetch(pin,name):
 stage=cache/'stage';stage.mkdir(exist_ok=True)
 with zipfile.ZipFile(fetch(lock['pocket'],'pocket.zip')) as z:
  f=next(n for n in z.namelist() if n.endswith('/pocket-tts.exe'));(stage/'pocket-tts.exe').write_bytes(z.read(f))
+with zipfile.ZipFile(fetch(lock['pocketPortable'],'pocket-portable-runtime.zip')) as z:
+ (stage/'pocket-tts-portable.exe').write_bytes(z.read('pocket-tts-portable.exe'))
 with zipfile.ZipFile(fetch(lock['ffmpeg'],'ffmpeg-runtime.zip')) as z:
  (stage/'ffmpeg.exe').write_bytes(z.read('ffmpeg.exe'))
 runtime=stage/'moss';runtime.mkdir(exist_ok=True)

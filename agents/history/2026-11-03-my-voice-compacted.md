@@ -297,3 +297,47 @@ in the report/receipts. All task NTFS fixtures and idle test controllers removed
 owner data/recovery and other apps retained. Completed updater/task verification
 tabs closed; live secondary Voice tab left as deliverable. Nothing remains for
 this managed app delivery; immutable release assets and code tags stay unchanged.
+
+## Preview3 worker compatibility repair in progress
+
+User reports PC2 Alba11-character generation failed with the generic three-attempt
+message. Its installed Pocket18 is Ready. That screenshot does not identify the
+OS failure; a private sanitized app.log worker/status line was requested but has
+not arrived. Public2 short unpunctuated/punctuated generation passes in isolated
+native data here. No production cause or old physical CPU performance is claimed.
+
+Upstream Pocket Windows release uses x86-64-v3/AVX2/FMA. Added a same-source,
+Cargo.lock-pinned baseline x86-64/static-CRT native MSVC build and exact offline
+recipe. Only STATUS_ILLEGAL_INSTRUCTION triggers fallback; deterministic missing,
+blocked and dependency errors are actionable, and job errors retain worker/status
+without stdout, argv or speech/reference text. Existing schemas/models unchanged.
+
+Native Go tests/vet, scrubbed environment/exception fallback/error privacy and
+real portable restricted-worker24kHz audible PCM pass. Exact preview3 EXE
+67f8aebe04f60dce52e48373844b8effbee9c9466b827865eec673b644e2adbf
+passes both Pocket models' actual WAV/MP3. Offline recipe passes; portable EXE
+15e9fa45b6e5bcedde1a8de56c3a5fdcbbc6611bf0373c5bdf85e056b1093352.
+Runtime1a0712ceed029775c587c27f91d17fdf3f657aa6e6d4588686d8474d1f06f864
+is exactly public2's entire payload plus that executable; deterministic omission
+reproduces old payload SHA87996d29... . UI build/assets unchanged. No owner models,
+voices, job text or feature data used as fixtures. No Actions/subagents/VMs.
+
+Artifacts I:/Projects/tooling/my-voice-worker-fix-20261103. Native source/vendor/
+Rust install and fixtures C:/Projects/.cache/my-voice-worker-fix-20261103 (NTFS).
+Rust1.99.1/MSVC19.41.34123; no-modify-path. I exFAT cannot host Rust toolchain
+hardlinks; CMake needs short CARGO_TARGET_DIR to avoid Windows path limits.
+
+Synthetic actual public112 managed setup (Accounts+Voice2) is running on39820,
+programs task tooling/managed-programs; metadata managed-process.json. Baseline
+MyAccounts/Voice UI and real nested Pocket18 generation pass, pinned fixture
+models seeded from verified synthetic native3 model-manager installation. Need
+normal app3 update, retained models/history/account/manager bytes and recovery,
+real post-update speech/rollback/reapply. Preserve and stop task services at end.
+
+Next: publish immutable app3 plus portable/runtime sources/metadata, promote
+ordinary channel and future component pin in suite (contract/integration unchanged;
+no new suite/Android release). Then synthetic public-channel protected app-only
+update/recovery gates, both owner normal app-only updates, retry user's existing
+PC2 failed job as intended repair (no new synthetic owner job), and record actual
+status/root cause. If still failing, new safe status guides further repair. Owner
+recovery/data/unselected apps must be retained. Public2/tag/assets stay immutable.

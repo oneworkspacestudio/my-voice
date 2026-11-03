@@ -263,5 +263,45 @@
     "normalVoiceOnlyCandidateUpdate": true,
     "workspaceManagerAccountsDriveRetained": true,
     "exactVoiceExecutableVerified": true
+  },
+  "workerRepair": {
+    "version": "0.1.0-preview.3",
+    "nativeWindowsTestsAndVetPassed": true,
+    "nativeExceptionFallbackTestPassed": true,
+    "workerEnvironmentAndErrorPrivacyPassed": true,
+    "portableRealRestrictedWorkerSpeechPassed": true,
+    "portableAudioSeconds": 1.56,
+    "portableRMS": 0.0952,
+    "portableWorkerSHA256": "15e9fa45b6e5bcedde1a8de56c3a5fdcbbc6611bf0373c5bdf85e056b1093352",
+    "nativePackageAcceptance": {
+      "schema": 1,
+      "passed": true,
+      "executableSHA256": "67f8aebe04f60dce52e48373844b8effbee9c9466b827865eec673b644e2adbf",
+      "cases": [
+        {
+          "model": "pocket18",
+          "durationSeconds": 1.5173333333333334,
+          "wallSeconds": 13.687,
+          "wavBytes": 72876,
+          "mp3Bytes": 32204
+        },
+        {
+          "model": "pocket7",
+          "durationSeconds": 1.5173333333333334,
+          "wallSeconds": 3.891,
+          "wavBytes": 72876,
+          "mp3Bytes": 32204
+        }
+      ],
+      "ownerInstallationUsedAsFixture": false
+    },
+    "runtimeComparison": {
+      "allExistingRuntimeBytesAndMetadataUnchanged": true,
+      "onlyAddition": "pocket-tts-portable.exe",
+      "runtimePayloadSHA256": "1a0712ceed029775c587c27f91d17fdf3f657aa6e6d4588686d8474d1f06f864",
+      "runtimePayloadBytes": 62301539
+    },
+    "oldPhysicalCPUAcceptanceClaimed": false,
+    "targetRecoveryRecordedSeparately": true
   }
 }

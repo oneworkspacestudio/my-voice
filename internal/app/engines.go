@@ -15,6 +15,7 @@ import (
 	"io/fs"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -135,6 +136,7 @@ func (a *App) service(ctx context.Context, exe string, args, extra []string) err
 		return e
 	}
 	// Use apphost's suspended-start, kill-on-close Job Object; never inherit SSO secrets.
+	var failure *workerFailure
 	for attempt := 0; attempt < 3; attempt++ {
 		e := apphost.Service(ctx, exe, a.path("tmp"), args, env, io.Discard)
 		if e == nil {
@@ -146,13 +148,75 @@ func (a *App) service(ctx context.Context, exe string, args, extra []string) err
 		// The error contains only the executable/OS status. Never record argv,
 		// standard output, speech text, references or inherited credentials.
 		a.H.Log.Warn("worker failed", "worker", filepath.Base(exe), "attempt", attempt+1, "cause", e.Error())
+		failure = describeWorkerFailure(exe, e)
+		if failure.permanent() {
+			return failure
+		}
 		select {
 		case <-ctx.Done():
 			return errors.New("Generation stopped")
 		case <-time.After(time.Duration(attempt+1) * 200 * time.Millisecond):
 		}
 	}
-	return errors.New("The speech worker failed after three attempts. Check the installed model and audio, then retry")
+	return failure
+}
+
+// Only fixed messages, the bundled executable's name and numeric OS status may
+// reach a job response. Worker output and command lines can contain private text.
+type workerFailure struct {
+	worker string
+	code   uint32
+	kind   string
+}
+
+func describeWorkerFailure(exe string, err error) *workerFailure {
+	f := &workerFailure{worker: filepath.Base(exe), kind: "start"}
+	var exited *exec.ExitError
+	switch {
+	case errors.As(err, &exited):
+		f.code, f.kind = uint32(exited.ExitCode()), "exit"
+	case os.IsPermission(err):
+		f.kind = "permission"
+	case os.IsNotExist(err):
+		f.kind = "missing"
+	}
+	return f
+}
+func (f *workerFailure) permanent() bool {
+	return f.kind == "permission" || f.kind == "missing" || f.code == 0xc000001d || f.code == 0xc0000135 || f.code == 0xc000007b
+}
+func (f *workerFailure) Error() string {
+	switch f.kind {
+	case "permission":
+		return "Windows blocked the speech worker (" + f.worker + "). Check its security protection or app-folder permissions, then retry"
+	case "missing":
+		return "The speech worker is missing (" + f.worker + "). Repair My Voice through Workspace Updates, then retry"
+	case "exit":
+		reason := "Check the installed model and audio, then retry"
+		switch f.code {
+		case 0xc000001d:
+			reason = "This worker requires CPU instructions unavailable on this PC"
+		case 0xc0000135, 0xc000007b:
+			reason = "A Windows runtime dependency is missing or incompatible. Repair My Voice through Workspace Updates"
+		case 0xc0000017, 0xc000009a:
+			reason = "Windows ran out of memory. Close other apps or select the smaller Pocket model, then retry"
+		}
+		return fmt.Sprintf("Speech worker %s exited (0x%08X). %s", f.worker, f.code, reason)
+	default:
+		return "Windows could not start the speech worker (" + f.worker + "). Check the app log for the OS error, then retry"
+	}
+}
+
+func (a *App) pocketService(ctx context.Context, dir string, args []string) error {
+	err := a.service(ctx, filepath.Join(dir, "pocket-tts.exe"), args, nil)
+	var failed *workerFailure
+	if errors.As(err, &failed) && failed.code == 0xc000001d {
+		// The upstream Windows release targets x86-64-v3. Fall back only for
+		// STATUS_ILLEGAL_INSTRUCTION, retaining its fast kernels on newer PCs.
+		a.H.Log.Info("using portable Pocket worker", "reason", "unsupported CPU instructions")
+		return a.service(ctx, filepath.Join(dir, "pocket-tts-portable.exe"), args, nil)
+	}
+	return err
 }
 func (a *App) runtime() (string, error) {
 	return a.runtimeFor(false)
@@ -473,7 +537,7 @@ func (p *PocketEngine) Generate(ctx context.Context, text string, v Voice, out s
 	if !v.Preset {
 		voice = p.A.path("projects", "voice-"+v.ID, "state.safetensors")
 	}
-	return p.A.service(ctx, filepath.Join(dir, "pocket-tts.exe"), []string{"generate", "--quiet", "--config", filepath.Join(p.A.modelDir(p.ID), "config.yaml"), "--device", "cpu", "--voice", voice, "--text", text, "--output-path", out}, nil)
+	return p.A.pocketService(ctx, dir, []string{"generate", "--quiet", "--config", filepath.Join(p.A.modelDir(p.ID), "config.yaml"), "--device", "cpu", "--voice", voice, "--text", text, "--output-path", out})
 }
 func (p *PocketEngine) Clone(ctx context.Context, src, dst string) error {
 	if !p.Cloning() {
@@ -483,7 +547,7 @@ func (p *PocketEngine) Clone(ctx context.Context, src, dst string) error {
 	if e != nil {
 		return e
 	}
-	return p.A.service(ctx, filepath.Join(dir, "pocket-tts.exe"), []string{"export-voice", "--quiet", "--config", filepath.Join(p.A.modelDir(p.ID), "config.yaml"), src, dst + ".safetensors"}, nil)
+	return p.A.pocketService(ctx, dir, []string{"export-voice", "--quiet", "--config", filepath.Join(p.A.modelDir(p.ID), "config.yaml"), src, dst + ".safetensors"})
 }
 
 type MossEngine struct{ A *App }

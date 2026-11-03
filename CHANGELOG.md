@@ -1,5 +1,15 @@
 # Changes
 
+## 0.1.0-preview.3
+
+Pocket speech now falls back to a native baseline x86-64 worker when the
+upstream optimized Windows worker exits with an unsupported CPU instruction.
+The same pinned model and voice files are reused. Windows worker failures show
+the executable and numeric status with a relevant recovery message; private
+speech, references and worker output are never included in those messages.
+
+Models, saved voices, projects and history retain their existing format.
+
 ## 0.1.0-preview.2
 
 First Windows preview: original Workspace interface inspired by familiar audio

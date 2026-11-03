@@ -1,5 +1,14 @@
 # Architecture
 
+Pocket's official Windows worker targets x86-64-v3. A bundled native baseline
+x86-64 build of the identical pinned source provides a fallback only when Windows
+returns STATUS_ILLEGAL_INSTRUCTION (0xC000001D). Both run in the same restricted
+Job Object with explicit private model/config paths and scrubbed environment.
+Deterministic missing/blocked/incompatible worker failures stop without repeated
+launches. Job errors expose only fixed recovery guidance, worker name and numeric
+OS status, never command lines, stdout/stderr or speech text. Model/config and
+database formats are unchanged by this runtime repair.
+
 `MyVoice.exe` is a native Go server with embedded production React/AUI assets.
 It uses the public Workspace `pkg/apphost` for MyAccounts OIDC/PKCE, session and
 CSRF checks, owner controls, SQLite migrations, protected NTFS storage and backups.

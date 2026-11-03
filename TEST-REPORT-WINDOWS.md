@@ -1,5 +1,29 @@
 # Native Windows test report
 
+## Preview3 worker compatibility repair
+
+On the same native host described below, the exact preview3 executable
+`67f8aebe04f60dce52e48373844b8effbee9c9466b827865eec673b644e2adbf`
+generated real WAV and MP3 for both Pocket18 and Pocket7, including 11 characters
+without punctuation. The new baseline x86-64 worker also generated audible
+24 kHz PCM in apphost's restricted native Job Object. A native process regression
+simulates Windows STATUS_ILLEGAL_INSTRUCTION and verifies fallback, environment
+scrubbing, ordinary error handling and suppression of private worker output.
+All Go tests/vet and the unchanged production frontend build pass.
+
+The deterministic runtime reconstruction preserves the complete preview2 payload
+byte for byte when the portable executable is omitted. Rust1.99.1/MSVC native
+compilation uses the same pinned source/Cargo.lock with baseline x86-64 and a
+static CRT. The offline source recipe also passed. See runtime.lock.json and
+the `workerRepair` record in docs/evidence/windows-native.json.
+
+This host supports AVX2. These checks establish the baseline build and fallback
+mechanism; they do not establish old physical CPU performance or the cause of a
+remote user's generic preview2 failure. Managed rollout and target recovery are
+recorded separately after publication, without publishing user text or audio.
+
+## Preview2 baseline acceptance
+
 Date: 3 November 2026. Preview0.1.0-preview.2, Windows x64.
 All execution used the current physical Windows PC. No VM, WSL, container,
 GPU runtime, cloud speech service or hosted runner was used.
