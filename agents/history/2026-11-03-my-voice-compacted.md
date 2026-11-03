@@ -597,3 +597,47 @@ normal primary114 and PC2 app-only6 delivery, existing-reference recovery, final
 receipts/histories and guarded fixture cleanup. No public6 or owner6 yet at this
 checkpoint. Runtime/model bytes, schema2, min111/integration7 and116 owned paths
 unchanged; no new suite/Android release. Actions stay disabled; assets immutable.
+
+## Preview6 public delivery and both targets verified
+
+Source9b316127 / immutable v0.1.0-preview.6 has14 verified public assets; anonymous
+ZIP/EXE/runtime/source and main update channel verify. Channel/pin5491f42 adds
+only Voice6 while preserving all prior releases, unrelated rows and withholdings.
+EXE e160a57fc276b9f4836223e681fca3e699e8e79bfd8db1372344922291f0fe74;
+ZIP e377181fd9ba0e5f0380efbc8a6932c6931274836662bcbccaca643e428b05d4.
+A short GitHub raw-main cache lag safely yielded no available update/no mutation;
+normal channel delivery proceeded after propagation. Ordinary component116 exact
+files and catalog/distribution checks pass. No new suite/Android release/Actions.
+
+Actual public114 setup Voice5 to6 through public114 updater retains manager,
+Accounts, identity/paths/models/projects/audio;116 public payloads and17 recovery
+files independently verify. Managed MyAccounts/proxy UI prepares the same failed
+26s quiet stereo CC0 reference into6.38s mono24kHz, retaining original bytes and
+showing both players/summary. Real cloned speech completes7.5906s with both script
+segments and WAV/MP3. Pre-update clone and6.7s recording retained.
+
+Primary Voice-only5 to6 retains Workspace114 and every unselected app/package
+contract/byte, identities/password fields, existing secret contents and locations.
+116 files/production JS B2P2Ca8p/CSS DQnFYA9P match;36 services healthy. Recovery
+independently verified and kept; ordinary cleanup retired1 eligible older copy.
+Large recovery cleanup was still making read progress before finishing normally.
+Actual SSO/proxy UI6 exposes automatic prep and inline install/capture guards.
+No owner feature fixture/model download was created.
+
+User explicitly reprioritized PC2, lifting the prior deferral FOR THIS REPAIR.
+Normal Voice-only5 to6 update submitted ONCE; all9 stages complete in242s, verified
+recovery retained and1 eligible older copy retired. Workspace113 and every other
+installed version retained;36 services running; actual SSO/proxy UI6 and retained
+MOSS ready. Verification there is remote UI/health, not independent filesystem
+hash auditing. Do not claim an owner-reference retry: old page required sign-in,
+user restored it and the old file selection was cleared. Agent never navigated/
+reloaded that original tab. New6 cloning page is ready for the same file; user was
+asked to reselect. Browser control then required an extension update. No fresh
+recording is required, but that user's specific audio recovery is not verified.
+
+Both synthetic sessions signed out; tracked services stopped; no active process
+references/reparse points remained; only the guarded disposable NTFS task root
+was removed. Tooling/evidence retained; owner data/recovery not manually removed.
+Full privacy-filtered receipt: docs/delivery-preview6.json. All repair, public
+promotion and both-PC delivery gates complete; only optional owner-file retry
+requires reselect/browser access. No release asset/tag replacement.
