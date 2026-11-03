@@ -671,3 +671,44 @@ receipts/handoff and guarded fixture cleanup. Owner PC2 original585734961 remain
 unmodified; current settings reflect clone/MOSS with stale Alba title. Other chat
 has My AI update tab; inspect active updater before PC2 apply, never submit twice.
 User's benchmark deferral was lifted for Voice repair; complete both target gates.
+
+## Preview7 public and both-PC delivery complete
+
+Sourcec3fc8782 / immutable v0.1.0-preview.7 has14 verified assets and anonymous
+ZIP/EXE/runtime/source downloads. Scoped pin/channel9482f59 preserves all other
+rows and prior releases; ordinary component116 files and suite tests pass. EXE
+0e1d378b4b06f6030dc25a70d40560c6e3eef4f9ad5b75ea6501658896defb8e;
+ZIP14be4bfd120b11cfee5fd6c2383b29106f6a4aa946604a9c8ecf8312769ff5d5.
+Raw-main cache lag was awaited without installing the old version or bypassing
+normal discovery. No new suite/Android release; no Actions or replaced assets.
+
+Actual public114 managed Voice5 to7 normal update preserves manager/unselected
+bytes, accounts/paths, models/audio and saved voice/recording/script database
+rows.116 payloads and17 recovery files independently verify. Actual SSO/proxy UI
+selects the retained clone directly from Alba, switches MOSS/title and generates
+complete2-segment8.0388s WAV/MP3, with correct recording speaker and playable media.
+Native exact7 acceptance is8.6788s;18 frontend regressions, Go tests/vet and build,
+desktop/phone review pass. All fixtures use isolated synthetic CC0 data.
+
+Primary6 to7 retains Workspace114, every unselected app/package byte/contract,
+identity/password fields, secret contents and paths.116 files and served production
+JS tHBeFQCq/CSS DQnFYA9P match;36 services healthy; recovery independently checked/
+kept; ordinary cleanup retires1 eligible older copy. Actual SSO/proxy7 dropdown
+shows voices across engines. No owner generation or model download fixture.
+
+PC2 normal Voice-only6 to7 submitted once, all9 stages complete in190s; recovery
+verified/retained and1 eligible older copy retired. Workspace113 and every other
+installed version retained;36 services healthy; actual SSO/proxy UI7. Existing
+saved clone now exists and remains selected/ready; no further capture is needed
+for this request. Original owner page never navigated/reloaded. A new7 page fixes
+the actual stale automatic title while preserving script, clone ID, model,
+language, speed, pitch, volume and pause (private before/after DOM comparison).
+Dropdown includes the clone and both presets. No owner speech was generated.
+Remote evidence is normal updater UI/health/version rows, not an independent
+remote filesystem hash audit. New verified owner7 page is left as deliverable.
+
+Both synthetic UI sessions signed out and task services stopped; resolved-path,
+active-process and reparse checks passed before removing only the named disposable
+NTFS root. Tooling/evidence retained; owner data/recovery not manually removed.
+All source, public promotion and both target delivery gates complete; no pending
+PC2 deferral or implementation work. Receipt: docs/delivery-preview7.json.
