@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "version": "0.1.0-preview.3",
+  "sourceCommit": "02851da74be82f3ea289074a9b83d412474ccd1f",
+  "release": "https://github.com/oneworkspacestudio/my-voice/releases/tag/v0.1.0-preview.3",
+  "channelCommit": "377e861dffe2908545e5bfc6030229325e904526",
+  "immutableAssetsVerified": 14,
+  "anonymousPackageExecutablePortableAndSourceVerified": true,
+  "builtOnNativeWindows": true,
+  "githubActionsUsed": false,
+  "executableSHA256": "67f8aebe04f60dce52e48373844b8effbee9c9466b827865eec673b644e2adbf",
+  "packageSHA256": "9516d4f43e9edd3753afe033bd90d357759e349a433f4d1f39fd30fa0f067591",
+  "runtimePayloadSHA256": "1a0712ceed029775c587c27f91d17fdf3f657aa6e6d4588686d8474d1f06f864",
+  "change": "Same-source baseline x86-64 Pocket fallback on unsupported-instruction exit; safe actionable Windows worker errors",
+  "specificProductionExceptionStatusObserved": false,
+  "validation": [
+    "Go tests and vet",
+    "Production frontend build; JS/CSS unchanged",
+    "Native exception fallback and private output/environment checks",
+    "Real portable speech in nested restricted Windows Job Objects",
+    "Both Pocket models genuine WAV and MP3",
+    "Public112 managed setup with Accounts and Voice2",
+    "Normal public-channel app-only2-to3 update, rollback, reapply and fresh speech",
+    "All116 app-owned payloads match on protected reapply; models/projects/audio/account identity/manager and unselected payloads retained",
+    "Independent recovery manifest and every recorded file verification"
+  ],
+  "nativePackageAcceptance": {
+    "schema": 1,
+    "passed": true,
+    "executableSHA256": "67f8aebe04f60dce52e48373844b8effbee9c9466b827865eec673b644e2adbf",
+    "cases": [
+      {
+        "model": "pocket18",
+        "durationSeconds": 1.5173333333333334,
+        "wallSeconds": 13.687,
+        "wavBytes": 72876,
+        "mp3Bytes": 32204
+      },
+      {
+        "model": "pocket7",
+        "durationSeconds": 1.5173333333333334,
+        "wallSeconds": 3.891,
+        "wavBytes": 72876,
+        "mp3Bytes": 32204
+      }
+    ],
+    "ownerInstallationUsedAsFixture": false
+  },
+  "managedReapply": {
+    "verifiedOwnedPayloads": 116,
+    "schema": 1,
+    "mode": "reapply",
+    "passed": true,
+    "version": "0.1.0-preview.3",
+    "managerAndUnselectedBytesPreserved": true,
+    "accountIdentityAndPathsPreserved": true,
+    "modelsProjectsAndAudioPreserved": true,
+    "backupID": "update-20261103T144217-f0394218d215",
+    "recoveryFilesIndependentlyVerified": 21,
+    "exactPublicExecutableVerified": true
+  },
+  "managedPostReapplyGeneration": {
+    "passed": true,
+    "version": "0.1.0-preview.3",
+    "actualMyAccountsAndProxy": true,
+    "freshRestrictedWorkerGeneration": true,
+    "durationSeconds": 1.4373333333333334,
+    "RMS": 0.08834555081455388,
+    "WAVBytes": 69036,
+    "MP3Bytes": 30284,
+    "ownerInstallationUsedAsFixture": false
+  },
+  "primary": {
+    "schema": 1,
+    "target": "primary",
+    "workspace": "0.3.0-preview.111",
+    "voice": "0.1.0-preview.3",
+    "transaction": "complete",
+    "verifiedVoicePayloads": 116,
+    "managerBytesRetained": true,
+    "publicVerificationPending": false,
+    "unselectedAppsAndPackagesPreserved": true,
+    "identitiesAndSecretContentsPreserved": true,
+    "locationsPreserved": true,
+    "verifiedRecoveryRetained": true,
+    "cleanup": "complete",
+    "runningAppCount": 35,
+    "baselineFailures": [],
+    "newFailures": [],
+    "finished": "2026-11-03T14:54:14.2823789Z",
+    "cleanupRetainedRecoveryVerified": true,
+    "cleanupRetiredEligibleCopies": 1,
+    "recoveryID": "update-20261103T144832-e8fe39df927e"
+  },
+  "secondary": {
+    "schema": 1,
+    "target": "secondary",
+    "workspace": "0.3.0-preview.112",
+    "voice": "0.1.0-preview.3",
+    "allNineStagesComplete": true,
+    "updateDurationSeconds": 595,
+    "retainedVerifiedRecovery": "update-20261103T144746-532090950f19",
+    "otherDisplayedGroupsUnchanged": 33,
+    "voiceUpToDate": true,
+    "runningServices": 35,
+    "MyAccountsSessionRetained": true,
+    "existingPocket18Retained": true,
+    "originalFailedJobRetried": true,
+    "originalTextVoiceAndControlsRetained": true,
+    "result": "complete",
+    "audioSeconds": 1.5,
+    "generationSeconds": 7.7,
+    "ownerAudioDownloaded": false,
+    "remoteFilesystemAuditClaimed": false,
+    "productionExceptionStatusObserved": false
+  },
+  "primaryOwnerSpeechFixtureCreated": false,
+  "ownerTextAudioOrScreenshotsPublished": false,
+  "oldReleaseAssetsReplaced": false,
+  "limits": [
+    "Production failure is resolved by observed retry; its prior exception status was not supplied, so a specific CPU diagnosis is not claimed",
+    "Remote PC acceptance is UI/managed-receipt/service-health evidence, not an independent filesystem or credential audit",
+    "No quality-superiority or general old-hardware performance claim"
+  ],
+  "cleanup": {
+    "syntheticServicesStopped": true,
+    "disposableTaskNTFSRootRemoved": true,
+    "ownerInstallationsAndLatestVerifiedRecoveryRetained": true,
+    "publicBuildEvidenceRetained": true
+  }
+}

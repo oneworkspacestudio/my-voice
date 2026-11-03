@@ -341,3 +341,55 @@ update/recovery gates, both owner normal app-only updates, retry user's existing
 PC2 failed job as intended repair (no new synthetic owner job), and record actual
 status/root cause. If still failing, new safe status guides further repair. Owner
 recovery/data/unselected apps must be retained. Public2/tag/assets stay immutable.
+
+## Preview3 repair — completed on both PCs
+
+App3 source02851da /14 immutable assets and anonymous package/EXE/portable/source
+checks pass. Channel377e861 promotes only one new Voice row, retaining every old
+release/repository/withholding; future component pin3. SDK/integration7 unchanged,
+so no suite release or Android rebuild. Public old assets/tags remain untouched.
+
+Additional native outer-Job test runs the real portable worker and exception/
+privacy tests inside another restricted Job Object; passes. Actual public112
+managed setup→normal channel Voice2→3→rollback2→reapply3 passes; all116 owned
+payloads exact, manager/Accounts bytes, identities/paths, pinned models/projects/
+audio retained, all21 recorded recovery files independently verified. Reapplied
+MyAccounts/proxy speech creates fresh1.437s audible WAV/MP3. Full receipts are in
+ docs/delivery-preview3.json; prior2 receipt stays historical and unmodified.
+
+Primary normal Voice-only update completed on Workspace111, which was retained.
+All116 installed payloads and served JS/CSS match tested/public3;35 services healthy.
+Every unselected app/package contract and byte, existing identity/password fields,
+old decrypted secret entries and locations retained. Recovery/cleanup complete,
+new verified app recovery update-20261103T144832-e8fe39df927e retained; normal cleanup
+retired1 eligible older copy. No owner model/audio QA generation was created there.
+
+PC2 normal Voice-only update completed all9 stages in9m55s, Workspace112 retained.
+Fresh check reports3 Up to date. All33 other displayed groups/versions unchanged
+(including MyAI20/Hosting2); pre-existing MyMeet review warning remains.35 services
+healthy, actual MyAccounts session and installed Pocket18 retained. New verified
+recovery update-20261103T144746-532090950f19 retained; normal cleanup retired1
+eligible old copy. No independent remote filesystem/credential audit is claimed.
+
+Retried the USER'S EXISTING failed recording without changing its text, voice,
+model or controls. It now completes:1.5s audio,7.7s generation, waveform/player and
+WAV/MP3 links available. No new fake owner QA recording, licence acknowledgement,
+model download or audio export performed. Media/screenshots stay private. The
+original OS status/log was not supplied, so do not claim a confirmed CPU cause;
+compatibility fallback/error reporting are implemented and actual recovery is
+observed. User should refresh an older phone tab to see the recovered result.
+
+Cleanup: stop the task managed39820 installation, verify tracked child processes
+have exited, then remove only C:/Projects/.cache/my-voice-worker-fix-20261103 after
+resolved-path/reparse/process checks. Preserve I tooling evidence/public artifacts,
+owner installations, credentials and newest usable recovery. Final source/docs
+push and task-tab cleanup follow; do not move release3 or replace assets.
+
+Final cleanup completed: signed out of the synthetic session, stopped its managed
+controller/children, verified no task process references and removed only the
+named disposable NTFS root. Rust task-local proxy symlinks were checked to target
+its own rustup.exe and removed as links before recursion. This fixture cleanup did not touch owner data or recovery. The updater's
+ordinary retirement of eligible older copies is recorded above; no global PATH
+change was made. I tooling/public evidence is retained. Private
+PC2 recovered-speech screenshot remains outside Git; live recovered owner page
+is the deliverable. No further repair or target remains pending.
