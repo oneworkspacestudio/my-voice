@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "app": {
+    "version": "0.1.0-preview.2",
+    "sourceCommit": "c07ace5afa846e5885aacfa937932532a646877f",
+    "executableSHA256": "e66d61720002393890a8ab46273919a04cb95dbf716f217f88ae84f6a23b4189",
+    "release": "https://github.com/oneworkspacestudio/my-voice/releases/tag/v0.1.0-preview.2",
+    "assetsVerified": 13,
+    "anonymousArchiveExecutableSourceCodecVerified": true
+  },
+  "workspace": {
+    "version": "0.3.0-preview.112",
+    "sourceCommit": "33aaa79129722e210317242db8152b813c42ef49",
+    "release": "https://github.com/oneworkspacestudio/one-workspace/releases/tag/v0.3.0-preview.112",
+    "assetsVerified": 442,
+    "signedAndroidCompanion": "0.1.0-preview.12",
+    "publicChannelVerified": true
+  },
+  "acceptance": {
+    "nativeCPUInference": true,
+    "finalVoice2WAVMP3": true,
+    "actualManagedAccountsDriveCloning": true,
+    "finalManagedFreshSSOAndPhoneUI": true,
+    "finalManagedOmission": true,
+    "finalOptionalDiscoveryAndNativeUIInstall112": true,
+    "finalProtected110UpgradeRollbackReapply": true,
+    "ownerInstallationUsedAsFeatureFixture": false
+  },
+  "targets": {
+    "primary": {
+      "schema": 1,
+      "target": "primary",
+      "workspace": "0.3.0-preview.111",
+      "voice": "0.1.0-preview.2",
+      "transaction": "complete",
+      "verifiedVoicePayloads": 116,
+      "managerMatchesTestedRelease": true,
+      "publicVerificationPending": false,
+      "unselectedAppsAndPackagesPreserved": true,
+      "identitiesAndSecretContentsPreserved": true,
+      "locationsPreserved": true,
+      "verifiedRecoveryRetained": true,
+      "cleanup": {
+        "finished": "2026-11-03T03:23:26.4149722Z",
+        "retainedVerified": true,
+        "removedBackups": 1,
+        "removedStages": 0,
+        "bytesFreed": 53080064
+      },
+      "runningAppCount": 35,
+      "baselineFailures": [],
+      "newFailures": [],
+      "finished": "2026-11-03T03:23:59.2745824Z",
+      "unselectedAppsChecked": 35,
+      "priorPackagesChecked": 288,
+      "recoveryFilesIndependentlyVerified": 19124,
+      "recoveryID": "update-20261103T031543-c7447c3dd96d",
+      "myAIVersionRetained": "0.1.0-preview.20",
+      "hostingVersionRetained": "0.1.0-preview.2",
+      "authenticatedOwnerBrowserCheck": false,
+      "nativeVoiceVersionMetadataVerified": true
+    },
+    "secondary": {
+      "schema": 1,
+      "passed": true,
+      "target": "secondary",
+      "workspace": "0.3.0-preview.112",
+      "voice": "0.1.0-preview.2",
+      "transaction": "complete",
+      "optionalOfferStartedUnchecked": true,
+      "onlyVoiceSelected": true,
+      "managedFilesVerifiedByUpdater": 116,
+      "downloadMB": 73.6,
+      "nineNativeStagesComplete": true,
+      "retainedVerifiedRecovery": true,
+      "recoveryID": "update-20261103T043541-ff73f589a0fe",
+      "cleanup": {
+        "removedBackups": 1,
+        "removedStages": 0,
+        "freedMB": 292.2
+      },
+      "runningAppCount": 35,
+      "newFailures": [],
+      "unselectedDisplayedGroupsPreserved": 32,
+      "missingPriorRows": [],
+      "myAIVersionRetained": "0.1.0-preview.20",
+      "hostingVersionRetained": "0.1.0-preview.2",
+      "authenticatedMyAccountsUIVerified": true,
+      "sharedAppsPickerAndCreativeVoiceEntryVerified": true,
+      "renderedVersion": "My Voice 0.1.0-preview.2",
+      "servedAssets": {
+        "scripts": [
+          "/voice/assets/index-en0bbr1A.js",
+          "/_workspace/navigation.js"
+        ],
+        "styles": [
+          "/voice/assets/index-CljoH0WX.css"
+        ]
+      },
+      "independentRemoteFilesystemCredentialAudit": false,
+      "ownerContentCreatedByAgent": false,
+      "finished": "2026-11-03T04:50:20.464Z"
+    }
+  },
+  "firstUseModels": "Separate explicit model downloads remain an owner first-use action on each PC; this delivery did not accept model licences or create owner audio.",
+  "limitations": [
+    "No blind voice-quality superiority claim",
+    "MOSS slower than real time on tested CPU",
+    "No physical-phone, clean-host or reboot acceptance"
+  ],
+  "fixtureCleanup": {
+    "target": "synthetic-task-NTFS-fixtures",
+    "removed": true,
+    "includes112OptionalDiscoveryFixtures": true,
+    "fixtureControllersStopped": 2,
+    "ownerDataTouched": false
+  }
+}

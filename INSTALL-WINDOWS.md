@@ -2,9 +2,11 @@
 
 ## Managed One Workspace
 
-Use Workspace preview111 or newer and select **My Voice** under Creative &
-Development. Open it from the Workspace Apps picker. Existing MyAccounts sign-in,
-Workspace origin and protected storage are supplied by the manager.
+Select **My Voice** under Creative & Development during Workspace setup. To add
+it to an existing installation, update Workspace to preview112 or newer, then
+choose My Voice in Updates. Open it from the Workspace Apps picker. Existing
+MyAccounts sign-in, Workspace origin and protected storage come from the manager.
+Already installed Voice2 remains compatible with Workspace111.
 
 Go to Settings, read the model licence, and choose Download. Use MOSS for private
 voice cloning and multilingual generation. Pocket 18.2M/6.9M are smaller English

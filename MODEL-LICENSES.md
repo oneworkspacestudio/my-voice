@@ -2,7 +2,7 @@
 
 | Component | Exact upstream source | Conditions |
 |---|---|---|
-| Pocket runtime | kyutai-labs/pocket-tts v4.0.1 Windows artifact (CLI3.3.0) | MIT; runtime code notice included |
+| Pocket runtime | kyutai-labs/pocket-tts v4.0.1 Windows artifact (CLI3.3.0) | MIT core; bundled third-party components include MPL-2.0; notices and corresponding sources accompany the release |
 | Pocket 18.2M / 6.9M preset checkpoints | kyutai/pocket-tts-without-voice-cloning; revisions and SHA256 in models.json | CC BY4.0; attribution to Kyutai; preset-only checkpoint |
 | Alba voice | Kyutai tts-voices / Alba MacKenna casual recording and model-specific preset state | CC BY4.0; credit Alba MacKenna and Kyutai |
 | MOSS TTS Nano ONNX weights | OpenMOSS-Team/MOSS-TTS-Nano-100M-ONNX f52645cb | Apache-2.0 model card; separately downloaded |

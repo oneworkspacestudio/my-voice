@@ -238,3 +238,62 @@ Managed candidate upgrade/rollback/reapply now fully passes on a fresh native110
 All full-suite Go tests, touched-package vet, app vet, publisher regression, branding desktop/phone and image checks pass. Public my-voice repository created with Actions explicitly disabled. Preparing initial source commit/tag and immutable app assets; both owner installations remain pending. Copied upstream licence whitespace is retained verbatim; own-source whitespace checks are clean.
 
 Final preview2 native smoke and desktop/phone UI pass. Exact EXE SHA256 e66d61720002393890a8ab46273919a04cb95dbf716f217f88ae84f6a23b4189. Official Pocket transitive MPL components now have Cargo.lock-derived dependency notices and corresponding source offer. Source-only preview1 remains unchanged; first downloadable release is preview2. Runtime payload unchanged. Publication and both production installs pending; managed candidate acceptance already passes.
+
+## Published111 and primary complete; secondary repair in progress
+
+My Voice2 public c07ace5/13 assets and Workspace111 source82adff5/442 assets are immutable and verified. Required signed Android12 APK and anonymous ordinary channel pass; channel main cb1da2d. Final normal public-pin build has36 apps/429 packages, candidate:false. Exact final fresh111 SSO/390px/global logout, omission and public110→111 protected update/rollback/reapply all pass. Source/catalog/archive release notices match. Synthetic NTFS fixtures stopped and safely removed; evidence stays outside repo on I.
+
+Primary normal new111 installer --update --apply --apps workspace,voice completed. Voice2 EXE e66d61720002393890a8ab46273919a04cb95dbf716f217f88ae84f6a23b4189, all116 owned payloads and served JS/CSS/logo match tested public bytes;35 services running/no failures. All old app/package contracts/bytes, identity/password fields, old decrypted secret entries and locations retained; MyAI20/Hosting2 retained. Full recovery manifest/every file verified, newest kept; normal cleanup retired1 eligible older copy (~53.1MB). Public apphost bootstrap is intentionally non-sensitive metadata; private voices/history/settings deny anonymous access. Primary browser required normal login, no owner authenticated feature fixture performed.
+
+Secondary owner Updates normal110 integration guard required verified installer repair. Clicked Back up and reinstall once; installer1.3GB downloaded and verified, new process started. Old page reports stage4/check compatibility then connection lost while controller/tunnel stopped. Latest public /healthz still Cloudflare1033 at03:29UTC; no duplicate action submitted. Wait for supported repair to reconnect, verify111 and preserved versions, reload updated UI, check Voice optional row starts unchecked, explicitly choose only Voice, apply/verify completion/recovery/35 healthy services/served Voice2 UI, screenshot. Do not claim secondary complete or public filesystem audit. Do not bypass recovery or edit catalog/identity markers.
+
+CUA Chrome3: voiceRolloutTab585734847 secondary/updates; voiceSecondaryHealthTab585734852 health check. Baseline34 table text rows saved privately in task artifacts. Original task-modified HF tab restored to original model tree; user tabs untouched. Primary task login tab closed. No owner model downloads/license clicks/audio created. Separate explicit first-use models remain. Mandatory publisher finished in session66028; primary delivery proof/session58149 completed. Remaining final receipts, history/public delivery docs, source-only handoff pushes, secondary verification and task tab cleanup pending. Source release tags/assets must stay unchanged.
+
+## Final delivery — complete on both PCs
+
+My Voice2 source c07ace5,13 immutable assets and anonymous ZIP/EXE/source/codec
+checks pass. Exact native EXE SHA256 is
+e66d61720002393890a8ab46273919a04cb95dbf716f217f88ae84f6a23b4189.
+Workspace112 source33aaa79/442 assets, signed Android12 and ordinary public
+channel436758f are verified.111 and source-only app1 tags/assets remain intact.
+No GitHub Actions/VM/WSL/hosted builds. Runtime/model pins are unchanged by112.
+
+Delivery caught111's outer discovery gate hiding optional groups before its
+correct selection helper ran.112 fixes that gate, with a full CheckUpdates
+public-index red/green regression and native110 setup→111 repair→112 ordinary
+update→unchecked optional Voice→Voice-only install acceptance. All relevant Go
+checks/vet pass; every pre-existing fixture app/manager byte is retained. The
+initial fresh111 harness intentionally had a Voice setup opt-out and correctly
+hid it; its timeout was a fixture assumption, not a remaining discovery defect.
+
+Primary: normal protected111 + Voice2 complete. All116 owned payloads and served
+JS/CSS/logo match public/tested bytes;35 native services running/no failures.
+All35 old app contracts/payloads, old decrypted secret entries, identity/password
+fields and installation locations retained; MyAI20/Hosting2 unchanged. Independently
+verified19124 recovery files and manifest; newest recovery retained, normal cleanup
+retired1 older eligible copy (~53.1MB). Primary authenticated browser required a
+normal sign-in, so no authenticated owner browser acceptance is claimed there;
+local version/managed OIDC metadata and anonymous private API denial pass.
+
+Secondary: supported owner Updates110→111 repair completed, followed by normal
+17.7MB Workspace-only112 update. Corrected UI offered Voice UNCHECKED; selected
+only Voice2 (73.6MB/116 files). All9 native stages/backup/startup/cleanup complete
+in13m35s.35 services healthy including Voice; fresh check reports Voice2 and112
+Up to date. All32 other displayed groups/versions retained, including MyAI20 and
+Hosting2. Existing MyMeet review warning predates this task. Actual MyAccounts
+session opens Voice home, renders2, expected index-en0bbr1A.js/index-CljoH0WX.css,
+and shared Apps picker includes Voice in Creative & Development. Latest verified
+recovery update-20261103T043541-ff73f589a0fe kept; normal cleanup retired1 eligible
+older copy (~292.2MB). No independent remote filesystem/credential audit claimed.
+
+Combined sanitised receipts: app docs/delivery-preview2.json and Workspace
+ docs/my-voice-delivery.json. Owner screenshots stay private; source screenshots
+use synthetic accounts. No owner audio, references, model-download acknowledgements
+or functional fixtures were created. Models remain explicit first-use Settings
+downloads per PC. MOSS cloning and ungated Pocket presets need no HF login; no
+blind quality-superiority or non-English/old-laptop/physical-phone/reboot/clean-host
+claim. Native CPU/WAV/MP3/clone/Drive/queue/recovery and390px acceptance are recorded
+in the report/receipts. All task NTFS fixtures and idle test controllers removed;
+owner data/recovery and other apps retained. Completed updater/task verification
+tabs closed; live secondary Voice tab left as deliverable. Nothing remains for
+this managed app delivery; immutable release assets and code tags stay unchanged.
