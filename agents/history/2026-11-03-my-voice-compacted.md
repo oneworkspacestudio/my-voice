@@ -514,3 +514,44 @@ retaining concurrent releases. PC2 remains EXPLICITLY DEFERRED until its model
 benchmark completes or user reprioritizes; no restart/update there. Leave existing
 owner recording tabs alone. Final receipts, histories and guarded fixture cleanup
 follow after delivery; no owner update or public5 yet at this checkpoint.
+
+## Preview5 released and primary delivered; secondary remains deferred
+
+Immutable app5 source c88e162f314e029b9062ba18246febdd7390d055 and14 public
+assets verify, including anonymous ZIP/EXE/portable/source downloads. ZIP SHA
+52f30ee82e31b7159536ccdff0f2094513e6888cae2be940b91617e2f25ee01a.
+Channel b152f7e promotes only Voice5 and its ordinary build pin, retaining all
+existing repositories/rows/withholdings and concurrent Slicer work. Ordinary
+projection116 exact files and suite catalog/distribution checks pass. No new
+suite/Android release; old assets/tags remain immutable and Actions disabled.
+
+Actual public112 managed setup Voice2→5 through current public113 updater passes.
+Manager112/Accounts, identity/paths, all MOSS files, projects and saved recording
+retained byte-for-byte;116 public payloads and22 recovery files independently
+verify. MyAccounts/proxy UI reports retained MOSS ready, creates a real public CC0
+reference clone, shows it in the voice library and plays a completed6.7028s cloned
+preview with WAV/MP3. Long first reference preparation extracted the new runtime;
+the app session was reopened and the already-saved clone retained, without repeat
+creation. No claim about the transient session's cause is made.
+
+Primary protected Voice-only4→5 completed with Workspace113 retained. All36
+services healthy;116 files and served JS index-DsBM7qlI/CSS index-DL4skLUV match
+tested/public5. Every unselected app/package contract/byte, identities/password
+fields, existing secret contents and locations verified retained. Recovery copy
+verified/kept; normal cleanup retired1 eligible older copy. Actual MyAccounts/
+proxy cloning screen lists installable MOSS, Install cloning model and locked
+record/upload controls before install. No owner model download/licence acceptance
+or reference/generation fixture was performed. A new verified cloning tab is left
+open; existing owner recording tabs were not navigated or reloaded.
+
+Both synthetic sessions signed out, both task controllers stopped and only the
+resolved/process/reparse-checked disposable NTFS root removed. I tooling/evidence
+is retained. A final owner screenshot timed out; the reviewed synthetic before-
+install screenshot is the presentation artifact. No viewport override remains on
+an open task tab. Full privacy-filtered receipt: docs/delivery-preview5.json.
+
+Only PC2 delivery remains, EXPLICITLY DEFERRED by the user until its model
+benchmark finishes or they reprioritize. No apply/restart submitted there. Check
+current installed/public versions and active operations before resuming; use the
+normal Voice-only updater and verify recovery/completion/health/SSO. Do not claim
+both PCs updated. All implementation/publication/primary/cleanup work is complete.
