@@ -23,7 +23,7 @@ names = ['compatibility.json', 'LICENSE', 'NOTICE', 'THIRD-PARTY-NOTICES.md',
          'README.md', 'INSTALL-WINDOWS.md', 'MODEL-LICENSES.md',
          'TEST-REPORT-WINDOWS.md', 'ARCHITECTURE.md', 'SECURITY.md', 'CHANGELOG.md',
          'docs/API.md', 'docs/go-dependencies.json', 'docs/web-dependencies.json',
-         'docs/evidence/windows-native.json']
+         'docs/evidence/windows-native.json', 'docs/pocket-dependencies.json']
 entries = {'MyVoice.exe': binary}
 for name in names:
     if not (root / name).is_file():

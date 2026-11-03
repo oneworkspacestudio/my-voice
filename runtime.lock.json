@@ -1,6 +1,6 @@
 {
   "ffmpeg": {
-    "url": "https://github.com/oneworkspacestudio/my-voice/releases/download/v0.1.0-preview.1/ffmpeg-runtime.zip",
+    "url": "https://github.com/oneworkspacestudio/my-voice/releases/download/v0.1.0-preview.2/ffmpeg-runtime.zip",
     "size": 1510883,
     "sha256": "2d84248e64319e77ed32639d8ceadf0b0f11807cfa19e8d2d13496c2f33e1a6d",
     "version": "FFmpeg 1e65c6cd5d + LAME 3.100; audio-only; Zig 0.15.2",
@@ -17,7 +17,11 @@
   },
   "pocket": {
     "url": "https://github.com/kyutai-labs/pocket-tts/releases/download/v4.0.1/pocket-tts-3.3.0-x86_64-pc-windows-msvc.zip",
-    "sha256": "98753041f2e65744b989776f87bccb93f1f574a08afe1890c5427ec94cd6309c"
+    "sha256": "98753041f2e65744b989776f87bccb93f1f574a08afe1890c5427ec94cd6309c",
+    "sourceCommit": "a922b912dfa366975294afb568d815b305acde5d",
+    "sourceURL": "https://codeload.github.com/kyutai-labs/pocket-tts/zip/a922b912dfa366975294afb568d815b305acde5d",
+    "sourceSHA256": "961db94d4e9f6953ab9a841a8e847b7745793296c419c40c06e7978de277f488",
+    "cargoLockSHA256": "3f2c5396eaaad4c64258ae724e012fdaa0c7b3e71165bcf0ef2c6b0641d18d27"
   },
   "mossSource": "8b7bcc9341b3b4ef3a3a58ba1338a7d85ff133eb",
   "python": {

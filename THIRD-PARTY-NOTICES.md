@@ -36,3 +36,15 @@ licences and bundled dependency notices apply. Models and the CC0 Open Voice
 reference download separately on explicit acceptance: see MODEL-LICENSES.md.
 
 No ElevenLabs code, branding, credentials or proprietary models are included.
+
+
+Pocket's runtime incorporates Rust dependencies, including Symphonia audio
+components under MPL-2.0. `licenses/Pocket-THIRD-PARTY-NOTICES.txt` retains the
+upstream copyright/licence texts; `docs/pocket-dependencies.json` records the
+complete pinned upstream Cargo.lock inventory (including optional/platform
+crates). Not every locked crate is compiled into the Windows executable.
+`pocket-runtime-corresponding-source.zip` supplies the runtime source and locked
+dependency source beside this release. Test audio and model files are excluded;
+the original upstream URLs and archive digests are included. This is in addition
+to the separate LGPL FFmpeg/LAME source archive. The MPL-covered files remain
+available under their original licence; the enclosing My Voice code stays MIT.

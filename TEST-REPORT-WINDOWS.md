@@ -1,6 +1,6 @@
 # Native Windows test report
 
-Date: 3 November 2026. Preview0.1.0-preview.1, Windows x64.
+Date: 3 November 2026. Preview0.1.0-preview.2, Windows x64.
 All execution used the current physical Windows PC. No VM, WSL, container,
 GPU runtime, cloud speech service or hosted runner was used.
 
