@@ -75,6 +75,26 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                 <Button onClick={() => onAction("dismiss")} icon="X" label="Dismiss message" variant="icon" />
               </Row>
             )}
+            {data.hasPreview && (
+              <Card variant="voice-preview">
+                <Row>
+                  <Icon name="AudioLines" size={21} />
+                  <Stack>
+                    <Heading level={2}>{data.previewName}</Heading>
+                    <Text variant="caption">{data.previewStatus}</Text>
+                  </Stack>
+                  <Spacer />
+                  {data.previewRunning && (
+                    <Button onClick={() => onAction("cancel-preview")} icon="Square" label="Stop preview" variant="secondary" />
+                  )}
+                  {data.previewFailed && (
+                    <Button onClick={() => onAction("retry-preview")} icon="RefreshCw" label="Retry preview" variant="secondary" />
+                  )}
+                  <Button onClick={() => onAction("close-preview")} icon="X" label="Close voice preview" variant="icon" />
+                </Row>
+                <Section id="preview-audio" />
+              </Card>
+            )}
             {data.home && (
               <Stack variant="home">
                 <Stack variant="hero">
@@ -157,7 +177,7 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                         <Button onClick={() => onAction("undo")} icon="Undo2" label="Undo" variant="icon" />
                         <Button onClick={() => onAction("redo")} icon="Redo2" label="Redo" variant="icon" />
                         <Button onClick={() => onAction("dictionary")} icon="BookOpen" label="Pronunciation" variant="text" />
-                        <Button onClick={() => onAction("toggle-dialogue")} icon="MessagesSquare" label="Dialogue" variant={data.dialogueVariant} />
+                        <Button onClick={() => onAction("toggle-dialogue")} icon="MessagesSquare" label={data.segmentDetailsLabel} variant={data.dialogueVariant} expanded={data.showDialogue} controls="speech-segments" />
                         <Spacer />
                         <Text variant="caption">TXT · MD</Text>
                       </Row>
@@ -169,7 +189,7 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                       </Row>
                     </Card>
                     {data.showDialogue && (
-                      <Card variant="segments">
+                      <Card variant="segments" id="speech-segments">
                         <Row>
                           <Heading level={2}>Speakers & segments</Heading>
                           <Spacer />

@@ -303,5 +303,73 @@
     },
     "oldPhysicalCPUAcceptanceClaimed": false,
     "targetRecoveryRecordedSeparately": true
+  },
+  "fullScriptRepair": {
+    "version": "0.1.0-preview.4",
+    "public3BugReproduced": true,
+    "frontendRegressionTests": 6,
+    "goTestsAndVetPassed": true,
+    "productionAUIBuildPassed": true,
+    "nativeAcceptance": {
+      "schema": 1,
+      "passed": true,
+      "version": "0.1.0-preview.4",
+      "executableSHA256": "5f70ec07ca6d71dee84bc584283a97097cbf9a1c5dd0f953188f5a63bc26c25e",
+      "previewDidNotReplaceEditorVerifiedInUI": true,
+      "detailsCollapsedByDefaultVerifiedInUI": true,
+      "cases": [
+        {
+          "segments": 3,
+          "fullTextMatchesAllSpokenChunks": true,
+          "finalChunkIncludedInWAV": true,
+          "everyChunkInteriorMatchesFinalAudio": true,
+          "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+          "audioSeconds": 5.992,
+          "wavBytes": 287660,
+          "mp3Bytes": 121484,
+          "inputMode": "text"
+        },
+        {
+          "segments": 15,
+          "fullTextMatchesAllSpokenChunks": true,
+          "finalChunkIncludedInWAV": true,
+          "everyChunkInteriorMatchesFinalAudio": true,
+          "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+          "audioSeconds": 75.32,
+          "wavBytes": 3615404,
+          "mp3Bytes": 1508204,
+          "inputMode": "text"
+        },
+        {
+          "segments": 3,
+          "fullTextMatchesAllSpokenChunks": true,
+          "finalChunkIncludedInWAV": true,
+          "everyChunkInteriorMatchesFinalAudio": true,
+          "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+          "audioSeconds": 6.712,
+          "wavBytes": 322220,
+          "mp3Bytes": 135884,
+          "inputMode": "segments"
+        },
+        {
+          "segments": 4,
+          "fullTextMatchesAllSpokenChunks": true,
+          "finalChunkIncludedInWAV": true,
+          "everyChunkInteriorMatchesFinalAudio": true,
+          "assembledFrameCountMatchesAllSegmentsAndPauses": true,
+          "audioSeconds": 9.589333333333334,
+          "wavBytes": 460332,
+          "mp3Bytes": 193484,
+          "inputMode": "text"
+        }
+      ],
+      "ownerInstallationUsedAsFixture": false,
+      "optionalTargetedRegenerationPreservesOtherSegmentBytes": true,
+      "mainEditorReplacementOverridesSegmentEdits": true
+    },
+    "detailsDefaultCollapsedAndTogglePassed": true,
+    "desktopAndPhoneVisualReviewPassed": true,
+    "runtimePayloadUnchanged": true,
+    "ownerInstallationUsedAsFixture": false
   }
 }

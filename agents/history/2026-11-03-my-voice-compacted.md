@@ -393,3 +393,48 @@ ordinary retirement of eligible older copies is recorded above; no global PATH
 change was made. I tooling/public evidence is retained. Private
 PC2 recovered-speech screenshot remains outside Git; live recovered owner page
 is the deliverable. No further repair or target remains pending.
+
+## Preview4 full-script and optional-details repair in progress
+
+User reports only old/first segments are spoken and requests details hidden unless
+opened. Confirmed public3 UI regression using synthetic data: Preview voice called
+openJob, replacing draft/name/controls and enabling segment mode; editing the main
+text then submitted old preview chunks. Generated audio was the stale preview,
+not the new full editor text. Auto-loaded recordings also enabled segment mode.
+
+Implemented explicit text/segments inputMode, independent detail visibility and
+separate preview-job state. Main text edits clear cached segment overrides;
+intentional segment edits update canonical full text and survive collapse. Preview
+never loads itself into the editor. Poll completion hydrates all segment fields
+only for its still-current unedited draft/job. Details default collapsed on reload
+and recording open. Legacy ambiguous requests fail with refresh guidance instead
+of silently truncating; text-only/segment-only and targeted reuse stay supported.
+Schema2/runtime/model/manager/116 owned package contracts unchanged.
+
+Six frontend regressions, full Go suite/vet and AUI/TS/Vite pass. Initial Go check
+raced Vite deleting embed files; rerun sequentially after completed build passes.
+Actual public3→candidate4 same-data app restart retains full legacy draft. Real
+Pocket audio acceptance:3 segments5.992s,15 segments75.320s, targeted3 segments
+6.712s (other chunk bytes exact), replacing main after segment edits generates4
+segments9.589333s. Complete WAV frame count equals all chunks+pauses; each chunk's
+interior, including final, matches output; MP3 present. Preview isolation, default
+collapse/show/hide, populated fields and desktop/~390px layout visually pass.
+Exact EXE SHA5f70ec07ca6d71dee84bc584283a97097cbf9a1c5dd0f953188f5a63bc26c25e.
+
+Artifacts I:/Projects/tooling/my-voice-full-script-20261103; synthetic NTFS root
+C:/Projects/.cache/my-voice-full-script-20261103. Native4 fixture29480 is running;
+public112 managed Accounts+Voice2 fixture40720 also running with verified model
+cache for normal public app4 update. Track fixture-process.json/managed-process.json.
+Do not use owner identities/data as feature fixtures. Models/download consent,
+all speech and images used for acceptance are synthetic and stay outside Git.
+
+Owner primary is now Workspace113/integration8/Voice3/36 services after Books;
+use its current verified public113 updater, preserve newer unrelated apps and
+credentials. PC2 now113/MyAI23/Voice3; another chat is downloading/comparing LLMs.
+USER EXPLICITLY CHOSE FINISH MODEL BENCHMARK FIRST. Publish/test/update primary
+independently, then wait for that run to finish before any PC2 restart. Do not
+interrupt it or start parallel repair. No source/public4 release/channel or owner4
+update yet at this checkpoint. Next: immutable4 publication/ordinary channel +
+future Voice pin retaining concurrent Books/Finance/MyAI rows, protected managed
+update/recovery verification, primary4, then deferred PC2; final receipts/history
+and stop/remove only task fixtures. Old tags/assets remain immutable, Actions off.

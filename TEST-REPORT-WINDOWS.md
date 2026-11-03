@@ -1,5 +1,25 @@
 # Native Windows test report
 
+## Preview4 full-script and preview isolation repair
+
+The public3 bug was reproduced with synthetic data: preview replaced the draft,
+then replacing the main text still generated the preview's cached chunks. The
+same saved data reopened in4 with its full editor text and details collapsed.
+Preview4 retained the draft during real voice preview, generated all3 sentences,
+and generated a15-segment,75.320s recording through the native CPU worker. Every
+chunk's interior samples, including the final chunk, matched the combined WAV;
+total frames equalled every segment plus pauses. MP3 exports were also present.
+
+Optional targeted regeneration retained all3 chunks and exact unchanged segment
+bytes. Replacing the main editor after segment edits generated all4 new sentences
+(9.589s audio). Six frontend regressions, native script-mode/punctuation tests,
+the full Go suite/vet and AUI/TypeScript/Vite build pass. Desktop and a phone-sized
+viewport (~390px) were visually reviewed without horizontal overflow. These are
+synthetic isolated tests; no owner's installation, text or voices were fixtures.
+
+Runtime/model bytes, storage schema and managed package contract are unchanged.
+Managed update and owner-target delivery are recorded separately after release.
+
 ## Preview3 worker compatibility repair
 
 On the same native host described below, the exact preview3 executable

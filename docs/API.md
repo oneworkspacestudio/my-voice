@@ -37,11 +37,21 @@ users; standalone local users require the apphost owner's explicit action.
 Speech request:
 
 ```json
-{"requestId":"unique-retry-id","name":"Welcome","text":"Hello from My Voice.","voice":"alba","model":"pocket18","language":"en","speed":1,"pitch":0,"volume":1,"pause":0.3,"dictionary":[{"from":"OWS","to":"One Work space"}],"segments":[]}
+{"requestId":"unique-retry-id","name":"Welcome","inputMode":"text","text":"Hello from My Voice.","voice":"alba","model":"pocket18","language":"en","speed":1,"pitch":0,"volume":1,"pause":0.3,"dictionary":[{"from":"OWS","to":"One Work space"}],"segments":[]}
 ```
 
-For dialogue, supply `{id,text,voice}` segments using voices compatible with the
-selected engine. To regenerate one segment, preserve model/audio controls,
+`inputMode:"text"` makes the entire `text` authoritative; cached segments are
+ignored and the server splits the complete script. For dialogue, use
+`inputMode:"segments"` and supply `{id,text,voice}` segments using voices compatible
+with the selected engine. The saved full text is then derived from every segment.
+Expanding or collapsing segment details does not change the input mode.
+
+Legacy text-only and segment-only requests remain supported. Ambiguous legacy
+requests with different full text and segment text return a refresh instruction,
+instead of silently speaking only stale chunks. Existing stored projects and
+recordings remain readable; no database migration is required.
+
+To regenerate one segment, preserve model/audio controls,
 dictionary, segment order and all other segments, and add `parent` (complete job
 ID) plus `replace` (selected segment ID). A new job owns the rebuilt exports.
 `requestId` is optional; repeating it for the same user returns the original job.

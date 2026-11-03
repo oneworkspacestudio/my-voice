@@ -55,6 +55,20 @@ Page Voice
         Row variant=notice
           Alert $error
           Button action=dismiss icon=X label="Dismiss message" variant=icon
+      If condition=$hasPreview
+        Card variant=voice-preview
+          Row
+            Icon name=AudioLines size=21
+            Stack
+              Heading level=2 $previewName
+              Text variant=caption $previewStatus
+            Spacer
+            If condition=$previewRunning
+              Button action=cancel-preview icon=Square label="Stop preview" variant=secondary
+            If condition=$previewFailed
+              Button action=retry-preview icon=RefreshCw label="Retry preview" variant=secondary
+            Button action=close-preview icon=X label="Close voice preview" variant=icon
+          Section id=preview-audio
       If condition=$home
         Stack variant=home
           Stack variant=hero
@@ -117,7 +131,7 @@ Page Voice
                   Button action=undo icon=Undo2 label="Undo" variant=icon
                   Button action=redo icon=Redo2 label="Redo" variant=icon
                   Button action=dictionary icon=BookOpen label="Pronunciation" variant=text
-                  Button action=toggle-dialogue icon=MessagesSquare label="Dialogue" variant=$dialogueVariant
+                  Button action=toggle-dialogue icon=MessagesSquare label=$segmentDetailsLabel variant=$dialogueVariant expanded=$showDialogue controls="speech-segments"
                   Spacer
                   Text variant=caption "TXT · MD"
                 Input name=script label="Speech script" multiline=true placeholder="Write or paste your script here. A story, a welcome message, the beginning of something new…" variant=script
@@ -126,7 +140,7 @@ Page Voice
                   Spacer
                   Text variant=caption "Ctrl + Enter to generate"
               If condition=$showDialogue
-                Card variant=segments
+                Card variant=segments id="speech-segments"
                   Row
                     Heading level=2 "Speakers & segments"
                     Spacer

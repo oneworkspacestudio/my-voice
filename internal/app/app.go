@@ -55,6 +55,7 @@ type Script struct {
 	ID         string    `json:"id"`
 	Name       string    `json:"name"`
 	Text       string    `json:"text"`
+	InputMode  string    `json:"inputMode,omitempty"`
 	Voice      string    `json:"voice"`
 	Model      string    `json:"model"`
 	Language   string    `json:"language"`
@@ -318,6 +319,28 @@ func (a *App) projects(w http.ResponseWriter, r *http.Request) {
 	apphost.JSON(w, 200, out)
 }
 func validateScript(s *Script) error {
+	if len(s.Segments) > 1000 {
+		return errors.New("Script exceeds project limits")
+	}
+	switch s.InputMode {
+	case "text":
+		// Cached/recorded chunks must never override the current editor text.
+		s.Segments = nil
+	case "segments":
+		s.Text = segmentText(s.Segments)
+	case "":
+		if len(s.Segments) == 0 {
+			s.InputMode = "text"
+		} else {
+			if s.Parent == "" && strings.TrimSpace(s.Text) != "" && speechContent(s.Text) != speechContent(segmentText(s.Segments)) {
+				return errors.New("The script and saved segments differ. Refresh My Voice and generate the full script again")
+			}
+			s.InputMode = "segments"
+			s.Text = segmentText(s.Segments)
+		}
+	default:
+		return errors.New("Choose full-script or edited-segment generation")
+	}
 	if s.Name == "" {
 		s.Name = "Untitled speech"
 	}

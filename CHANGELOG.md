@@ -1,5 +1,16 @@
 # Changes
 
+## 0.1.0-preview.4
+
+Generate speech now uses the complete current script after editing or reopening
+a recording. Stale chunks cannot silently replace new text. Voice previews play
+separately and keep your draft, voice settings and recording intact.
+
+Segment details are hidden by default. Use **Show segment details** to inspect or
+edit them; hiding the panel keeps any intentional segment edits and voices.
+Editing the main script returns generation to the complete text. Optional targeted
+regeneration still retains the unchanged audio from other segments.
+
 ## 0.1.0-preview.3
 
 Pocket speech now falls back to a native baseline x86-64 worker when the

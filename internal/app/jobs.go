@@ -12,13 +12,31 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"unicode"
 	"unicode/utf8"
 )
 
-var sentences = regexp.MustCompile(`[^.!?\n]+[.!?]*`)
+var sentences = regexp.MustCompile(`[^.!?\n]+[.!?]*|[.!?]+`)
+
+func segmentText(segments []Segment) string {
+	parts := make([]string, len(segments))
+	for i, segment := range segments {
+		parts[i] = segment.Text
+	}
+	return strings.Join(parts, "\n")
+}
+
+func speechContent(text string) string {
+	return strings.Map(func(r rune) rune {
+		if unicode.IsSpace(r) {
+			return -1
+		}
+		return r
+	}, text)
+}
 
 func splitScript(s Script) []Segment {
-	if len(s.Segments) > 0 {
+	if s.InputMode != "text" && len(s.Segments) > 0 {
 		return s.Segments
 	}
 	var result []Segment
