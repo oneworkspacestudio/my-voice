@@ -150,7 +150,7 @@ Page Voice
                     Row variant=segment
                       Text variant=segment-number $item.number
                       Input name=$item.textField label=$item.label multiline=true variant=segment-text
-                      Select name=$item.voiceField label="Segment voice" options=$voiceOptions
+                      Select name=$item.voiceField label="Segment voice" options=$segmentVoiceOptions
                       Button action=regenerate item=$item.id icon=RefreshCw label="Regenerate segment" variant=icon disabled=$item.disabled
               If condition=$showDictionary
                 Card
@@ -169,6 +169,7 @@ Page Voice
                     Stack
                       Heading level=2 $jobName
                       Text variant=caption $jobStatus
+                      Text variant=caption $jobVoiceLabel
                     Spacer
                     If condition=$jobRunning
                       Button action=cancel icon=Square label="Cancel" variant=secondary

@@ -484,5 +484,37 @@
       "desktopAndPhoneControlsReviewed": true
     },
     "ownerInstallationUsedAsFixture": false
+  },
+  "directVoiceSelectionPreview7": {
+    "frontendRegressions": 18,
+    "fullGoTestsAndVet": true,
+    "nativeAcceptance": {
+      "schema": 1,
+      "passed": true,
+      "version": "0.1.0-preview.7",
+      "executableSHA256": "0e1d378b4b06f6030dc25a70d40560c6e3eef4f9ad5b75ea6501658896defb8e",
+      "public6HidesSavedMossCloneWhileAlbaSelected": true,
+      "savedCloneRetainedAcrossUpgrade": true,
+      "cloneSelectedDirectlyFromSpeechDropdownInUI": true,
+      "matchingModelSelectedAutomaticallyInUI": true,
+      "automaticPreviewTitleUpdatedInUI": true,
+      "actualRecordingVoiceLabelVerifiedInUI": true,
+      "submittedVoiceAndEveryGeneratedSegmentUseSelectedClone": true,
+      "completeInputTextPreserved": true,
+      "realMossGeneration": {
+        "segments": 2,
+        "durationSeconds": 8.678791666666667,
+        "generationSeconds": 22.0557395,
+        "wavBytes": 416626,
+        "mp3Bytes": 175244
+      },
+      "publicCC0SyntheticFixtureOnly": true,
+      "ownerInstallationUsedAsFixture": false,
+      "physicalMicrophoneCaptureTested": false,
+      "runtimeAndModelBytesUnchanged": true,
+      "desktopAndPhoneSelectionReviewed": true,
+      "phoneHorizontalOverflow": false
+    },
+    "managedDelivery": "Recorded separately after public release"
   }
 }

@@ -1,5 +1,17 @@
 # Changes
 
+## 0.1.0-preview.7
+
+Choose saved or shared clones directly in the Speech voice dropdown. Selecting a
+voice selects its matching model and preserves supported language choices.
+Compatible model changes keep your chosen voice; switching engines uses the
+matching preset. Segment voice choices stay compatible with the script model.
+
+Automatic preview titles follow the selected voice, including older drafts with
+a stale Alba title. Custom titles and historical recording data are preserved.
+Each recording displays the voice(s) it actually used; changing the editor voice
+does not relabel existing audio as the new speaker.
+
 ## 0.1.0-preview.6
 
 Voice references are prepared automatically before cloning: convert the format,

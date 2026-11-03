@@ -641,3 +641,33 @@ was removed. Tooling/evidence retained; owner data/recovery not manually removed
 Full privacy-filtered receipt: docs/delivery-preview6.json. All repair, public
 promotion and both-PC delivery gates complete; only optional owner-file retry
 requires reselect/browser access. No release asset/tag replacement.
+
+## Preview7 direct cloned-voice selection checkpoint
+
+User reports own clone absent from Speech dropdown under Pocket and stale Alba
+preview/project title after choosing it through My Voices. Public6 synthetic
+fixture reproduces hidden clone while Alba selected. New shared selection helper
+lists all accessible voices, prefers clones in the list, picks matching model,
+retains compatible model/language choices and updates automatic preview titles.
+Legacy stale preview titles are normalized on draft/recording load; custom titles
+and immutable recording data remain unchanged. Player caption names actual
+recorded speaker(s). Per-segment choices remain model-compatible. AUI/generated
+React kept in sync. Eighteen frontend regressions, Go tests/vet and production
+build pass (Go harness requires MYVOICE_TEST_ROOT to isolated NTFS).
+
+Exact7 EXE0e1d378b4b06f6030dc25a70d40560c6e3eef4f9ad5b75ea6501658896defb8e
+retains real CC0 clone, selects it directly from Alba dropdown, automatically
+switches MOSS/title and generates full2-segment8.679s WAV/MP3. All submitted/
+rendered segment IDs use that clone. Desktop/phone review passes; viewport reset.
+No owner feature fixture. Runtime/model/schema/116-file contract unchanged.
+
+Artifacts I:/Projects/tooling/my-voice-selection-20261103; disposable NTFS root
+C:/Projects/.cache/my-voice-selection-20261103. Native29780 runs exact7. Actual
+public114 managed fixture41820/Accounts+Voice5 has retained CC0 clone/preview and
+Alba draft ready for normal public7 update. Track fixture/managed-process.json.
+Do not remove while active. Next: immutable7 publication, scoped pin/channel,
+managed5 to7 acceptance, protected primary6 to7 and PC2 normal Voice-only update,
+receipts/handoff and guarded fixture cleanup. Owner PC2 original585734961 remains
+unmodified; current settings reflect clone/MOSS with stale Alba title. Other chat
+has My AI update tab; inspect active updater before PC2 apply, never submit twice.
+User's benchmark deferral was lifted for Voice repair; complete both target gates.

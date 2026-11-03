@@ -200,7 +200,7 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                           <Row key={i} variant="segment">
                             <Text variant="segment-number">{item.number}</Text>
                             <Input name={item.textField} label={item.label} multiline={true} variant="segment-text" />
-                            <Select name={item.voiceField} label="Segment voice" options={data.voiceOptions} />
+                            <Select name={item.voiceField} label="Segment voice" options={data.segmentVoiceOptions} />
                             <Button onClick={() => onAction("regenerate")} item={item.id} icon="RefreshCw" label="Regenerate segment" variant="icon" disabled={item.disabled} />
                           </Row>
                         ))}
@@ -226,6 +226,7 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                           <Stack>
                             <Heading level={2}>{data.jobName}</Heading>
                             <Text variant="caption">{data.jobStatus}</Text>
+                            <Text variant="caption">{data.jobVoiceLabel}</Text>
                           </Stack>
                           <Spacer />
                           {data.jobRunning && (

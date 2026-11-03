@@ -1,5 +1,23 @@
 # Native Windows test report
 
+## Preview7 direct cloned-voice selection
+
+Public6 reproduces the missing clone: a real saved MOSS clone exists, but the
+Alba/Pocket Speech dropdown offers only Alba. Exact7 retains the same clone and
+allows direct dropdown selection from Alba; model, language and automatic title
+are updated together. The submitted script and every generated segment use the
+selected clone ID, with the complete two-sentence text. Real MOSS generation is
+8.679s WAV plus MP3; the player shows the selected clone as the recorded speaker.
+
+Eighteen frontend regressions cover complete script handling, cloning readiness,
+cross-engine clone/shared/preset selection, compatible model/language retention,
+custom/legacy automatic titles and immutable recording labels. Full Go tests
+(with MYVOICE_TEST_ROOT set to the isolated NTFS fixture), vet and AUI/TypeScript/
+Vite build pass. Desktop and phone-width dropdown/title layout are reviewed with
+no horizontal overflow. Only public CC0 synthetic accounts/audio are fixtures.
+Runtime/model bytes, schema2 and116 owned destinations remain unchanged. Managed
+update, channel promotion and owner-target delivery receipts follow publication.
+
 ## Preview6 automatic reference preparation
 
 Public5 rejects a recoverable26-second,44.1kHz stereo upload containing quiet
