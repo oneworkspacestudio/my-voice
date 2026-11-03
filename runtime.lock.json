@@ -1,0 +1,70 @@
+{
+  "ffmpeg": {
+    "url": "https://github.com/oneworkspacestudio/my-voice/releases/download/v0.1.0-preview.1/ffmpeg-runtime.zip",
+    "size": 1510883,
+    "sha256": "2d84248e64319e77ed32639d8ceadf0b0f11807cfa19e8d2d13496c2f33e1a6d",
+    "version": "FFmpeg 1e65c6cd5d + LAME 3.100; audio-only; Zig 0.15.2",
+    "sources": [
+      {
+        "url": "https://github.com/FFmpeg/FFmpeg/archive/1e65c6cd5d3d2d12cbb374460dbf08bedf54772a.tar.gz",
+        "sha256": "d0f5acb525c6dc501549b95204504d64835ee3867d4386e063f9701b62a6088b"
+      },
+      {
+        "url": "https://distfiles.macports.org/lame/lame-3.100.tar.gz",
+        "sha256": "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
+      }
+    ]
+  },
+  "pocket": {
+    "url": "https://github.com/kyutai-labs/pocket-tts/releases/download/v4.0.1/pocket-tts-3.3.0-x86_64-pc-windows-msvc.zip",
+    "sha256": "98753041f2e65744b989776f87bccb93f1f574a08afe1890c5427ec94cd6309c"
+  },
+  "mossSource": "8b7bcc9341b3b4ef3a3a58ba1338a7d85ff133eb",
+  "python": {
+    "url": "https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip",
+    "sha256": "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3"
+  },
+  "wheels": [
+    {
+      "name": "flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "sha256": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4"
+    },
+    {
+      "name": "mpmath-1.3.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/43/e3/7d92a15f894aa0c9c4b49b8ee9ac9850d6e63b03c9c32c0367a13ae62209/mpmath-1.3.0-py3-none-any.whl",
+      "sha256": "a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c"
+    },
+    {
+      "name": "numpy-2.4.4-cp312-cp312-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/2d/5b/e1deebf88ff431b01b7406ca3583ab2bbb90972bbe1c568732e49c844f7e/numpy-2.4.4-cp312-cp312-win_amd64.whl",
+      "sha256": "b5f0362dc928a6ecd9db58868fca5e48485205e3855957bdedea308f8672ea4a"
+    },
+    {
+      "name": "onnxruntime-1.24.4-cp312-cp312-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/8b/f4/6b89e297b93704345f0f3f8c62229bee323ef25682a3f9b4f89a39324950/onnxruntime-1.24.4-cp312-cp312-win_amd64.whl",
+      "sha256": "535b29475ca42b593c45fbb2152fbf1cdf3f287315bf650e6a724a0a1d065cdb"
+    },
+    {
+      "name": "packaging-26.3-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+    },
+    {
+      "name": "protobuf-7.36.2-cp310-abi3-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/8a/55/b77bda4e5e5f5971fb51b07663694690e9afdb9402136c16a522bd621cad/protobuf-7.36.2-cp310-abi3-win_amd64.whl",
+      "sha256": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353"
+    },
+    {
+      "name": "sentencepiece-0.2.1-cp312-cp312-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/2d/81/92df5673c067148c2545b1bfe49adfd775bcc3a169a047f5a0e6575ddaca/sentencepiece-0.2.1-cp312-cp312-win_amd64.whl",
+      "sha256": "4cdc7c36234fda305e85c32949c5211faaf8dd886096c7cea289ddc12a2d02de"
+    },
+    {
+      "name": "sympy-1.14.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/a2/09/77d55d46fd61b4a135c444fc97158ef34a095e5681d0a6c10b75bf356191/sympy-1.14.0-py3-none-any.whl",
+      "sha256": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5"
+    }
+  ],
+  "mossRuntimeSHA256": "99477efaff28c12c0c8e16a6b4aab4e880a70851693fa303d932415ba180cbd5"
+}

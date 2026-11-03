@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "host": {
+    "benchmarkExecutableSHA256": "38ca46c547992176f1d700416260560973df407ab63b937cade4201a1a5d9499",
+    "runtimePayloadSHA256": "87996d2929a2db9f3aee664e7b769a473315638de1426592bc6b58c9ef93c76e",
+    "cpuThreads": 2,
+    "coldWeightsDownloaded": false,
+    "operatingSystem": "Windows 11 Home 10.0.22631",
+    "CPU": "Intel Core i9-11900K, 8 physical / 16 logical cores",
+    "physicalRAMGiB": 31.9,
+    "GPUUsed": false
+  },
+  "benchmarks": [
+    {
+      "engine": "pocket18",
+      "case": "short",
+      "characters": 329,
+      "durationSeconds": 18.987,
+      "wallSeconds": 4.621,
+      "RTF": 0.243,
+      "peakTreeRSSMiB": 383.5,
+      "peakSampledCPUPercent": 232.0,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "pocket18",
+      "case": "warm",
+      "characters": 71,
+      "durationSeconds": 4.625,
+      "wallSeconds": 1.312,
+      "RTF": 0.284,
+      "peakTreeRSSMiB": 360.4,
+      "peakSampledCPUPercent": 125.6,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "pocket18",
+      "case": "long",
+      "characters": 1963,
+      "durationSeconds": 125.529,
+      "wallSeconds": 22.174,
+      "RTF": 0.177,
+      "peakTreeRSSMiB": 426.1,
+      "peakSampledCPUPercent": 258.8,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "pocket7",
+      "case": "short",
+      "characters": 329,
+      "durationSeconds": 19.707,
+      "wallSeconds": 3.298,
+      "RTF": 0.167,
+      "peakTreeRSSMiB": 371.8,
+      "peakSampledCPUPercent": 123.8,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "pocket7",
+      "case": "warm",
+      "characters": 71,
+      "durationSeconds": 4.705,
+      "wallSeconds": 1.29,
+      "RTF": 0.274,
+      "peakTreeRSSMiB": 354.0,
+      "peakSampledCPUPercent": 110.5,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "pocket7",
+      "case": "long",
+      "characters": 1963,
+      "durationSeconds": 119.129,
+      "wallSeconds": 20.002,
+      "RTF": 0.168,
+      "peakTreeRSSMiB": 391.7,
+      "peakSampledCPUPercent": 141.7,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "moss",
+      "case": "short",
+      "characters": 230,
+      "durationSeconds": 28.444,
+      "wallSeconds": 39.17,
+      "RTF": 1.377,
+      "peakTreeRSSMiB": 1673.6,
+      "peakSampledCPUPercent": 304.1,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "moss",
+      "case": "warm",
+      "characters": 71,
+      "durationSeconds": 13.328,
+      "wallSeconds": 22.689,
+      "RTF": 1.702,
+      "peakTreeRSSMiB": 1653.0,
+      "peakSampledCPUPercent": 273.6,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    },
+    {
+      "engine": "moss",
+      "case": "long",
+      "characters": 1433,
+      "durationSeconds": 146.809,
+      "wallSeconds": 292.786,
+      "RTF": 1.994,
+      "peakTreeRSSMiB": 1640.9,
+      "peakSampledCPUPercent": 333.1,
+      "CPUOnly": true,
+      "timeToFirstAudio": "not exposed; playback after assembled job completion"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Pronunciation defaults and paragraph segments generate and join",
+      "passed": true
+    },
+    {
+      "name": "Targeted regeneration preserves exact unchanged segment bytes",
+      "passed": true
+    },
+    {
+      "name": "Long-text sentence order and complete final segment",
+      "passed": true
+    },
+    {
+      "name": "Bounded batch sequential synthesis and ZIP export",
+      "passed": true
+    },
+    {
+      "name": "Active or queued generation cancellation",
+      "passed": true
+    },
+    {
+      "name": "Native authorization and path-validation rejection",
+      "passed": true
+    },
+    {
+      "name": "Member cannot inspect unshared voice, download reference or install a model",
+      "passed": true
+    },
+    {
+      "name": "Explicit grant permits synthesis but preserves reference and output ownership",
+      "passed": true
+    },
+    {
+      "name": "Revocation immediately removes library/use rights",
+      "passed": true
+    },
+    {
+      "name": "Two different CC0 voice references generate joined multi-voice dialogue",
+      "passed": true
+    },
+    {
+      "name": "MP3 reference decoding, state creation and deletion",
+      "passed": true
+    },
+    {
+      "name": "M4A reference decoding, state creation and deletion",
+      "passed": true
+    },
+    {
+      "name": "WEBM reference decoding, state creation and deletion",
+      "passed": true
+    },
+    {
+      "name": "Silence rejected",
+      "passed": true
+    },
+    {
+      "name": "Extreme speed/pitch postprocessing",
+      "passed": true
+    },
+    {
+      "name": "Extreme speed/pitch postprocessing",
+      "passed": true
+    },
+    {
+      "name": "Actual process restart preserves clone, history/audio, draft controls and resumes queued segments without replacing completed bytes",
+      "passed": true
+    }
+  ],
+  "managedStatus": "passed; publication and owner installs pending",
+  "UI": {
+    "passed": true,
+    "viewports": [
+      "1600x1000",
+      "390x844"
+    ],
+    "checks": [
+      "Native packaged UI login",
+      "Reference-inspired home",
+      "Text editor and actual segment content",
+      "Phone overflow",
+      "Cloning screen",
+      "Voice library"
+    ],
+    "consoleErrors": []
+  },
+  "finalRuntime": {
+    "passed": true,
+    "basePreparedWithoutMoss": true,
+    "MossPreparedOnExplicitUse": true,
+    "mossFirstUseSeconds": 19.969,
+    "durationSeconds": 4.155541666666666,
+    "executableSHA256": "0913a566d5267060cb485d8554f49ccccdb952e82c7ab6677ccb7f75c91f1f87",
+    "runtimePayloadSHA256": "87996d2929a2db9f3aee664e7b769a473315638de1426592bc6b58c9ef93c76e"
+  },
+  "managed": {
+    "schema": 1,
+    "checks": [
+      "Actual complete installer selects all Voice-owned payloads and omits unrelated apps",
+      "Real MyAccounts PKCE/OIDC binds Voice owner; anonymous library stays private",
+      "Existing Apps header opens the shared Workspace picker",
+      "Owner model manager downloads and verifies Pocket in restricted managed runtime",
+      "Supervised managed native worker generates real WAV/MP3 through /voice proxy",
+      "My Drive save verifies same OIDC subject and exact exported bytes",
+      "Actual scoped My Drive browser imports Markdown into a new project",
+      "Managed restricted worker installs open MOSS, clones a CC0 reference, synthesizes new text and deletes model-specific state",
+      "Global Workspace sign-out revokes Voice access"
+    ],
+    "errors": [],
+    "realAccounts": true,
+    "realDrive": true,
+    "realCPUInference": true,
+    "ownerInstallationUsedAsFixture": false
+  },
+  "omission": {
+    "passed": true,
+    "actualInstaller": true,
+    "voiceExecutableAbsent": true,
+    "voiceRuntimeContractAndDocumentationAbsent": true,
+    "voicePrivateDataAbsent": true,
+    "globalLicenceNoticesRetained": true,
+    "ownerInstallationUsedAsFixture": false
+  },
+  "upgrade": {
+    "schema": 1,
+    "passed": true,
+    "checks": [
+      "Exact public Workspace110 installer digest verified",
+      "Actual public110 selected installation prepared with synthetic accounts/files",
+      "Public110 controller rejects installer-integration7 before changing configuration",
+      "Normal protected110-to111 update adds optional Voice; retains all old app bytes, identity, selection and paths",
+      "Protected recovery manifest and every recorded recovery file independently verified",
+      "Actual protected rollback restores110 and retains Voice model/project data and prior accounts/files",
+      "Normal reapply restores managed Voice without losing retained private data"
+    ],
+    "ownerInstallationUsedAsFixture": false
+  },
+  "independentVoiceUpdate": {
+    "passed": true,
+    "normalVoiceOnlyCandidateUpdate": true,
+    "workspaceManagerAccountsDriveRetained": true,
+    "exactVoiceExecutableVerified": true
+  }
+}

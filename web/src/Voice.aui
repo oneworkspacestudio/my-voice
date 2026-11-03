@@ -1,0 +1,406 @@
+Page Voice
+  If condition=$loggedOut
+    Card variant=login
+      Image src="./logo.svg" alt="My Voice" width=56 height=56
+      Heading level=1 "Your words. Your voice."
+      Text variant=muted "Sign in to your private audio workspace."
+      If condition=$oidc
+        Link href="./auth/login" variant=primary "Continue with MyAccounts"
+      Else
+        Input name=email label="Email" type=email
+        Input name=password label="Password" type=password
+        Button action=login variant=primary $signInLabel
+      If condition=$error
+        Alert $error
+  Else
+    Stack variant=sidebar
+      Row variant=brand
+        Image src="./logo.svg" alt="" width=34 height=34
+        Heading level=1 "My Voice"
+      Text variant=eyebrow "YOUR AUDIO WORKSPACE"
+      For each=$nav
+        Button action=navigate item=$item.id icon=$item.icon label=$item.label variant=$item.variant
+      Divider
+      Text variant=eyebrow "CREATE"
+      Button action=speech icon=AudioLines label="Text to Speech" variant=nav
+      Button action=clone icon=Fingerprint label="Voice Cloning" variant=nav
+      Button action=dialogue icon=MessagesSquare label="Multi-voice dialogue" variant=nav
+      Button action=batch icon=Layers label="Batch generation" variant=nav
+      Spacer
+      Card variant=privacy
+        Icon name=ShieldCheck size=21
+        Text variant=privacy-title "Made to stay yours"
+        Text variant=caption "Local speech. Private voices. No subscription."
+      Link href=$workspace variant=apps
+        Icon name=Grid2X2 size=17
+        Text "One Workspace"
+      Text variant=version $version
+    Stack variant=main
+      Row variant=announcement
+        Icon name=Sparkles size=14
+        Text "A little text. A world of possibilities."
+        Badge "CPU powered"
+      Row variant=header
+        Button action=menu icon=Menu label="Open navigation" variant=mobile-menu
+        Icon name=$pageIcon size=19
+        Text $pageTitle
+        Spacer
+        Input name=search placeholder="Search your creations…" variant=search
+        Link href=$workspace variant=apps
+          Icon name=Grid2X2 size=16
+          Text "Apps"
+        Button action=help icon=CircleHelp label="Help" variant=icon
+        Button action=account variant=avatar $initials
+      If condition=$error
+        Row variant=notice
+          Alert $error
+          Button action=dismiss icon=X label="Dismiss message" variant=icon
+      If condition=$home
+        Stack variant=home
+          Stack variant=hero
+            Badge "MY VOICE · YOUR CREATIVE SPACE"
+            Heading level=1 "What would you like to create?"
+            Text variant=muted "Bring your words to life. Make them sound like you."
+            Row variant=prompt
+              Icon name=AudioLines size=26
+              Input name=idea placeholder="Start with a story, an idea, a few words…" variant=idea
+              Button action=start icon=ArrowUp label="Start creating" variant=round
+          Row variant=quick-tools
+            For each=$quickTools
+              Button action=navigate item=$item.id icon=$item.icon label=$item.label variant=quick-tool
+          Card variant=feature
+            Stack
+              Badge "YOUR NEXT GREAT IDEA, SPOKEN"
+              Heading level=2 "A voice for every story."
+              Text "Natural speech and instant voice cloning, right in your Workspace."
+              Row
+                Button action=speech icon=ArrowUpRight label="Create your first speech" variant=white
+                Button action=clone label="Make it your voice" variant=feature-link
+            Section id=feature-wave
+          Row variant=section-heading
+            Heading level=2 "Make something great"
+            Spacer
+            Button action=history variant=text "View all creations"
+          Grid variant=quickstarts
+            For each=$starts
+              Button action=navigate item=$item.id variant=start-card icon=$item.icon label=$item.label detail=$item.detail
+          Row variant=section-heading
+            Heading level=2 "Recent creations"
+            Spacer
+            Text variant=caption "Saved privately to your account"
+          If condition=$hasHistory
+            Stack variant=recent
+              For each=$recent
+                Button action=open-job item=$item.id variant=recent icon=AudioLines label=$item.script.name detail=$item.detail
+          Else
+            Card variant=empty-recent
+              Icon name=AudioLines size=23
+              Text "Your next creation starts with a few words."
+              Button action=speech variant=text "Write something"
+      If condition=$speech
+        Stack variant=studio
+          Row variant=titlebar
+            Stack
+              Heading level=1 "Text to Speech"
+              Text variant=muted "A blank page. Endless ways to be heard."
+            Spacer
+            Button action=import icon=Upload label="Import text" variant=secondary
+            Button action=import-drive icon=CloudDownload label="My Drive" variant=secondary
+            Button action=new-project icon=Plus label="New project" variant=secondary
+          Row variant=studio-layout
+            Stack variant=editor-column
+              Card variant=editor
+                Row variant=editor-heading
+                  Input name=projectName placeholder="Untitled speech" variant=title
+                  Badge $saved
+                Row variant=editor-tools
+                  Button action=undo icon=Undo2 label="Undo" variant=icon
+                  Button action=redo icon=Redo2 label="Redo" variant=icon
+                  Button action=dictionary icon=BookOpen label="Pronunciation" variant=text
+                  Button action=toggle-dialogue icon=MessagesSquare label="Dialogue" variant=$dialogueVariant
+                  Spacer
+                  Text variant=caption "TXT · MD"
+                Input name=script label="Speech script" multiline=true placeholder="Write or paste your script here. A story, a welcome message, the beginning of something new…" variant=script
+                Row variant=editor-footer
+                  Text variant=caption $counter
+                  Spacer
+                  Text variant=caption "Ctrl + Enter to generate"
+              If condition=$showDialogue
+                Card variant=segments
+                  Row
+                    Heading level=2 "Speakers & segments"
+                    Spacer
+                    Button action=split icon=Scissors label="Split script" variant=text
+                  Text variant=caption "Assign each segment a voice. After generating, edit and regenerate just one segment."
+                  For each=$segments
+                    Row variant=segment
+                      Text variant=segment-number $item.number
+                      Input name=$item.textField label=$item.label multiline=true variant=segment-text
+                      Select name=$item.voiceField label="Segment voice" options=$voiceOptions
+                      Button action=regenerate item=$item.id icon=RefreshCw label="Regenerate segment" variant=icon disabled=$item.disabled
+              If condition=$showDictionary
+                Card
+                  Heading level=2 "Pronunciation dictionary"
+                  Text variant=caption "Exact text replacements, applied before speech. Project rules override account rules; no SSML or phoneme support is implied."
+                  Input name=rules label="Project replacements" multiline=true placeholder="One Workspace = One Work space" variant=dictionary
+                  Text variant=caption $defaultRuleText
+                  Row
+                    Button action=preview-text icon=Eye label="Preview spoken text" variant=secondary
+                    Button action=save-dictionary label="Save as account defaults" variant=text
+                  Text variant=pre $transformed
+              If condition=$hasJob
+                Card variant=player
+                  Row
+                    Icon name=AudioLines size=23
+                    Stack
+                      Heading level=2 $jobName
+                      Text variant=caption $jobStatus
+                    Spacer
+                    If condition=$jobRunning
+                      Button action=cancel icon=Square label="Cancel" variant=secondary
+                    If condition=$jobFailed
+                      Button action=retry icon=RefreshCw label="Retry" variant=secondary
+                  Section id=waveform
+                  Section id=audio
+                  If condition=$jobComplete
+                    Row variant=exports
+                      Link href=$wav variant=secondary "Download WAV"
+                      Link href=$mp3 variant=secondary "Download MP3"
+                      Button action=drive icon=CloudUpload label="Save to My Drive" variant=text
+              If condition=$showBatch
+                Card
+                  Heading level=2 "Batch generation"
+                  Text variant=caption "One recording per line. Up to 20 queued jobs, processed one at a time."
+                  Input name=batchText label="Batch scripts" multiline=true variant=dictionary
+                  Row
+                    Button action=run-batch icon=Layers label="Generate batch" variant=primary
+                    Button action=export-batch icon=Download label="Export completed ZIP" variant=secondary
+            Card variant=voice-settings
+              Row variant=tabs
+                Text variant=tab-active "Settings"
+                Spacer
+                Text variant=caption "Local generation"
+              Text variant=field-label "Voice"
+              Select name=voice label="Voice" options=$voiceOptions
+              Row variant=selected-voice
+                Icon name=AudioLines size=19
+                Stack
+                  Text $voiceName
+                  Text variant=caption $voiceDescription
+                Spacer
+                Button action=preview-voice icon=Play label="Preview voice" variant=icon
+              Button action=clone icon=Plus label="Create a voice" variant=text
+              Divider
+              Select name=model label="Model" options=$modelOptions
+              Text variant=caption $modelDescription
+              Select name=language label="Language" options=$languages
+              Divider
+              Row
+                Text variant=field-label "Audio controls"
+                Badge "Post-processing"
+              Input name=speed label=$speedLabel type=range min=0.5 max=2 step=0.05
+              Input name=pitch label=$pitchLabel type=range min=-12 max=12 step=1
+              Input name=volume label=$volumeLabel type=range min=0.1 max=2 step=0.05
+              Input name=pause label=$pauseLabel type=range min=0 max=2 step=0.1
+              Text variant=caption "Speed, pitch and volume are applied to generated audio. Voice identity stays fixed to your selected model."
+              Spacer
+              Button action=generate icon=Sparkles label="Generate speech" variant=primary disabled=$generating
+              Text variant=caption "Private by default. Generated on this PC."
+      If condition=$clone
+        Stack variant=clone-page
+          Row variant=titlebar
+            Stack
+              Heading level=1 "Make it your voice."
+              Text variant=muted "A few seconds of you. A whole world of possibilities."
+            Spacer
+            Badge "INSTANT VOICE CLONING"
+          Row variant=steps
+            Badge "1 · Add a reference"
+            Icon name=ChevronRight size=16
+            Text "2 · Test your voice"
+            Icon name=ChevronRight size=16
+            Text "3 · Ready to create"
+          Card variant=clone-card
+            Row
+              Icon name=Fingerprint size=32
+              Stack
+                Heading level=2 "Every great voice starts with a sample."
+                Text variant=muted "3–30 seconds of clear, natural speech works best."
+            Section id=upload
+            Row variant=record-actions
+              Button action=record icon=Mic label=$recordLabel variant=secondary
+              Text variant=caption "WAV, MP3, M4A · up to 25 MB"
+            Section id=reference-audio
+            Grid variant=two
+              Input name=cloneName label="Voice name" placeholder="Give your voice a name"
+              Select name=cloneModel label="Cloning model" options=$cloneOptions
+              Select name=cloneLanguage label="Reference language" options=$cloneLanguages
+            Input name=cloneTags label="Tags" placeholder="Warm, storytelling, my voice…"
+            Checkbox name=consent label="I own this voice, or have explicit permission from the speaker to clone and use it."
+            Text variant=caption "Your reference and model-specific voice state stay private. Share use only with people you explicitly choose."
+            Row
+              Button action=save-clone icon=Fingerprint label="Create my voice" variant=primary disabled=$savingClone
+              Text variant=caption $cloneStatus
+            If condition=$cloneCreated
+              Card variant=clone-success
+                Icon name=CircleCheck size=28
+                Heading level=2 "Your voice is ready."
+                Text "Compare your original reference with a generated sample before using it."
+                Button action=test-clone icon=Play label="Generate a test sample" variant=secondary
+                Section id=clone-test-audio
+                Button action=use-clone icon=ArrowRight label="Use this voice" variant=primary
+          Card variant=tips
+            Heading level=2 "A little preparation makes a big difference."
+            Grid variant=quickstarts
+              Stack
+                Icon name=AudioLines size=22
+                Text "Keep it natural"
+                Text variant=caption "Speak at your normal pace, with a little expression."
+              Stack
+                Icon name=VolumeX size=22
+                Text "Find a quiet spot"
+                Text variant=caption "Avoid music, echo and background conversations."
+              Stack
+                Icon name=ShieldCheck size=22
+                Text "Keep it permissioned"
+                Text variant=caption "Only clone voices you own or are authorised to use."
+      If condition=$voicesPage
+        Stack variant=library-page
+          Row variant=titlebar
+            Stack
+              Heading level=1 "A library that sounds like you."
+              Text variant=muted "Your voices, ready for your next idea."
+            Spacer
+            Button action=clone icon=Plus label="Create a voice" variant=primary
+          Row variant=filters
+            Input name=voiceSearch placeholder="Search voices or tags…"
+            Select name=voiceFilter label="Voice collection" options=$voiceFilters
+            Select name=voiceLanguage label="Reference language filter" options=$voiceLanguages
+          Grid variant=voices
+            For each=$filteredVoices
+              Card variant=voice-card
+                Row
+                  Icon name=AudioLines size=28
+                  Spacer
+                  Badge $item.type
+                Heading level=2 $item.name
+                Text variant=caption $item.tags
+                Badge $item.engineLabel
+                Row
+                  Button action=choose-voice item=$item.id icon=ArrowRight label="Use voice" variant=secondary
+                  Button action=listen-voice item=$item.id icon=Play label="Preview" variant=icon
+                  Button action=favorite-voice item=$item.id icon=Star label=$item.favoriteLabel variant=$item.favoriteVariant
+                  If condition=$item.owned
+                    Button action=edit-voice item=$item.id icon=Ellipsis label="Manage voice" variant=icon
+      If condition=$historyPage
+        Stack variant=library-page
+          Row variant=titlebar
+            Stack
+              Heading level=1 "Every word, kept close."
+              Text variant=muted "Pick up where you left off. Listen, export or create again."
+            Spacer
+            Button action=export-all icon=Download label="Export completed ZIP" variant=secondary
+          Input name=historySearch placeholder="Search recordings and scripts…"
+          If condition=$hasHistory
+            Stack
+              For each=$filteredHistory
+                Card variant=history-row
+                  Icon name=AudioLines size=24
+                  Stack
+                    Heading level=2 $item.script.name
+                    Text variant=caption $item.detail
+                  Spacer
+                  Badge $item.status
+                  Button action=open-job item=$item.id icon=Play label="Open recording" variant=secondary
+                  Button action=delete-recording item=$item.id icon=Trash2 label="Remove recording" variant=icon
+          Else
+            Card variant=empty
+              Icon name=AudioLines size=42
+              Heading level=2 "Your story starts here."
+              Text variant=muted "Create your first recording and it will be waiting here."
+              Button action=speech label="Create speech" variant=primary
+      If condition=$settingsPage
+        Stack variant=library-page
+          Row variant=titlebar
+            Stack
+              Heading level=1 "Your voice. Your setup."
+              Text variant=muted "Choose the right balance for your PC."
+          For each=$models
+            Card variant=model-card
+              Row
+                Icon name=Cpu size=28
+                Stack
+                  Heading level=2 $item.name
+                  Text variant=caption $item.runtime
+                Spacer
+                Badge $item.installLabel
+              Text variant=caption $item.license
+              Text variant=caption $item.description
+              Row
+                Link href=$item.url variant=text "Model & licence details"
+                Spacer
+                Button action=install-model item=$item.id icon=Download label=$item.buttonLabel variant=secondary
+                If condition=$item.installed
+                  Button action=remove-model item=$item.id icon=Trash2 label="Remove model" variant=icon
+              If condition=$item.status
+                Text variant=caption $item.status
+          Card
+            Heading level=2 "Performance & privacy"
+            Input name=threads label="CPU threads (1–8)" type=number min=1 max=8
+            Button action=save-settings label="Save settings" variant=primary
+            Text variant=caption $storageInfo
+            Text variant=caption $retentionInfo
+            Text variant=caption "Local CPU generation. No audio sent to a speech API. Model downloads are explicit; installed models work offline."
+            Text variant=caption "Voice references and clone states are private app data. Export your audio to My Drive or download a copy."
+      If condition=$modal
+        Card variant=modal
+          Row
+            Heading level=2 $modalTitle
+            Spacer
+            Button action=close-modal icon=X label="Close dialog" variant=icon
+          If condition=$installModal
+            Text $installDescription
+            Link href=$installURL variant=text "Read the model licence and access terms"
+            Checkbox name=license label="I have reviewed and accept the model licence and usage conditions."
+            If condition=$pocketInstall
+              Checkbox name=enableCloning label="Enable Pocket voice cloning (requires authorised Hugging Face access)."
+              Input name=hfToken type=password label="Hugging Face read token (sent only to Hugging Face; never saved)" placeholder="hf_…"
+            Button action=confirm-install icon=Download label="Download model" variant=primary
+          If condition=$manageModal
+            Input name=editName label="Voice name"
+            Input name=editTags label="Tags"
+            Checkbox name=favorite label="Favourite voice"
+            Button action=save-voice label="Save voice" variant=primary
+            Divider
+            Input name=shareEmail label="Share use with OneAccount email" type=email
+            Button action=share-voice icon=UserPlus label="Grant private use" variant=secondary
+            Text variant=caption $shareResult
+            For each=$shares
+              Row
+                Text $item.email
+                Spacer
+                Button action=revoke-specific item=$item.user icon=UserMinus label="Revoke use" variant=secondary
+            Divider
+            Checkbox name=deleteConsent label="Permanently remove this voice and its reference recording."
+            Button action=delete-voice icon=Trash2 label="Delete voice" variant=danger
+          If condition=$helpModal
+            Text "Start with Text to Speech. Install a CPU model in Settings, choose a voice and write your script. Use Voice Cloning only with a speaker’s permission."
+            Text "Dialogue splits your script into segments. After generation, change a segment and press its regenerate button. TXT and Markdown import preserve sentence order."
+            Text "My Voice runs through OneAccount and Workspace. For standalone use, create a local account using the one-time setup link printed by the launcher."
+          If condition=$accountModal
+            Text $accountName
+            Button action=logout icon=LogOut label="Sign out" variant=secondary
+          If condition=$removeModelModal
+            Text "Remove the downloaded model files? Your voices, scripts and generated recordings will be kept. You can reinstall the model later."
+            Button action=confirm-remove-model icon=Trash2 label="Remove downloaded model" variant=danger
+          If condition=$deleteRecordingModal
+            Text "Permanently remove this recording and its generated segments? Your voice library and saved script projects will be kept."
+            Checkbox name=deleteRecordingConsent label="I want to permanently delete this recording."
+            Button action=confirm-delete-recording icon=Trash2 label="Permanently remove recording" variant=danger
+          If condition=$driveImportModal
+            Text "Choose a TXT or Markdown file from your signed-in My Drive account."
+            Select name=driveSource label="Drive source" options=$driveSources
+            Input name=drivePath label="Folder path"
+            Button action=list-drive icon=FolderOpen label="Open folder" variant=secondary
+            For each=$driveFiles
+              Button action=select-drive-file item=$item.path icon=$item.icon label=$item.name variant=drive-file

@@ -1,0 +1,10 @@
+One Workspace orchestration and installer.
+Includes separately licensed MyAccounts (Casdoor derivative), FileBrowser Drive
+(FileBrowser Quantum derivative with document/Photos features), Photos and
+cloudflared. Component notices and provenance accompany the bundled payload.
+Windows ACL, DPAPI and folder-picker helpers adapted from fahimc/myaccounts,
+retaining its Apache-2.0 license. No affiliation with Google is claimed.
+
+The optional Mail component embeds the official Stalwart 0.16.26 Windows engine
+under AGPL-3.0-only. Its source, exact engine provenance and licenses accompany
+Mail-enabled bundles; see licenses/Mail-NOTICE.md and docs/MAIL.md.

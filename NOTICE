@@ -1,0 +1,10 @@
+My Voice · One Workspace
+Copyright 2026 One Workspace contributors.
+
+An original application inspired by familiar audio workflows. No ElevenLabs
+source code, trademarks, accounts or proprietary models are bundled.
+
+Pocket TTS: Kyutai, MIT runtime, CC BY4.0 separately downloaded preset weights.
+Alba voice: Alba MacKenna and Kyutai, CC BY4.0.
+MOSS TTS Nano: OpenMOSS Team / MOSI.AI, Apache-2.0 code and model cards.
+See MODEL-LICENSES.md, THIRD-PARTY-NOTICES.md and licenses/ for conditions.

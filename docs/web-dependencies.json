@@ -1,0 +1,42 @@
+[
+  {
+    "package": "@codedia/parser",
+    "version": "0.2.1",
+    "license": "MIT",
+    "notices": [
+      "LICENSE"
+    ]
+  },
+  {
+    "package": "lucide-react",
+    "version": "0.577.0",
+    "license": "ISC",
+    "notices": [
+      "LICENSE"
+    ]
+  },
+  {
+    "package": "react",
+    "version": "19.3.1",
+    "license": "MIT",
+    "notices": [
+      "LICENSE"
+    ]
+  },
+  {
+    "package": "react-dom",
+    "version": "19.3.1",
+    "license": "MIT",
+    "notices": [
+      "LICENSE"
+    ]
+  },
+  {
+    "package": "scheduler",
+    "version": "0.28.0",
+    "license": "MIT",
+    "notices": [
+      "LICENSE"
+    ]
+  }
+]
