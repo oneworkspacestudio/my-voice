@@ -82,5 +82,34 @@
     "target": "x86_64-pc-windows-msvc",
     "rustflags": "-C target-cpu=x86-64 -C target-feature=+crt-static",
     "recipe": "scripts/build-pocket-runtime.py"
+  },
+  "qwenRuntime": {
+    "url": "https://github.com/ggml-org/llama.cpp/releases/download/b12084/llama-b12084-bin-win-cpu-x64.zip",
+    "size": 24613156,
+    "sha256": "ef8728e4c9652cf940a99ea72341bfcbe295af157e24f7cffb0c7d8744e8dce8",
+    "version": "b12084",
+    "sourceCommit": "f9448cddc48c129a4abc7ff9c2a84c2b4c101c61",
+    "sourceURL": "https://codeload.github.com/ggml-org/llama.cpp/zip/f9448cddc48c129a4abc7ff9c2a84c2b4c101c61",
+    "sourceSHA256": "08962773adcafd6c7d271fc87396aea5b2cf5dfc6ed4be31c02c10c58098fbcf",
+    "sourceSize": 41313498
+  },
+  "qwenCRT": {
+    "url": "https://download.visualstudio.microsoft.com/download/pr/a424e95b-20f6-4af6-844f-9d9a806080a7/a4ab48822362df6e478eb4ed33bf825a07a6faacd6879c1e3d59929cd38b984b/Microsoft.VC.14.50.18.0.CRT.Redist.X64.base.vsix",
+    "size": 3313422,
+    "sha256": "a4ab48822362df6e478eb4ed33bf825a07a6faacd6879c1e3d59929cd38b984b",
+    "version": "14.50.35719",
+    "memberPrefix": "Contents/VC/Redist/MSVC/14.50.35710/x64/Microsoft.VC145.CRT/",
+    "members": [
+      "msvcp140.dll",
+      "msvcp140_1.dll",
+      "msvcp140_2.dll",
+      "msvcp140_atomic_wait.dll",
+      "msvcp140_codecvt_ids.dll",
+      "vcruntime140.dll",
+      "vcruntime140_1.dll",
+      "vcruntime140_threads.dll",
+      "concrt140.dll"
+    ],
+    "license": "https://visualstudio.microsoft.com/license-terms/vs2026-ga-visualcpp-v14-redist-runtime/"
   }
 }

@@ -5,7 +5,7 @@ Usage: python scripts/prepare-runtime.py I:/Projects/tooling/my-voice-runtime
 import hashlib,json,sys,urllib.request,zipfile,shutil
 from pathlib import Path
 repo=Path(__file__).resolve().parents[1];cache=Path(sys.argv[1]).resolve();cache.mkdir(parents=True,exist_ok=True)
-lock=json.loads((repo/'runtime.lock.json').read_text())
+lock=json.loads((repo/'runtime.lock.json').read_text(encoding='utf-8'))
 def fetch(pin,name):
  p=cache/name
  if not p.exists():
@@ -20,6 +20,17 @@ with zipfile.ZipFile(fetch(lock['pocketPortable'],'pocket-portable-runtime.zip')
  (stage/'pocket-tts-portable.exe').write_bytes(z.read('pocket-tts-portable.exe'))
 with zipfile.ZipFile(fetch(lock['ffmpeg'],'ffmpeg-runtime.zip')) as z:
  (stage/'ffmpeg.exe').write_bytes(z.read('ffmpeg.exe'))
+# The native CPU build dispatches to a compatible CPU backend at runtime.
+qwen=stage/'qwen';qwen.mkdir(exist_ok=True)
+with zipfile.ZipFile(fetch(lock['qwenRuntime'],'qwen-runtime.zip')) as z:
+ for name in z.namelist():
+  base=Path(name).name
+  needed=(base in ['llama-tts.exe','llama.dll','llama-common.dll','mtmd.dll','libomp.dll','LICENSE-LLVM-OpenMP'] or (base.startswith('ggml') and base.endswith('.dll') and 'rpc' not in base))
+  if needed:(qwen/base).write_bytes(z.read(name))
+# App-local release CRT from the pinned official Microsoft redistributable.
+with zipfile.ZipFile(fetch(lock['qwenCRT'],'qwen-crt.vsix')) as z:
+ for name in lock['qwenCRT']['members']:
+  (qwen/name).write_bytes(z.read(lock['qwenCRT']['memberPrefix']+name))
 runtime=stage/'moss';runtime.mkdir(exist_ok=True)
 with zipfile.ZipFile(fetch(lock['python'],'python.zip')) as z:z.extractall(runtime)
 (runtime/'python312._pth').write_text('python312.zip\n.\nLib/site-packages\nimport site\n')

@@ -712,3 +712,40 @@ active-process and reparse checks passed before removing only the named disposab
 NTFS root. Tooling/evidence retained; owner data/recovery not manually removed.
 All source, public promotion and both target delivery gates complete; no pending
 PC2 deferral or implementation work. Receipt: docs/delivery-preview7.json.
+
+
+## Preview8 selectable cloning models: native acceptance checkpoint
+
+User asks for other better cloning choices to try. Add ungated Qwen3-TTS Base Q8
+0.6B (mradermacher0762b31e) and1.7B (official ggml-org ca27d74b), retaining MOSS.
+No promise of superior identity similarity; larger model is a comparison option.
+Native llama.cpp b12084/f9448 CPU dispatch and official pinned app-local Microsoft
+release CRT ship embedded. Full MIT/LLVM/CRT notices appended to existing notice
+path; model weights remain explicit licensed downloads, never release assets.
+No package namespace/schema/capability/min111/integration7 changes are required.
+
+My Voices Try another model and own-clone Speech model changes reuse owner-only
+canonical reference, reset consent and create separate model-specific voices.
+Original references/scripts/voices retained; same-name voice options and recording
+captions identify actual models. Shared/preset references cannot be reused.
+Cloning picker has three choices, size/summary/RAM guidance and inline install.
+Readiness requires real supervised speech+signal check, not downloaded files only.
+Large downloads stream/hash/resume verified Range tails; incomplete files never
+promote. No external startup runtime fetch/Python/PyTorch dependency for Qwen.
+
+Go tests/vet,19 frontend regressions and build pass. Both real CPU checkpoints
+pass apphost Job Object setup and full two-sentence clone synthesis in synthetic
+NTFS data;0.6B6.642s/14.864s wall,1.7B5.195s/~19.8s. Runtime CRT loaded app-local.
+0.6 cache was seeded then reverified/prepared;1.7 app downloaded complete pins.
+One harness cache-copy/install race produced checksum rejection, correctly kept
+unready; clean supported app download then passed. Desktop/390px review passes.
+No physical mic, non-English or human blind similarity study. RAM is guidance.
+
+Artifacts tooling/my-voice-model-options-20261103, disposable NTFS root
+C:/Projects/.cache/my-voice-model-options-20261103. Native process tracker in
+fixture-process.json; stop confirmed before moving task model cache. Actual114
+managed setup selectedAccounts+Voice5 is in progress under managed/; use exact
+process tracker and preserved credential only for synthetic QA. Public8 source,
+release/channel, protected managed upgrade and both target installs pending.
+Do not confuse implementation/native success with completed delivery. Actions
+remain disabled; immutable older public releases are unchanged.

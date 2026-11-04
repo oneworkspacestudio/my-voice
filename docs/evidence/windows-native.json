@@ -516,5 +516,61 @@
       "phoneHorizontalOverflow": false
     },
     "managedDelivery": "Recorded separately after public release"
+  },
+  "preview8ModelOptions": {
+    "schema": 1,
+    "passed": true,
+    "version": "0.1.0-preview.8",
+    "executableSHA256": "b89a1e6d2bdcfee8ac00ea226035406569821895d26c08e1b8ab8bb6c8748d39",
+    "models": [
+      {
+        "passed": true,
+        "model": "qwen06",
+        "fullTextAndTwoSegments": true,
+        "savedReferenceReusedInUI": true,
+        "originalReferenceUnchanged": true,
+        "nativeSupervisedWorker": true,
+        "durationSeconds": 6.641875,
+        "generationSeconds": 14.86357,
+        "wavBytes": 318854,
+        "mp3Bytes": 134444
+      },
+      {
+        "passed": true,
+        "model": "qwen17",
+        "fullTextAndTwoSegments": true,
+        "speechModelChangeReusesSavedReferenceInUI": true,
+        "nativeSupervisedWorker": true,
+        "bundledAppLocalCRTLoaded": true,
+        "durationSeconds": 5.159291666666666,
+        "generationSeconds": 19.8055484,
+        "wavBytes": 247690,
+        "mp3Bytes": 104684
+      }
+    ],
+    "installationChecks": [
+      {
+        "passed": true,
+        "model": "qwen06",
+        "verifiedAssets": 4,
+        "supervisedCpuSpeechCheck": true,
+        "setupSeconds": 8.34
+      },
+      {
+        "passed": true,
+        "model": "qwen17",
+        "verifiedAssets": 4,
+        "actualCompleteUpstreamDownloadByApp": true,
+        "supervisedCpuSpeechCheck": true,
+        "setupSeconds": 159.67
+      }
+    ],
+    "threeCloningChoicesVisibleInUI": true,
+    "public7MossCloneRetained": true,
+    "desktopAnd390pxUIReviewed": true,
+    "ownerInstallationUsedAsFixture": false,
+    "physicalMicrophoneCaptureTested": false,
+    "humanBlindSimilarityStudyPerformed": false,
+    "availableRamGuidanceIsEstimate": true
   }
 }

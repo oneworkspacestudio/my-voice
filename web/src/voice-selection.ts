@@ -1,5 +1,5 @@
 type Voice = {id: string; name: string; engine: string; language: string; preset?: boolean; shared?: boolean};
-type Model = {id: string; languages: string[]};
+type Model = {id: string; languages: string[]; shortName?: string};
 type Fields = Record<string, any>;
 
 function speechTitle(name: string, voice: Voice | undefined, voices: Voice[]) {
@@ -10,9 +10,9 @@ export function voiceFitsModel(voice: Voice, model: string) {
   return voice.engine === model || (voice.engine === 'pocket' && ['pocket18', 'pocket7'].includes(model));
 }
 
-export function speechVoiceOptions(voices: Voice[]) {
+export function speechVoiceOptions(voices: Voice[], models: Model[] = []) {
   return [...voices].sort((a, b) => Number(!!a.preset) - Number(!!b.preset)).map(v => ({
-    value: v.id, label: v.name + (v.preset ? '' : v.shared ? ' · Shared' : ' · Clone')
+    value: v.id, label: v.name + (v.preset ? '' : (v.shared ? ' · Shared' : ' · Clone')+(models.find(m=>m.id===v.engine)?.shortName?' · '+models.find(m=>m.id===v.engine)!.shortName:''))
   }));
 }
 
@@ -34,11 +34,11 @@ export function selectSpeechModel(fields: Fields, model: string, voices: Voice[]
   return voice ? selectSpeechVoice({...fields, model}, voice.id, voices, models) : {...fields, model};
 }
 
-export function recordingVoiceLabel(script: any, voices: Voice[]) {
+export function recordingVoiceLabel(script: any, voices: Voice[], models: Model[] = []) {
   if (!script) return '';
   const ids: string[] = Array.from(new Set(script.inputMode === 'segments' ? script.segments.map((s: any) => s.voice) : [script.voice]));
   const names = ids.map(id => voices.find(v => v.id === id)?.name || 'Unavailable voice');
-  return (names.length > 1 ? 'Voices · ' : 'Voice · ') + names.join(', ');
+  return (names.length > 1 ? 'Voices · ' : 'Voice · ') + names.join(', ') + (models.find(m=>m.id===script.model)?.shortName?' · '+models.find(m=>m.id===script.model)!.shortName:'');
 }
 
 export function recordingTitle(script: any, voices: Voice[]) {

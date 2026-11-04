@@ -8,12 +8,15 @@
 | MOSS TTS Nano ONNX weights | OpenMOSS-Team/MOSS-TTS-Nano-100M-ONNX f52645cb | Apache-2.0 model card; separately downloaded |
 | MOSS audio tokenizer | OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX; exact revision/digests in models.json | Apache-2.0 model card; separately downloaded |
 | MOSS runtime source | OpenMOSS/MOSS-TTS-Nano 8b7bcc9341b3b4ef3a3a58ba1338a7d85ff133eb | Apache-2.0; upstream ort_cpu_runtime.py is unmodified |
-| Open Voice preset reference | Kyutai tts-voices / voice-donations/0a67.wav; pinned revision/digest in models.json | CC0 voluntary Unmute Voice Donation Project reference; state generated locally for MOSS |
+| Qwen3-TTS 0.6B Base Q8 | Qwen/Qwen3-TTS-12Hz-0.6B-Base; mradermacher GGUF conversion 0762b31e | Apache-2.0; pinned talker and codec, separately downloaded |
+| Qwen3-TTS 1.7B Base Q8 | Qwen/Qwen3-TTS-12Hz-1.7B-Base; official ggml-org GGUF ca27d74b | Apache-2.0; pinned talker and codec, separately downloaded |
+| Qwen native runtime | ggml-org/llama.cpp b12084 / f9448cdd | MIT; LLVM OpenMP and Microsoft app-local release CRT notices in THIRD-PARTY-NOTICES.md |
+| Open Voice preset reference | Kyutai tts-voices / voice-donations/0a67.wav; pinned revision/digest in models.json | CC0 voluntary Unmute Voice Donation Project reference; state generated locally for MOSS; private reference input for Qwen |
 
 No model weights or personal references are included in the application release.
 Owner-initiated installation acknowledges each model's linked licence. The gated
 Pocket cloning checkpoint is **not used, mirrored or redistributed**. A browser
-access grant does not imply CLI credentials; this preview needs neither for MOSS.
+access grant does not imply CLI credentials; this preview needs neither for MOSS nor Qwen.
 
 The MOSS source advertises 20 languages, but its published table explicitly names
 19 codes. The app exposes those 19 codes and does not invent the missing entry or
@@ -33,3 +36,13 @@ https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX
 
 Generated speech is synthetic. Disclose that when sharing it, and do not present
 it as an original recording or evidence that a person said those words.
+
+Qwen exposes ten upstream languages: Chinese, English, German, Italian, Portuguese,
+Spanish, Japanese, Korean, French and Russian. The 0.6B quantization is a pinned
+community conversion; the 1.7B quantization is published by ggml-org. Neither
+requires a Hugging Face login. Model-specific saved references and state are kept
+private. A model comparison creates a separate voice and preserves the original.
+
+Qwen sources: https://github.com/QwenLM/Qwen3-TTS;
+https://huggingface.co/mradermacher/Qwen3-TTS-12Hz-0.6B-Base-GGUF;
+https://huggingface.co/ggml-org/Qwen3-TTS-12Hz-1.7B-Base-GGUF.

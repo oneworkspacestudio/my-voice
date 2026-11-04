@@ -326,6 +326,10 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                     <Badge>{data.cloneSetupStatus}</Badge>
                   </Row>
                   <Select name="cloneModel" label="Cloning model" options={data.cloneOptions} disabled={data.cloneModelDisabled} />
+                  <Text variant="caption">{data.cloneModelInfo}</Text>
+                  {data.referenceSource && (
+                    <Text variant="caption">{data.referenceSource}</Text>
+                  )}
                   <Section id="clone-model-progress" />
                   <Row variant="clone-model-actions">
                     {data.cloneCanInstall && (
@@ -432,6 +436,9 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                           <Button onClick={() => onAction("edit-voice")} item={item.id} icon="Ellipsis" label="Manage voice" variant="icon" />
                         )}
                       </Row>
+                      {item.owned && (
+                        <Button onClick={() => onAction("try-model")} item={item.id} icon="Repeat2" label="Try another model" variant="text" />
+                      )}
                     </Card>
                   ))}
                 </Grid>

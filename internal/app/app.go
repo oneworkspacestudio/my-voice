@@ -105,7 +105,7 @@ func New(h *apphost.Host) (*App, error) {
 	if _, e := h.DB.Exec(`UPDATE jobs SET status='queued' WHERE status='running'`); e != nil {
 		return nil, e
 	}
-	a.Engines = map[string]SpeechEngine{"pocket18": &PocketEngine{A: a, ID: "pocket18"}, "pocket7": &PocketEngine{A: a, ID: "pocket7"}, "moss": &MossEngine{A: a}}
+	a.Engines = map[string]SpeechEngine{"pocket18": &PocketEngine{A: a, ID: "pocket18"}, "pocket7": &PocketEngine{A: a, ID: "pocket7"}, "moss": &MossEngine{A: a}, "qwen06": &QwenEngine{A: a, ID: "qwen06"}, "qwen17": &QwenEngine{A: a, ID: "qwen17"}}
 	routes := []struct {
 		p     string
 		f     http.HandlerFunc
@@ -166,6 +166,8 @@ func (a *App) presetVoices() []Voice {
 	return []Voice{
 		{ID: "alba", Name: "Alba", Engine: "pocket", Language: "en", Tags: "Warm · Conversational · CC BY 4.0", Preset: true},
 		{ID: "moss-open", Name: "Open Voice", Engine: "moss", Language: "en", Tags: "CC0 donated reference · MOSS", Preset: true},
+		{ID: "qwen06-open", Name: "Open Voice · Qwen 0.6B", Engine: "qwen06", Language: "en", Tags: "CC0 donated reference", Preset: true},
+		{ID: "qwen17-open", Name: "Open Voice · Qwen 1.7B", Engine: "qwen17", Language: "en", Tags: "CC0 donated reference", Preset: true},
 	}
 }
 func (a *App) findVoice(id, user string) (Voice, error) {

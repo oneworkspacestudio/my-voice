@@ -74,3 +74,16 @@ test('recording labels describe the immutable recorded speakers, including expli
  assert.equal(recordingVoiceLabel({...original,inputMode:'segments',segments:[{voice:'own'},{voice:'shared'},{voice:'own'}]},voices),'Voices · My own voice, Shared speaker');
  assert.equal(recordingVoiceLabel({...original,voice:'removed'},voices),'Voice · Unavailable voice');
 });
+
+test('same-name clone variants show their actual model and select its matching language',()=>{
+ const variants=[...voices,{id:'q06',name:'My own voice',engine:'qwen06',language:'en'},{id:'q17',name:'My own voice',engine:'qwen17',language:'en'}];
+ const choices=[...models,{id:'qwen06',shortName:'Qwen3 0.6B',languages:['en','zh']},{id:'qwen17',shortName:'Qwen3 1.7B',languages:['en','zh']}];
+ const options=speechVoiceOptions(variants,choices);
+ assert.match(options.find(v=>v.value==='q06')!.label,/Qwen3 0.6B/);
+ assert.match(options.find(v=>v.value==='q17')!.label,/Qwen3 1.7B/);
+ let selected=selectSpeechVoice({...loadDraft(original).fields,language:'zh'},'q17',variants,choices);
+ assert.equal(selected.voice,'q17');assert.equal(selected.model,'qwen17');assert.equal(selected.language,'zh');
+ assert.match(recordingVoiceLabel(buildScript(selected,[],false,[]),variants,choices),/Qwen3 1.7B$/);
+ selected=selectSpeechVoice(selected,'own',variants,choices);
+ assert.equal(selected.model,'moss');assert.equal(selected.language,'en');
+});

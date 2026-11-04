@@ -205,3 +205,41 @@ text. Signal checks are not a blind human listening study or proof of identity
 match. No claim of quality parity/superiority to ElevenLabs or Pocket cloning is
 made. Generated consented QA samples remain private for listening comparison.
 The executable is unsigned. No service/reboot/clean-host acceptance is claimed.
+
+
+## Preview8 model comparison acceptance (4 November 2026)
+
+Nineteen frontend regressions, native Go tests/vet and production frontend build
+pass. New coverage checks same-name model variants, engine/language isolation,
+resumed and restarted downloads, interruption recovery, invalid ranges and
+checksum rejection without promoting a partial file.
+
+Both Qwen3-TTS Base Q8 checkpoints run with the pinned native Windows CPU runtime
+inside apphost's supervised Job Object. Setup generates and checks real speech
+before marking the model ready. Qwen1.7 was downloaded completely by the app from
+its pinned public sources without authentication. Large files are streamed and
+hashed without loading model weights into the Go heap. App-local Microsoft CRT
+and OpenMP modules were observed loading from the verified embedded runtime.
+
+A synthetic public7 MOSS voice survives in preview8. My Voices **Try another model**
+reuses its owner-only saved reference; the original reference hash stays unchanged.
+The UI creates separate 0.6B and1.7B variants with the same name, displays their
+models in voice choices and recording captions, and preserves the full script.
+Switching the own voice's Speech model opens the same reference-reuse flow.
+Recording/upload stay disabled until the selected model is ready. Desktop and
+390px presentation pass; no physical microphone was used.
+
+| Model | Same two-sentence script: audio seconds | App wall seconds |
+|---|---:|---:|
+| Qwen3-TTS0.6B Q8 | 6.642 | 14.864 |
+| Qwen3-TTS1.7B Q8 | 5.159 | 19.806 |
+
+These include separate workers, both segments, postprocessing and WAV/MP3 exports,
+with two CPU threads on this host. Download/setup time is excluded. RAM guidance
+(4GB/8GB available) is an estimate, not a tested minimum specification. English
+is tested; the other nine Qwen languages require their own listening review.
+No blind similarity study, quality-superiority or low-memory/clean-host claim is
+made. The larger model is an option to compare, not a guaranteed better match.
+
+Managed public upgrade and each owner target are recorded separately in the
+subsequent delivery receipt. No owner installation is a feature test fixture.

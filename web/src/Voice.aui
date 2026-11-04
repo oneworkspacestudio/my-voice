@@ -244,6 +244,9 @@ Page Voice
               Spacer
               Badge $cloneSetupStatus
             Select name=cloneModel label="Cloning model" options=$cloneOptions disabled=$cloneModelDisabled
+            Text variant=caption $cloneModelInfo
+            If condition=$referenceSource
+              Text variant=caption $referenceSource
             Section id=clone-model-progress
             Row variant=clone-model-actions
               If condition=$cloneCanInstall
@@ -325,6 +328,8 @@ Page Voice
                   Button action=favorite-voice item=$item.id icon=Star label=$item.favoriteLabel variant=$item.favoriteVariant
                   If condition=$item.owned
                     Button action=edit-voice item=$item.id icon=Ellipsis label="Manage voice" variant=icon
+                If condition=$item.owned
+                  Button action=try-model item=$item.id icon=Repeat2 label="Try another model" variant=text
       If condition=$historyPage
         Stack variant=library-page
           Row variant=titlebar

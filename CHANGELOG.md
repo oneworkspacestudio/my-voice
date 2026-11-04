@@ -1,5 +1,18 @@
 # Changes
 
+## 0.1.0-preview.8
+
+Choose between MOSS, Qwen3-TTS 0.6B Q8 and Qwen3-TTS 1.7B Q8 for cloning.
+Install each model on the cloning screen, with size, memory guidance, resumable
+downloads and a real speech readiness check before recording is enabled.
+The native CPU runtime and its app-local dependencies ship with My Voice.
+
+Use **Try another model** on your own saved voice to reuse its private reference.
+Changing the Speech model for your own clone opens that same comparison flow.
+A separate model-specific voice is created; original voices and scripts are kept.
+Voice choices and recordings identify their actual model for comparison.
+
+
 ## 0.1.0-preview.7
 
 Choose saved or shared clones directly in the Speech voice dropdown. Selecting a

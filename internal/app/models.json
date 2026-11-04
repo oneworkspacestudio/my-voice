@@ -32,7 +32,8 @@
         "size": 4163992,
         "sha256": "11554cbe9f3d3a3e10722932df9952bb44928e534f7af3200524659166b5627a"
       }
-    ]
+    ],
+    "shortName": "Pocket18M"
   },
   {
     "id": "pocket7",
@@ -67,7 +68,8 @@
         "size": 1042832,
         "sha256": "fef27ae7a34132e88c81090316145671362da386ab4e5c6b048e5d16800d746b"
       }
-    ]
+    ],
+    "shortName": "Pocket7M"
   },
   {
     "id": "moss",
@@ -207,6 +209,113 @@
         "path": "MOSS-Audio-Tokenizer-Nano-ONNX/moss_audio_tokenizer_encode.onnx",
         "size": 815775,
         "sha256": "eadea4a645abdcf98714c7aead122ee2ce7da6e080f9f80b977cd1ca8e19473a"
+      },
+      {
+        "url": "https://huggingface.co/kyutai/tts-voices/resolve/323332d33f997de8394f24a193e1a76df720e01a/voice-donations/0a67.wav",
+        "path": "presets/open-voice.wav",
+        "size": 480044,
+        "sha256": "4bd75d0ef0ad3f4e82ac075eab2a132651d2463f83bec210edeeccaf69294886",
+        "gated": false
+      }
+    ],
+    "shortName": "MOSS100M",
+    "summary": "Small multilingual model. A useful fast baseline for comparing your voice.",
+    "ramGB": 2
+  },
+  {
+    "id": "qwen06",
+    "name": "Qwen3 0.6B \u00b7 Voice cloning \u00b7 Q8",
+    "shortName": "Qwen3 0.6B",
+    "version": "0762b31e / Q8_0",
+    "languages": [
+      "zh",
+      "en",
+      "de",
+      "it",
+      "pt",
+      "es",
+      "ja",
+      "ko",
+      "fr",
+      "ru"
+    ],
+    "license": "Apache-2.0 (Qwen model and codec weights)",
+    "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+    "runtime": "Native llama.cpp \u00b7 CPU only \u00b7 no Python or PyTorch",
+    "size": 1047825108,
+    "cloning": true,
+    "summary": "A lighter Qwen option for comparing voice similarity and naturalness.",
+    "ramGB": 4,
+    "assets": [
+      {
+        "url": "https://huggingface.co/mradermacher/Qwen3-TTS-12Hz-0.6B-Base-GGUF/resolve/0762b31e9cd99274d49dca4e895bd81863134f08/Qwen3-TTS-12Hz-0.6B-Base.Q8_0.gguf",
+        "path": "model.gguf",
+        "size": 646211264,
+        "sha256": "59b28b4ab6a1c4e24e6701fc871a427c1fb3e8333f0ed5cebec3bb67a699ae8e"
+      },
+      {
+        "url": "https://huggingface.co/mradermacher/Qwen3-TTS-12Hz-0.6B-Base-GGUF/resolve/0762b31e9cd99274d49dca4e895bd81863134f08/Qwen3-TTS-12Hz-0.6B-Base.mmproj-Q8_0.gguf",
+        "path": "codec.gguf",
+        "size": 401129632,
+        "sha256": "202c1fbf3a0f00b7586ca45b8328d696cc6cd980c3798979eaa4fefe8efd8320"
+      },
+      {
+        "url": "https://huggingface.co/mradermacher/Qwen3-TTS-12Hz-0.6B-Base-GGUF/raw/0762b31e9cd99274d49dca4e895bd81863134f08/README.md",
+        "path": "MODEL-CARD.md",
+        "size": 4168,
+        "sha256": "39b1cc020d5c59b8a504015703a48569504e4e6b486f815931e0d5a4e4df9127"
+      },
+      {
+        "url": "https://huggingface.co/kyutai/tts-voices/resolve/323332d33f997de8394f24a193e1a76df720e01a/voice-donations/0a67.wav",
+        "path": "presets/open-voice.wav",
+        "size": 480044,
+        "sha256": "4bd75d0ef0ad3f4e82ac075eab2a132651d2463f83bec210edeeccaf69294886",
+        "gated": false
+      }
+    ]
+  },
+  {
+    "id": "qwen17",
+    "name": "Qwen3 1.7B \u00b7 Voice cloning \u00b7 Q8",
+    "shortName": "Qwen3 1.7B",
+    "version": "ca27d74b / Q8_0",
+    "languages": [
+      "zh",
+      "en",
+      "de",
+      "it",
+      "pt",
+      "es",
+      "ja",
+      "ko",
+      "fr",
+      "ru"
+    ],
+    "license": "Apache-2.0 (Qwen model and codec weights)",
+    "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+    "runtime": "Native llama.cpp \u00b7 CPU only \u00b7 no Python or PyTorch",
+    "size": 2294835173,
+    "cloning": true,
+    "summary": "Larger quality-focused option. Uses more memory and may take longer on a CPU.",
+    "ramGB": 8,
+    "assets": [
+      {
+        "url": "https://huggingface.co/ggml-org/Qwen3-TTS-12Hz-1.7B-Base-GGUF/resolve/ca27d74bc954b73dadab5b71ca265d87fc861a7c/Qwen3-TTS-12Hz-1.7B-Base-Q8_0.gguf",
+        "path": "model.gguf",
+        "size": 1847874400,
+        "sha256": "ac7931aeb2e7aad1a6ed6602d353a5679c9d096b18ce8204ac730a8408d572e1"
+      },
+      {
+        "url": "https://huggingface.co/ggml-org/Qwen3-TTS-12Hz-1.7B-Base-GGUF/resolve/ca27d74bc954b73dadab5b71ca265d87fc861a7c/mmproj-Qwen3-TTS-12Hz-1.7B-Base-Q8_0.gguf",
+        "path": "codec.gguf",
+        "size": 446422912,
+        "sha256": "6fd65188839bcd6ecc91b277ad471e22a0edfada4699a0fe82f1165c18cfcce2"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base/resolve/fd4b254389122332181a7c3db7f27e918eec64e3/README.md",
+        "path": "MODEL-CARD.md",
+        "size": 57817,
+        "sha256": "621b7e88f1867bc03d817176fc1f7f55f4b5a70654b2a07fdcda1e169efb024b"
       },
       {
         "url": "https://huggingface.co/kyutai/tts-voices/resolve/323332d33f997de8394f24a193e1a76df720e01a/voice-donations/0a67.wav",

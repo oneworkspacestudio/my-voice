@@ -205,9 +205,9 @@ func (a *App) previewVoice(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 404, "Voice not found")
 		return
 	}
-	model := "pocket18"
-	if v.Engine == "moss" {
-		model = "moss"
+	model := v.Engine
+	if model == "pocket" {
+		model = "pocket18"
 	}
 	j, e := a.enqueue(Script{Name: "Voice preview · " + v.Name, Text: "Welcome to My Voice. Bring your words to life, one idea at a time.", Voice: v.ID, Model: model, Language: v.Language}, uid(r))
 	if e != nil {
@@ -305,7 +305,7 @@ func (a *App) generate(ctx context.Context, j *Job, user string) error {
 			if e != nil {
 				return e
 			}
-			if e = engine.Generate(ctx, text, v, raw); e != nil {
+			if e = engine.Generate(ctx, text, v, j.Script.Language, raw); e != nil {
 				return e
 			}
 			if e = a.processAudio(ctx, raw, target, j.Script); e != nil {

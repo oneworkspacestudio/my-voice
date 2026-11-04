@@ -34,7 +34,7 @@ type SpeechEngine interface {
 	Available() bool
 	Cloning() bool
 	Compatible(Voice, string) bool
-	Generate(context.Context, string, Voice, string) error
+	Generate(context.Context, string, Voice, string, string) error
 	Clone(context.Context, string, string) error
 }
 type Asset struct {
@@ -58,6 +58,9 @@ type Model struct {
 	Installed    bool     `json:"installed"`
 	Status       string   `json:"status"`
 	Size         int64    `json:"size"`
+	Summary      string   `json:"summary,omitempty"`
+	ShortName    string   `json:"shortName,omitempty"`
+	RAMGB        int      `json:"ramGB,omitempty"`
 	Assets       []Asset  `json:"assets,omitempty"`
 }
 
@@ -314,7 +317,7 @@ func (a *App) installModel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if p.Cloning || p.Token != "" {
-		apphost.Problem(w, 400, "Use the open MOSS model for cloning. This build uses ungated Pocket presets only")
+		apphost.Problem(w, 400, "These models use pinned public downloads. No access token or extra cloning access is needed")
 		return
 	}
 	if len(p.Token) > 512 || strings.ContainsAny(p.Token, "\r\n") {
@@ -330,7 +333,7 @@ func (a *App) installModel(w http.ResponseWriter, r *http.Request) {
 	a.installing[id] = "Downloading 0%"
 	a.modelsMu.Unlock()
 	go func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Minute)
 		defer cancel()
 		e := a.downloadModel(ctx, *selected, p.Token, p.Cloning)
 		a.modelsMu.Lock()
@@ -349,14 +352,7 @@ func (a *App) downloadModel(ctx context.Context, m Model, token string, cloning 
 	if e := os.MkdirAll(dir, 0700); e != nil {
 		return e
 	}
-	available, e := freeBytes(dir)
-	if e != nil {
-		return errors.New("Cannot check model storage space")
-	}
-	if available < uint64(m.Size)+128<<20 {
-		return errors.New("Not enough space for this model and download staging; free disk space before retrying")
-	}
-	client := &http.Client{Timeout: 10 * time.Minute}
+	client := &http.Client{Timeout: 45 * time.Minute}
 	var total, done int64
 	for _, v := range m.Assets {
 		if !v.Gated || cloning {
@@ -371,47 +367,30 @@ func (a *App) downloadModel(ctx context.Context, m Model, token string, cloning 
 		if e := os.MkdirAll(filepath.Dir(dest), 0700); e != nil {
 			return e
 		}
-		if raw, e := os.ReadFile(dest); e == nil {
-			sum := sha256.Sum256(raw)
-			if int64(len(raw)) == v.Size && hex.EncodeToString(sum[:]) == v.SHA {
-				done += v.Size
-				continue
-			}
+		if verifiedModelFile(dest, v) {
+			done += v.Size
+			continue
 		}
-		req, e := http.NewRequestWithContext(ctx, "GET", v.URL, nil)
+		available, e := freeBytes(dir)
 		if e != nil {
+			return errors.New("Cannot check model storage space")
+		}
+		remaining := v.Size
+		if part, e := os.Stat(dest + ".part"); e == nil && part.Size() < v.Size {
+			remaining -= part.Size()
+		}
+		if available < uint64(remaining)+(128<<20) {
+			return errors.New("Not enough space for this model download; free disk space and retry to continue")
+		}
+		show := func(n int64) {
+			a.modelsMu.Lock()
+			a.installing[m.ID] = fmt.Sprintf("Downloading %d%%", (done+n)*100/total)
+			a.modelsMu.Unlock()
+		}
+		if e := downloadModelAsset(ctx, client, v, dest, show); e != nil {
 			return e
 		}
-		if v.Gated && token != "" {
-			req.Header.Set("Authorization", "Bearer "+token)
-		}
-		resp, e := client.Do(req)
-		if e != nil {
-			return errors.New("Download failed. Check your connection and retry")
-		}
-		if resp.StatusCode != 200 {
-			resp.Body.Close()
-			if resp.StatusCode == 401 || resp.StatusCode == 403 {
-				return errors.New("Hugging Face denied model access. Accept its terms and provide an authorised read token")
-			}
-			return fmt.Errorf("Model download returned HTTP %d", resp.StatusCode)
-		}
-		f, e := os.OpenFile(dest+".part", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0600)
-		if e != nil {
-			resp.Body.Close()
-			return e
-		}
-		h := sha256.New()
-		n, e := io.Copy(io.MultiWriter(f, h), io.LimitReader(resp.Body, v.Size+1))
-		resp.Body.Close()
-		ce := f.Close()
-		if e != nil || ce != nil || n != v.Size || hex.EncodeToString(h.Sum(nil)) != v.SHA {
-			_ = os.Remove(dest + ".part")
-			return errors.New("Download checksum failed; retry safely")
-		}
-		if e = os.Rename(dest+".part", dest); e != nil {
-			return e
-		}
+		n := v.Size
 		done += n
 		a.modelsMu.Lock()
 		a.installing[m.ID] = fmt.Sprintf("Downloading %d%%", done*100/total)
@@ -456,7 +435,18 @@ func (a *App) downloadModel(ctx context.Context, m Model, token string, cloning 
 			return e
 		}
 	}
-	return os.WriteFile(filepath.Join(dir, "installed.json"), []byte(jsonText(map[string]any{"version": m.Version, "cloning": cloning || m.ID == "moss", "verified": now()})), 0600)
+	if q, ok := a.Engines[m.ID].(*QwenEngine); ok {
+		a.modelsMu.Lock()
+		a.installing[m.ID] = "Preparing cloning model and checking audio…"
+		a.modelsMu.Unlock()
+		a.inference.Lock()
+		e := q.prepare(ctx)
+		a.inference.Unlock()
+		if e != nil {
+			return e
+		}
+	}
+	return os.WriteFile(filepath.Join(dir, "installed.json"), []byte(jsonText(map[string]any{"version": m.Version, "cloning": cloning || m.Cloning, "verified": now()})), 0600)
 }
 func (a *App) removeModel(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
@@ -540,7 +530,7 @@ func (p *PocketEngine) Cloning() bool   { return canClone(p.A.modelDir(p.ID)) }
 func (p *PocketEngine) Compatible(v Voice, lang string) bool {
 	return lang == "en" && (v.Engine == "pocket" || v.Engine == p.ID && p.Cloning())
 }
-func (p *PocketEngine) Generate(ctx context.Context, text string, v Voice, out string) error {
+func (p *PocketEngine) Generate(ctx context.Context, text string, v Voice, lang, out string) error {
 	dir, e := p.A.runtime()
 	if e != nil {
 		return e
@@ -576,7 +566,7 @@ func (m *MossEngine) Compatible(v Voice, lang string) bool {
 	}
 	return supported && v.Engine == "moss"
 }
-func (m *MossEngine) Generate(ctx context.Context, text string, v Voice, out string) error {
+func (m *MossEngine) Generate(ctx context.Context, text string, v Voice, lang, out string) error {
 	dir, e := m.A.runtimeFor(true)
 	if e != nil {
 		return e

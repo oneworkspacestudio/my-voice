@@ -1,4 +1,4 @@
-export type CloneModel = {id:string;name:string;cloning:boolean;cloningReady?:boolean;installed:boolean;installing?:boolean;status?:string;size:number;languages:string[]};
+export type CloneModel = {id:string;name:string;cloning:boolean;cloningReady?:boolean;installed:boolean;installing?:boolean;status?:string;size:number;languages:string[];summary?:string;ramGB?:number};
 
 export const modelInstalling = (m:CloneModel) => !!m.installing || /^(Downloading|Preparing)/.test(m.status||'');
 export const cloneReady = (m?:CloneModel) => !!m && m.installed && (m.cloningReady ?? m.cloning) && !modelInstalling(m);

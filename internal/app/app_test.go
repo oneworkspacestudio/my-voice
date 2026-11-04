@@ -15,11 +15,11 @@ import (
 
 type testEngine struct{}
 
-func (testEngine) Available() bool                                       { return true }
-func (testEngine) Cloning() bool                                         { return true }
-func (testEngine) Compatible(Voice, string) bool                         { return true }
-func (testEngine) Generate(context.Context, string, Voice, string) error { return nil }
-func (testEngine) Clone(context.Context, string, string) error           { return nil }
+func (testEngine) Available() bool                                               { return true }
+func (testEngine) Cloning() bool                                                 { return true }
+func (testEngine) Compatible(Voice, string) bool                                 { return true }
+func (testEngine) Generate(context.Context, string, Voice, string, string) error { return nil }
+func (testEngine) Clone(context.Context, string, string) error                   { return nil }
 func TestChunkingAndAudioBoundaries(t *testing.T) {
 	if got, e := transform("OWS", mergeRules([]Rule{{From: "OWS", To: "default"}}, []Rule{{From: "OWS", To: "project"}})); e != nil || got != "project" {
 		t.Fatal("project dictionary did not override account rules", got)
@@ -57,8 +57,8 @@ func TestChunkingAndAudioBoundaries(t *testing.T) {
 }
 func TestModelRegistryIsPinnedAndOpen(t *testing.T) {
 	models := modelList()
-	if len(models) != 3 {
-		t.Fatal("expected three explicit CPU models")
+	if len(models) != 5 {
+		t.Fatal("expected five explicit CPU models")
 	}
 	for _, m := range models {
 		if len(m.Languages) == 0 || m.Size <= 0 || len(m.Assets) == 0 {

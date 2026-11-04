@@ -10,7 +10,7 @@ It runs on your Windows PC. No speech subscription or GPU is required.
 ![My Voice home screen](docs/screenshots/home-desktop.png)
 
 - Generate English speech with the small, CPU-only Pocket TTS presets.
-- Create reusable voices with the open MOSS TTS Nano ONNX engine.
+- Create reusable voices with MOSS TTS Nano or Qwen3-TTS 0.6B / 1.7B.
 - Edit sentences, assign voices to dialogue segments, and regenerate one segment.
 - Import TXT/Markdown, queue a batch, replay history and export WAV, MP3 or ZIP.
 - Save a copy to your signed-in My Drive account. References stay private.
@@ -21,7 +21,10 @@ It runs on your Windows PC. No speech subscription or GPU is required.
 Install **My Voice** from the Creative & Development section of One Workspace
 setup or Updates. Existing installations need Workspace112 for the new optional
 app to appear in Updates. Open it from Apps, then visit Settings to install a model.
-MOSS is the open cloning option; Pocket's ungated checkpoints provide preset
+Choose MOSS for a small cloning engine, Qwen3 0.6B for a lighter Qwen option,
+or Qwen3 1.7B to compare the larger model. Install directly on the cloning screen.
+Use **Try another model** on your saved voice to reuse its private reference;
+you do not need to record again. Pocket's ungated checkpoints provide preset
 speech only. The launcher contains its CPU runtimes, **not the model weights**.
 Model downloads are explicit, version pinned and checksum verified.
 
@@ -40,7 +43,7 @@ Only clone a voice you own or have explicit permission to use. Keep a clear
 [Security](SECURITY.md) · [Changes](CHANGELOG.md)
 
 This Windows preview exposes only the language codes explicitly listed upstream.
-English has native acceptance coverage; other MOSS languages need your own review.
+English has native acceptance coverage; other model languages need your own review.
 Hindi, noise removal, GPU engines, dubbing and voice agents are not included.
 There is no claim of ElevenLabs feature parity, voice-quality superiority or
 minimum-memory support on hardware that was not tested.
