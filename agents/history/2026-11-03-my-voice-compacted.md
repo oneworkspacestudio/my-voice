@@ -749,3 +749,45 @@ process tracker and preserved credential only for synthetic QA. Public8 source,
 release/channel, protected managed upgrade and both target installs pending.
 Do not confuse implementation/native success with completed delivery. Actions
 remain disabled; immutable older public releases are unchanged.
+
+
+## Preview8 public and both-PC delivery complete
+
+Source03eeb6a136b1cc077e8446aca2845bf18daad683 / immutable v0.1.0-preview.8
+has15 verified assets, anonymous package/runtime/source access and scoped public
+pin/channel e7116f11344fcaec318becfd9043151f0c381b62. Ordinary component116 files
+and unrelated channel rows retained. No Actions, suite release or asset replacement.
+Qwen0.6B and1.7B CPU runtimes ship inside the existing package contract; weights
+remain explicit user downloads. No quality-superiority or minimum-RAM guarantee.
+
+Actual public114 fresh selected setup and normal Voice5 to8 upgrade preserve
+manager/unselected bytes, identity, paths, models/audio and saved voice/script/
+recording rows.116 public payloads and20 recovery files independently verify.
+Managed MyAccounts/proxy UI reuses the synthetic CC0 reference and produces full
+two-segment speech for both engines:0.6B5.5462s/13.7418s wall;1.7B5.8419s/19.7434s.
+Model-labelled voice dropdown/captions and playable WAV/MP3 verified. Native exact8
+also passes. Correction to the earlier app native checkpoint:1.7B audio duration
+is5.1592916667s (not5.195s); wall19.8055484s. Go tests/vet,19 frontend regressions,
+production build, download failure/resume coverage and desktop/390px review pass.
+
+Primary Voice7 to8 retains Workspace114, unselected app/package bytes/contracts,
+account identity, secret contents and paths.116 payloads and production assets
+CEqxbgfR/DQnFYA9P match;36 services healthy; independently verified recovery kept.
+Ordinary cleanup retires1 eligible older recovery. Actual authenticated UI8 with
+three cloning options verified before interruption. Followup browser session now
+requires sign-in; no claim of a second authenticated primary check was made.
+
+PC2 normal Voice-only7 to8 submitted once, all9 stages complete in192s. Recovery
+verified/retained and1 eligible older copy retired. Workspace113, MyAI24 and every
+other installed version retained (full before/after row comparison).36 services
+healthy; restored normal MyAccounts app-opening session shows Voice8, existing
+saved clone, MOSS ready, three cloning choices and Try another model. Qwen1.7B
+inline Install with capture disabled until ready verified and left as deliverable.
+Remote verification is normal updater UI/health, not independent filesystem audit.
+No owner model download, generation or feature fixture. New model weights remain
+opt-in; saved reference reuse was fully exercised only on synthetic fixtures.
+
+Synthetic sessions signed out and tracked services stopped; guarded disposable
+NTFS root removed, absence rechecked. Tooling/evidence retained. No owner data or
+recovery manually removed. All release/channel and both target install gates
+complete; no pending PC2 deferral. Receipt: docs/delivery-preview8.json.

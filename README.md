@@ -48,4 +48,4 @@ Hindi, noise removal, GPU engines, dubbing and voice agents are not included.
 There is no claim of ElevenLabs feature parity, voice-quality superiority or
 minimum-memory support on hardware that was not tested.
 
-[Verified two-PC delivery receipt](docs/delivery-preview3.json).
+[Verified two-PC delivery receipt](docs/delivery-preview8.json).

@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "version": "0.1.0-preview.8",
+  "sourceCommit": "03eeb6a136b1cc077e8446aca2845bf18daad683",
+  "release": "https://github.com/oneworkspacestudio/my-voice/releases/tag/v0.1.0-preview.8",
+  "channelCommit": "e7116f11344fcaec318becfd9043151f0c381b62",
+  "immutableAssetsVerified": 15,
+  "anonymousReleaseAndChannelVerified": true,
+  "builtOnNativeWindows": true,
+  "githubActionsUsed": false,
+  "executableSHA256": "b89a1e6d2bdcfee8ac00ea226035406569821895d26c08e1b8ab8bb6c8748d39",
+  "packageSHA256": "13e39a503efbdc9166ed06eacb9150b28111ac52ec3bcfdf045e15d85cf3044e",
+  "change": "Selectable Qwen3-TTS Base Q8 0.6B and 1.7B alongside MOSS; inline verified installation and saved private reference reuse into separate model-specific voices",
+  "validation": [
+    "Full Go tests/vet, nineteen frontend regressions and production AUI/TypeScript/Vite build",
+    "Streaming download resume, ignored-Range restart, bad-range rejection, checksum corruption and interrupted-body recovery tests",
+    "Real supervised CPU setup and full two-sentence clone synthesis for both Qwen engines using synthetic CC0 data",
+    "Native runtime loads bundled app-local release CRT; no startup executable dependency download",
+    "Desktop and 390px UI review; temporary viewport override reset",
+    "Actual public114 fresh selected setup and normal public Voice5 to8 protected update",
+    "Managed MyAccounts/proxy saved reference comparison and full-script WAV/MP3 generation on both Qwen engines",
+    "Both owner targets installed Voice8, recovery retained and health verified"
+  ],
+  "nativeAcceptance": {
+    "schema": 1,
+    "passed": true,
+    "version": "0.1.0-preview.8",
+    "executableSHA256": "b89a1e6d2bdcfee8ac00ea226035406569821895d26c08e1b8ab8bb6c8748d39",
+    "models": [
+      {
+        "passed": true,
+        "model": "qwen06",
+        "fullTextAndTwoSegments": true,
+        "savedReferenceReusedInUI": true,
+        "originalReferenceUnchanged": true,
+        "nativeSupervisedWorker": true,
+        "durationSeconds": 6.641875,
+        "generationSeconds": 14.86357,
+        "wavBytes": 318854,
+        "mp3Bytes": 134444
+      },
+      {
+        "passed": true,
+        "model": "qwen17",
+        "fullTextAndTwoSegments": true,
+        "speechModelChangeReusesSavedReferenceInUI": true,
+        "nativeSupervisedWorker": true,
+        "bundledAppLocalCRTLoaded": true,
+        "durationSeconds": 5.159291666666666,
+        "generationSeconds": 19.8055484,
+        "wavBytes": 247690,
+        "mp3Bytes": 104684
+      }
+    ],
+    "installationChecks": [
+      {
+        "passed": true,
+        "model": "qwen06",
+        "verifiedAssets": 4,
+        "supervisedCpuSpeechCheck": true,
+        "setupSeconds": 8.34
+      },
+      {
+        "passed": true,
+        "model": "qwen17",
+        "verifiedAssets": 4,
+        "actualCompleteUpstreamDownloadByApp": true,
+        "supervisedCpuSpeechCheck": true,
+        "setupSeconds": 159.67
+      }
+    ],
+    "threeCloningChoicesVisibleInUI": true,
+    "public7MossCloneRetained": true,
+    "desktopAnd390pxUIReviewed": true,
+    "ownerInstallationUsedAsFixture": false,
+    "physicalMicrophoneCaptureTested": false,
+    "humanBlindSimilarityStudyPerformed": false,
+    "availableRamGuidanceIsEstimate": true
+  },
+  "managedProtectedUpdate": {
+    "verifiedOwnedPayloads": 116,
+    "schema": 1,
+    "mode": "update",
+    "passed": true,
+    "version": "0.1.0-preview.8",
+    "managerAndUnselectedBytesPreserved": true,
+    "accountIdentityAndPathsPreserved": true,
+    "modelsProjectsAndAudioPreserved": true,
+    "savedVoiceRecordingAndScriptRowsPreserved": true,
+    "backupID": "update-20261104T004238-80c7185d2ca7",
+    "recoveryFilesIndependentlyVerified": 20,
+    "exactPublicExecutableVerified": true
+  },
+  "managedSpeechAcceptance": {
+    "schema": 1,
+    "passed": true,
+    "version": "0.1.0-preview.8",
+    "actualMyAccountsAndManagedProxyVerified": true,
+    "retainedOriginalReferenceUnchanged": true,
+    "savedReferenceReusedInUI": true,
+    "threeDistinctModelVariantsVisibleInSpeechDropdown": true,
+    "speechModelChangeOpensReferenceReuseFlow": true,
+    "correctModelRecordingCaptionsVerifiedInUI": true,
+    "completeScriptAndAllSegmentsAudible": true,
+    "publicPackageBytesVerified": 116,
+    "modelCachesReusedFromVerifiedSyntheticNativeInstallation": true,
+    "finalBrowserAudioReadyState": 4,
+    "ownerInstallationUsedAsFixture": false,
+    "models": [
+      {
+        "model": "qwen06",
+        "durationSeconds": 5.546166666666666,
+        "generationSeconds": 13.7417972,
+        "segments": 2,
+        "segmentRMS": [
+          0.06722,
+          0.10308
+        ],
+        "wavBytes": 266260,
+        "mp3Bytes": 112844
+      },
+      {
+        "model": "qwen17",
+        "durationSeconds": 5.841875,
+        "generationSeconds": 19.7434222,
+        "segments": 2,
+        "segmentRMS": [
+          0.10535,
+          0.05205
+        ],
+        "wavBytes": 280454,
+        "mp3Bytes": 118604
+      }
+    ]
+  },
+  "ordinaryComponent": {
+    "passed": true,
+    "version": "0.1.0-preview.8",
+    "exactPublicFiles": 116,
+    "otherChannelRowsPreserved": true
+  },
+  "primary": {
+    "schema": 1,
+    "target": "primary",
+    "workspace": "0.3.0-preview.114",
+    "voice": "0.1.0-preview.8",
+    "transaction": "complete",
+    "verifiedVoicePayloads": 116,
+    "managerBytesRetained": true,
+    "publicVerificationPending": false,
+    "unselectedAppsAndPackagesPreserved": true,
+    "identitiesAndSecretContentsPreserved": true,
+    "locationsPreserved": true,
+    "verifiedRecoveryRetained": true,
+    "cleanup": "complete",
+    "runningAppCount": 36,
+    "baselineFailures": [],
+    "newFailures": [],
+    "finished": "2026-11-04T00:52:14.1467564Z",
+    "cleanupRetainedRecoveryVerified": true,
+    "cleanupRetiredEligibleCopies": 1,
+    "recoveryID": "update-20261104T005019-4638e44eef84",
+    "servedProductionAssetsMatchTestedBuild": true,
+    "servedAssetNames": [
+      "assets/index-CEqxbgfR.js",
+      "assets/index-DQnFYA9P.css"
+    ],
+    "oidcAndWorkspaceBootstrap": true,
+    "ownerModelDownloadPerformed": false,
+    "ownerFeatureFixtureCreated": false,
+    "threeCloningChoicesVerifiedInPriorAuthenticatedSession": true,
+    "followupBrowserSessionRequiresSignIn": true
+  },
+  "pc2": {
+    "schema": 1,
+    "target": "PC2",
+    "workspace": "0.3.0-preview.113",
+    "voice": "0.1.0-preview.8",
+    "transaction": "complete",
+    "onlySelectedUpdate": "My Voice",
+    "applySubmittedOnce": true,
+    "allNineUpdateStagesCompleted": true,
+    "updateSeconds": 192,
+    "recoveryID": "update-20261104T005113-6e6be2862d31",
+    "verifiedRecoveryRetained": true,
+    "cleanupRetiredEligibleCopies": 1,
+    "runningAppCount": 36,
+    "unselectedInstalledVersionsPreserved": true,
+    "actualMyAccountsProxySessionVerifiedInBrowser": true,
+    "retainedSavedCloneAndMossReadyVisible": true,
+    "threeCloningModelChoicesVisible": true,
+    "tryAnotherModelAvailableOnSavedVoice": true,
+    "qwenInlineInstallAndCaptureReadinessGuardVerified": true,
+    "ownerModelDownloadPerformed": false,
+    "ownerFeatureFixtureCreated": false,
+    "ownerGenerationSubmitted": false,
+    "independentRemoteFilesystemAuditPerformed": false,
+    "verification": "Normal updater completion/recovery UI, installed version row comparison, health and authenticated app UI",
+    "verifiedAt": "2026-11-05T10:35:17.566113+00:00"
+  },
+  "compatibility": {
+    "ownedPackageCount": 116,
+    "minimumManager": "0.3.0-preview.111",
+    "installerIntegration": 7,
+    "managerContractUnchanged": true,
+    "newSuiteOrAndroidReleaseRequired": false,
+    "qwenNativeRuntimeEmbeddedInApp": true,
+    "newModelWeightsRemainExplicitUserDownloadsOnOwnerPCs": true
+  },
+  "fixtureCleanup": {
+    "activeProcessAndReparseChecksPassed": true,
+    "trackedServicesStopped": true,
+    "nativeAndManagedSessionsSignedOut": true,
+    "buildArtifactsAndEvidenceRetained": true,
+    "ownerDataOrRecoveryManuallyRemoved": false,
+    "schema": 1,
+    "disposableNtfRootRemoved": true
+  },
+  "verificationLimits": {
+    "ownerVoiceUsedAsTestFixture": false,
+    "ownerGenerationSubmitted": false,
+    "physicalMicrophoneCaptureTested": false,
+    "independentRemoteFilesystemAuditPerformed": false,
+    "nonEnglishAcceptanceTested": false,
+    "humanBlindSimilarityStudyPerformed": false,
+    "availableRamGuidanceIsEstimate": true,
+    "modelQualitySuperiorityClaimed": false
+  }
+}
