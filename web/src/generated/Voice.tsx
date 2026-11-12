@@ -518,7 +518,7 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                 {data.podcastOwner && (
                   <Card>
                     <Heading level={2}>Podcasts narration</Heading>
-                    <Text>Let My Podcasts use an installed speech model on this PC. It uses stock presets and wakes the model when it has a turn to record.</Text>
+                    <Text>Let My Podcasts use an installed speech model on this PC. It wakes the model when a turn is ready. Install or reinstall Pocket TTS in Models to add separate male and female voices for Alex and Jamie.</Text>
                     <Text variant="caption">{data.podcastStatus}</Text>
                     <Row>
                       <Button onClick={() => onAction("issue-podcast-credential")} label="Issue Podcasts credential" variant="primary" disabled={data.podcastChanging} />

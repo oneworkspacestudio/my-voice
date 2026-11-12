@@ -91,6 +91,10 @@ POST /_internal/podcasts/speech only from a literal loopback address, with a
 matching local Host, the bearer grant, and no proxy or browser headers.
 
 Status returns protocol version, readiness and the selected stock model.
+When a Pocket installation contains both presets, status includes the
+marius-alba-v1 cast. Pass the cast to speech to pin the speaker mapping for
+each turn. Alex uses Marius and Jamie uses Alba. An absent cast remains
+compatible with the earlier request format.
 Speech accepts model, speaker (Alex or Jamie) and up to 3,500 UTF-8 bytes of
 text. It returns signed 16-bit mono PCM with X-Voice-Sample-Rate set to 24000.
 The request wakes an installed model. HTTP 429 means the shared engine is busy.

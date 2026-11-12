@@ -19,8 +19,24 @@ import (
 )
 
 const podcastGrantKey = "podcasts-speech-grant"
+const pocketPodcastCast = "marius-alba-v1"
 
-func (a *App) podcastModel() (string, Voice) {
+func (a *App) podcastModel() (model, cast string, voice Voice) {
+	for _, m := range modelList() {
+		engine, ok := a.Engines[m.ID].(*PocketEngine)
+		if !ok || !engine.Available() {
+			continue
+		}
+		for _, asset := range m.Assets {
+			if !asset.PodcastPreset {
+				continue
+			}
+			info, err := os.Stat(filepath.Join(a.modelDir(m.ID), asset.Path))
+			if err == nil && info.Mode().IsRegular() && info.Size() == asset.Size {
+				return m.ID, pocketPodcastCast, Voice{ID: "alba", Engine: "pocket", Language: "en", Preset: true}
+			}
+		}
+	}
 	for _, model := range []string{"pocket18", "pocket7", "moss", "qwen06", "qwen17"} {
 		engine := a.Engines[model]
 		if engine == nil || !engine.Available() {
@@ -28,11 +44,11 @@ func (a *App) podcastModel() (string, Voice) {
 		}
 		for _, voice := range a.presetVoices() {
 			if engine.Compatible(voice, "en") {
-				return model, voice
+				return model, "single-v1", voice
 			}
 		}
 	}
-	return "", Voice{}
+	return "", "", Voice{}
 }
 
 func (a *App) podcastGrantStatus(w http.ResponseWriter, r *http.Request) {
@@ -42,9 +58,9 @@ func (a *App) podcastGrantStatus(w http.ResponseWriter, r *http.Request) {
 		a.H.DBError(w, err)
 		return
 	}
-	model, _ := a.podcastModel()
+	model, cast, _ := a.podcastModel()
 	w.Header().Set("Cache-Control", "no-store")
-	apphost.JSON(w, 200, map[string]any{"connected": digest != "", "model": model})
+	apphost.JSON(w, 200, map[string]any{"connected": digest != "", "model": model, "cast": cast})
 }
 
 func (a *App) changePodcastGrant(w http.ResponseWriter, r *http.Request) {
@@ -114,9 +130,9 @@ func (a *App) podcastServiceStatus(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 401, "A direct local Podcasts credential is required")
 		return
 	}
-	model, _ := a.podcastModel()
+	model, cast, _ := a.podcastModel()
 	w.Header().Set("Cache-Control", "no-store")
-	apphost.JSON(w, 200, map[string]any{"protocol": 1, "ready": model != "", "model": model})
+	apphost.JSON(w, 200, map[string]any{"protocol": 1, "ready": model != "", "model": model, "cast": cast})
 }
 
 func (a *App) podcastSpeech(w http.ResponseWriter, r *http.Request) {
@@ -147,6 +163,7 @@ func (a *App) podcastSpeech(w http.ResponseWriter, r *http.Request) {
 		Text    string `json:"text"`
 		Speaker string `json:"speaker"`
 		Model   string `json:"model"`
+		Cast    string `json:"cast,omitempty"`
 	}
 	if !apphost.Decode(w, r, &in) {
 		return
@@ -156,12 +173,15 @@ func (a *App) podcastSpeech(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 400, "Send one Alex or Jamie narration turn up to 3500 bytes")
 		return
 	}
-	model, voice := a.podcastModel()
-	if model == "" || model != in.Model {
+	model, cast, voice := a.podcastModel()
+	if model == "" || model != in.Model || (in.Cast != "" && in.Cast != cast) {
 		apphost.Problem(w, 409, "Install a speech model in My Voice or refresh the selected model")
 		return
 	}
-	b, err := a.recordPodcastTurn(ctx, model, voice, in.Speaker, in.Text)
+	if cast == pocketPodcastCast && in.Speaker == "Alex" {
+		voice.ID = "marius"
+	}
+	b, err := a.recordPodcastTurn(ctx, model, voice, in.Speaker, in.Text, cast)
 	if err != nil {
 		apphost.Problem(w, 502, "My Voice could not render this turn. Check the installed model and retry")
 		return
@@ -172,7 +192,7 @@ func (a *App) podcastSpeech(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(b)
 }
 
-func (a *App) recordPodcastTurn(ctx context.Context, model string, voice Voice, speaker, text string) ([]byte, error) {
+func (a *App) recordPodcastTurn(ctx context.Context, model string, voice Voice, speaker, text, cast string) ([]byte, error) {
 	root := a.path("tmp")
 	if err := os.MkdirAll(root, 0700); err != nil {
 		return nil, err
@@ -189,6 +209,9 @@ func (a *App) recordPodcastTurn(ctx context.Context, model string, voice Voice, 
 	style := Script{Speed: 1.02, Pitch: 1, Volume: 1}
 	if speaker == "Jamie" {
 		style.Speed, style.Pitch = 0.96, -1.5
+	}
+	if cast == pocketPodcastCast {
+		style.Speed, style.Pitch = 1, 0
 	}
 	if err := a.processAudio(ctx, raw, wav, style); err != nil {
 		return nil, err

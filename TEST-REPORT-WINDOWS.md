@@ -252,3 +252,11 @@ PCM. A signed-out Podcasts worker generated three complete scheduled WAVs and
 resumed a previously reviewed script using the real local endpoint. Research
 and writing were fixtures. Direct authorization, proxy denial and credential
 revocation were verified. Nineteen browser regressions passed.
+
+## Preview.10 Pocket co-hosts
+
+The packaged CPU runtime rendered Alex with the pinned Marius preset and
+Jamie with the pinned Alba preset. The direct endpoint reported the pair
+and produced valid mono 24 kHz PCM for both using the same test text. The
+signed-out Podcasts worker produced three scheduled WAVs with the pair
+and synthetic writing. MOSS still rendered with the single-preset fallback.

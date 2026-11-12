@@ -5,6 +5,7 @@
 | Pocket runtime | kyutai-labs/pocket-tts v4.0.1 Windows artifact (CLI3.3.0) | MIT core; bundled third-party components include MPL-2.0; notices and corresponding sources accompany the release |
 | Pocket 18.2M / 6.9M preset checkpoints | kyutai/pocket-tts-without-voice-cloning; revisions and SHA256 in models.json | CC BY4.0; attribution to Kyutai; preset-only checkpoint |
 | Alba voice | Kyutai tts-voices / Alba MacKenna casual recording and model-specific preset state | CC BY4.0; credit Alba MacKenna and Kyutai |
+| Marius voice | Kyutai Pocket stock embedding from the Unmute Voice Donation Project’s Selfie.wav | CC BY 4.0 model-specific embedding by Kyutai, based on a CC0 donated reference |
 | MOSS TTS Nano ONNX weights | OpenMOSS-Team/MOSS-TTS-Nano-100M-ONNX f52645cb | Apache-2.0 model card; separately downloaded |
 | MOSS audio tokenizer | OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX; exact revision/digests in models.json | Apache-2.0 model card; separately downloaded |
 | MOSS runtime source | OpenMOSS/MOSS-TTS-Nano 8b7bcc9341b3b4ef3a3a58ba1338a7d85ff133eb | Apache-2.0; upstream ort_cpu_runtime.py is unmodified |

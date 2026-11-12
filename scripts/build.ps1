@@ -1,4 +1,4 @@
-param([string]$Go='go',[string]$Version='0.1.0-preview.9',[string]$Out='build/MyVoice.exe')
+param([string]$Go='go',[string]$Version='0.1.0-preview.10',[string]$Out='build/MyVoice.exe')
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 if(!(Test-Path -LiteralPath (Join-Path $root 'internal/app/payload.zip'))){throw 'Run scripts/prepare-runtime.py with a project-owned cache folder first.'}

@@ -1,5 +1,11 @@
 # Changes
 
+## 0.1.0-preview.10
+
+Pocket TTS installations include separate Marius and Alba presets for My Podcasts.
+An existing Pocket installation can add the pair by reinstalling in Models.
+Existing single-preset models still produce speech.
+
 ## 0.1.0-preview.9
 
 Issue or revoke a local My Podcasts narration credential in Settings. A direct

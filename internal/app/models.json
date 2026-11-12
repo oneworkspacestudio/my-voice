@@ -9,7 +9,7 @@
     "license": "CC BY 4.0 \u00b7 preset speech only (ungated checkpoint)",
     "url": "https://huggingface.co/kyutai/pocket-tts-without-voice-cloning",
     "runtime": "Native Rust \u00b7 CPU only",
-    "size": 115951859,
+    "size": 120115851,
     "cloning": false,
     "assets": [
       {
@@ -31,6 +31,13 @@
         "path": "alba.safetensors",
         "size": 4163992,
         "sha256": "11554cbe9f3d3a3e10722932df9952bb44928e534f7af3200524659166b5627a"
+      },
+      {
+        "url": "https://huggingface.co/kyutai/pocket-tts-without-voice-cloning/resolve/a7056f505a4a8ca72d8b5fb1440071d6f1a35739/languages/english_18m_2026-10/embeddings/marius.safetensors",
+        "path": "marius.safetensors",
+        "size": 4163992,
+        "sha256": "1af5d5c612ba4229871c3132eabc91566d0aad618b202059abc734cdbc124cd7",
+        "podcastPreset": true
       }
     ],
     "shortName": "Pocket18M"
@@ -45,7 +52,7 @@
     "license": "CC BY 4.0 \u00b7 preset speech only (ungated checkpoint)",
     "url": "https://huggingface.co/kyutai/pocket-tts-without-voice-cloning",
     "runtime": "Native Rust \u00b7 CPU only",
-    "size": 67585091,
+    "size": 68627923,
     "cloning": false,
     "assets": [
       {
@@ -67,6 +74,13 @@
         "path": "alba.safetensors",
         "size": 1042832,
         "sha256": "fef27ae7a34132e88c81090316145671362da386ab4e5c6b048e5d16800d746b"
+      },
+      {
+        "url": "https://huggingface.co/kyutai/pocket-tts-without-voice-cloning/resolve/a7056f505a4a8ca72d8b5fb1440071d6f1a35739/languages/english_7m_2026-10/embeddings/marius.safetensors",
+        "path": "marius.safetensors",
+        "size": 1042832,
+        "sha256": "659cacbfcd15cb49a3ccdb0d32b5f9507e370671ff95f3c172e255906cd8af88",
+        "podcastPreset": true
       }
     ],
     "shortName": "Pocket7M"

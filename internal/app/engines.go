@@ -38,11 +38,12 @@ type SpeechEngine interface {
 	Clone(context.Context, string, string) error
 }
 type Asset struct {
-	URL   string `json:"url"`
-	Path  string `json:"path"`
-	Size  int64  `json:"size"`
-	SHA   string `json:"sha256"`
-	Gated bool   `json:"gated,omitempty"`
+	URL           string `json:"url"`
+	Path          string `json:"path"`
+	Size          int64  `json:"size"`
+	SHA           string `json:"sha256"`
+	Gated         bool   `json:"gated,omitempty"`
+	PodcastPreset bool   `json:"podcastPreset,omitempty"`
 }
 type Model struct {
 	ID           string   `json:"id"`
@@ -500,6 +501,9 @@ func installed(dir string) bool {
 			return false
 		}
 		for _, asset := range m.Assets {
+			if asset.PodcastPreset {
+				continue
+			}
 			info, e := os.Stat(filepath.Join(dir, filepath.FromSlash(asset.Path)))
 			if e != nil || !info.Mode().IsRegular() || info.Size() != asset.Size {
 				return false
@@ -542,6 +546,8 @@ func (p *PocketEngine) Generate(ctx context.Context, text string, v Voice, lang,
 	voice := filepath.Join(p.A.modelDir(p.ID), "alba.safetensors")
 	if !v.Preset {
 		voice = p.A.path("projects", "voice-"+v.ID, "state.safetensors")
+	} else if v.ID == "marius" {
+		voice = filepath.Join(p.A.modelDir(p.ID), "marius.safetensors")
 	}
 	return p.A.pocketService(ctx, dir, []string{"generate", "--quiet", "--config", filepath.Join(p.A.modelDir(p.ID), "config.yaml"), "--device", "cpu", "--voice", voice, "--text", text, "--output-path", out})
 }
