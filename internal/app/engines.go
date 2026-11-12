@@ -110,7 +110,11 @@ func (a *App) settings(w http.ResponseWriter, r *http.Request) {
 		return nil
 	})
 	available, _ := freeBytes(a.H.Config.Data)
-	apphost.JSON(w, 200, map[string]any{"threads": threads, "storage": a.H.Config.Data, "usedBytes": usage, "availableBytes": available, "retention": "Recordings and reusable segments stay until you remove them in History. Raw successful generation intermediates are removed.", "network": "Authenticated Workspace proxy; loopback listener", "drive": "Export to My Drive using the signed-in Drive account", "version": a.H.Config.Version, "queueLimit": 20, "storageLimitGB": 10})
+	var podcastsConnected bool
+	if apphost.Current(r).User.Role == "owner" {
+		_ = a.H.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM preferences WHERE owner='' AND key=?)", podcastGrantKey).Scan(&podcastsConnected)
+	}
+	apphost.JSON(w, 200, map[string]any{"threads": threads, "storage": a.H.Config.Data, "usedBytes": usage, "availableBytes": available, "retention": "Recordings and reusable segments stay until you remove them in History. Raw successful generation intermediates are removed.", "network": "Authenticated Workspace proxy; loopback listener", "drive": "Export to My Drive using the signed-in Drive account", "version": a.H.Config.Version, "queueLimit": 20, "storageLimitGB": 10, "podcastsConnected": podcastsConnected})
 }
 func (a *App) setSettings(w http.ResponseWriter, r *http.Request) {
 	var cfg struct {

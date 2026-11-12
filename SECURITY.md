@@ -9,6 +9,12 @@ Grant revocation prevents subsequent synthesis and reference access. Shared user
 receive use rights; the original reference remains available only to its owner.
 Existing generated audio owned by a recipient is not retroactively erased.
 
+The owner can issue a revocable My Podcasts stock narration grant with CSRF
+protection. My Voice stores its hash. The speech service requires direct
+loopback, a matching local Host and the grant, and rejects browser and forwarded
+requests. Revocation cancels active integration synthesis. Model installation
+and private audio access retain their normal account permissions.
+
 Only loopback listeners are permitted. Use Workspace for trusted remote access.
 Inputs cannot supply executable paths, arbitrary model URLs or OS commands.
 No cloud speech API or telemetry endpoint is configured. Scripts/references and

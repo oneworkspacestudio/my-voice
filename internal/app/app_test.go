@@ -122,6 +122,37 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	_, raw, _ := call("GET", "/api/me", "", cookie, "")
 	var session apphost.Session
 	_ = json.Unmarshal(raw, &session)
+	if code, _, _ := call("POST", "/api/integrations/podcasts", "", cookie, ""); code != 403 {
+		t.Fatal("credential issuance accepted without CSRF", code)
+	}
+	code, grant, _ := call("POST", "/api/integrations/podcasts", "", cookie, session.CSRF)
+	var credential struct{ Credential string }
+	if code != 201 || json.Unmarshal(grant, &credential) != nil || len(credential.Credential) != 64 {
+		t.Fatal("owner credential issuance failed", code)
+	}
+	speechStatus := func(proxy bool) int {
+		req, _ := http.NewRequest("GET", server.URL+"/_internal/podcasts/status", nil)
+		req.Host = host.Config.Listen
+		req.Header.Set("Authorization", "Bearer "+credential.Credential)
+		if proxy {
+			req.Header.Set("X-Forwarded-For", "203.0.113.1")
+		}
+		res, err := server.Client().Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Body.Close()
+		return res.StatusCode
+	}
+	if speechStatus(false) != 200 || speechStatus(true) != 401 {
+		t.Fatal("direct authorization or proxy rejection failed")
+	}
+	if code, status, _ := call("GET", "/api/integrations/podcasts", "", cookie, session.CSRF); code != 200 || bytes.Contains(status, []byte(credential.Credential)) {
+		t.Fatal("credential status disclosed the secret", code)
+	}
+	if code, _, _ := call("DELETE", "/api/integrations/podcasts", "", cookie, session.CSRF); code != 200 || speechStatus(false) != 401 {
+		t.Fatal("credential revocation did not stop access", code)
+	}
 	_, raw, _ = call("GET", "/api/models", "", cookie, "")
 	var models []Model
 	if e := json.Unmarshal(raw, &models); e != nil {

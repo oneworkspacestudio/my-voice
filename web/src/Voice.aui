@@ -382,6 +382,19 @@ Page Voice
                   Button action=remove-model item=$item.id icon=Trash2 label="Remove model" variant=icon
               If condition=$item.status
                 Text variant=caption $item.status
+          If condition=$podcastOwner
+            Card
+              Heading level=2 "Podcasts narration"
+              Text "Let My Podcasts use an installed speech model on this PC. It uses stock presets and wakes the model when it has a turn to record."
+              Text variant=caption $podcastStatus
+              Row
+                Button action=issue-podcast-credential label="Issue Podcasts credential" variant=primary disabled=$podcastChanging
+                If condition=$podcastConnected
+                  Button action=revoke-podcast-credential label="Revoke Podcasts credential" variant=secondary disabled=$podcastChanging
+              If condition=$podcastCredential
+                Text variant=caption "Copy this credential into My Podcasts → Connections → Narration, then save connections."
+                Text variant=caption $podcastCredential
+                Button action=copy-podcast-credential label="Copy credential" variant=secondary
           Card
             Heading level=2 "Performance & privacy"
             Input name=threads label="CPU threads (1–8)" type=number min=1 max=8

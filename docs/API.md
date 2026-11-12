@@ -32,7 +32,8 @@ users; standalone local users require the apphost owner's explicit action.
 | GET outputs/{id}/download?format=wav\|mp3 | Owner attachment export |
 | GET outputs/{id}/segments/{segmentID} | Owner PCM segment |
 | GET exports/zip?ids=ID,ID | Up to 20 complete owner recordings |
-| GET / PATCH settings | Performance/storage details; owner-only thread update |
+| GET / PATCH settings | Performance/storage details and integration state |
+| GET / POST / DELETE integrations/podcasts | Owner-only status, issue/rotate, revoke |
 
 Voice creation decodes up to120 seconds to mono24kHz16-bit PCM, automatically
 trims silence/long pauses, removes DC drift, safely balances volume and selects
@@ -80,3 +81,19 @@ Other Workspace apps can use the existing curated, authenticated My AI native
 connector (voice list, generation, history, job status). This adds no blanket LAN
 bearer token or arbitrary HTTP proxy. General external token issuance is not
 included. Model installation/settings remain owner-controlled.
+
+## My Podcasts narration
+
+Issue a dedicated bearer credential in My Voice **Settings → Podcasts narration**.
+The issue response shows the token once. Rotation and revocation cancel active
+requests. The direct listener accepts GET /_internal/podcasts/status and
+POST /_internal/podcasts/speech only from a literal loopback address, with a
+matching local Host, the bearer grant, and no proxy or browser headers.
+
+Status returns protocol version, readiness and the selected stock model.
+Speech accepts model, speaker (Alex or Jamie) and up to 3,500 UTF-8 bytes of
+text. It returns signed 16-bit mono PCM with X-Voice-Sample-Rate set to 24000.
+The request wakes an installed model. HTTP 429 means the shared engine is busy.
+Only one integration request can render at a time. The contract exposes stock
+narration and keeps private voices, histories and model management behind the
+existing owner session.

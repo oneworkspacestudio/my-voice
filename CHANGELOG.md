@@ -1,5 +1,11 @@
 # Changes
 
+## 0.1.0-preview.9
+
+Issue or revoke a local My Podcasts narration credential in Settings. A direct
+loopback request wakes an installed stock speech model and returns 24 kHz PCM.
+The grant is limited to stock narration and works while the browser is closed.
+
 ## 0.1.0-preview.8
 
 Choose between MOSS, Qwen3-TTS 0.6B Q8 and Qwen3-TTS 1.7B Q8 for cloning.

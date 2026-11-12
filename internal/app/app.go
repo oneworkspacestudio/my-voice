@@ -28,6 +28,8 @@ type App struct {
 	installing       map[string]string
 	runtimePath      string
 	mossRuntimeReady bool
+	podcastMu        sync.Mutex
+	podcastCancel    context.CancelFunc
 }
 type Voice struct {
 	ID        string `json:"id"`
@@ -125,6 +127,11 @@ func New(h *apphost.Host) (*App, error) {
 		}
 		h.Mux.HandleFunc(r.p, f)
 	}
+	h.Mux.HandleFunc("GET /api/integrations/podcasts", h.Owner(a.podcastGrantStatus))
+	h.Mux.HandleFunc("POST /api/integrations/podcasts", h.Owner(a.changePodcastGrant))
+	h.Mux.HandleFunc("DELETE /api/integrations/podcasts", h.Owner(a.changePodcastGrant))
+	h.Mux.HandleFunc("GET /_internal/podcasts/status", a.podcastServiceStatus)
+	h.Mux.HandleFunc("POST /_internal/podcasts/speech", a.podcastSpeech)
 	h.BackupPaths = append(h.BackupPaths, "models", "projects")
 	return a, nil
 }

@@ -515,6 +515,26 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                     )}
                   </Card>
                 ))}
+                {data.podcastOwner && (
+                  <Card>
+                    <Heading level={2}>Podcasts narration</Heading>
+                    <Text>Let My Podcasts use an installed speech model on this PC. It uses stock presets and wakes the model when it has a turn to record.</Text>
+                    <Text variant="caption">{data.podcastStatus}</Text>
+                    <Row>
+                      <Button onClick={() => onAction("issue-podcast-credential")} label="Issue Podcasts credential" variant="primary" disabled={data.podcastChanging} />
+                      {data.podcastConnected && (
+                        <Button onClick={() => onAction("revoke-podcast-credential")} label="Revoke Podcasts credential" variant="secondary" disabled={data.podcastChanging} />
+                      )}
+                    </Row>
+                    {data.podcastCredential && (
+                      <>
+                        <Text variant="caption">Copy this credential into My Podcasts → Connections → Narration, then save connections.</Text>
+                        <Text variant="caption">{data.podcastCredential}</Text>
+                        <Button onClick={() => onAction("copy-podcast-credential")} label="Copy credential" variant="secondary" />
+                      </>
+                    )}
+                  </Card>
+                )}
                 <Card>
                   <Heading level={2}>Performance & privacy</Heading>
                   <Input name="threads" label="CPU threads (1–8)" type="number" min={1} max={8} />

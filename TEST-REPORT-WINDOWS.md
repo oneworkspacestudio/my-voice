@@ -243,3 +243,12 @@ made. The larger model is an option to compare, not a guaranteed better match.
 
 Managed public upgrade and each owner target are recorded separately in the
 subsequent delivery receipt. No owner installation is a feature test fixture.
+
+## Preview.9 Podcasts integration
+
+An isolated NTFS fixture exercised MOSS and Pocket 18 with the packaged local
+CPU runtime. Both stock narrator styles produced audible, non-silent 24 kHz
+PCM. A signed-out Podcasts worker generated three complete scheduled WAVs and
+resumed a previously reviewed script using the real local endpoint. Research
+and writing were fixtures. Direct authorization, proxy denial and credential
+revocation were verified. Nineteen browser regressions passed.
