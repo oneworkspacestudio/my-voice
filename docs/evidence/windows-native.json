@@ -398,7 +398,7 @@
           "Downloading 93%",
           "Ready",
           "Downloading 88%",
-          "Preparing cloning model…",
+          "Preparing cloning model\u2026",
           "Downloading 94%",
           "Downloading 0%"
         ],
@@ -661,6 +661,28 @@
     "nativeFirstPCMms": [
       45,
       34
-    ]
+    ],
+    "managedUpgradeAndRollback": {
+      "synthetic": true,
+      "anonymousUpdate": true,
+      "payloads": 116,
+      "oidc": true,
+      "privatePhonon": true,
+      "residentPocket": true,
+      "modelChoice": true,
+      "rollback": true,
+      "stopped": true
+    },
+    "ownerDelivery": {
+      "pc2": "0.1.0-preview.13",
+      "allNineUpdateStages": true,
+      "servicesRunning": 46,
+      "resident": "pocket18",
+      "wonderpal": "0.2.4",
+      "liveSpeechHTTP": 200,
+      "contentType": "audio/pcm",
+      "liveStop": true,
+      "parentPicker": "synthetic native desktop/mobile passed; live area remains user-locked"
+    }
   }
 }
