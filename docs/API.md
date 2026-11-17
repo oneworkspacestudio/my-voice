@@ -101,3 +101,17 @@ The request wakes an installed model. HTTP 429 means the shared engine is busy.
 Only one integration request can render at a time. The contract exposes stock
 narration and keeps private voices, histories and model management behind the
 existing owner session.
+
+## WonderPal read-aloud
+
+An authenticated owner can issue, rotate or revoke a dedicated credential under
+**Settings → WonderPal read-aloud** (`GET`, `POST`, `DELETE /api/integrations/wonderpal`).
+Issuing a credential installs the pinned Apache-2.0 Phonon English Q8 model and
+starts a supervised resident worker. My Voice restores the worker at startup while
+the grant is enabled. Revocation stops the worker and cancels any ongoing stream.
+
+WonderPal Hosting uses the direct same-machine loopback origin and bearer
+credential to call `POST /v1/audio/speech`. Request `input` (up to 1,600 UTF-8
+bytes), `voice: "default"`, and `response_format: "pcm"`. The response streams
+signed 16-bit little-endian mono PCM at 24 kHz. HTTP 503 means the model is still
+loading and HTTP 429 means the worker is speaking. Each reply is ephemeral.

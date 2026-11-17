@@ -30,6 +30,7 @@ type App struct {
 	mossRuntimeReady bool
 	podcastMu        sync.Mutex
 	podcastCancel    context.CancelFunc
+	wonderVoice      *residentVoice
 }
 type Voice struct {
 	ID        string `json:"id"`
@@ -92,6 +93,7 @@ var appMigrations = []string{`CREATE TABLE voices(id TEXT PRIMARY KEY,owner TEXT
 
 func New(h *apphost.Host) (*App, error) {
 	a := &App{H: h, cancel: map[string]context.CancelFunc{}, wake: make(chan struct{}, 1), installing: map[string]string{}}
+	a.wonderVoice = &residentVoice{app: a, changed: make(chan struct{}, 1)}
 	var current int
 	if e := h.DB.QueryRow(`SELECT coalesce(max(version),0) FROM host_migrations`).Scan(&current); e != nil {
 		return nil, e
@@ -132,6 +134,10 @@ func New(h *apphost.Host) (*App, error) {
 	h.Mux.HandleFunc("DELETE /api/integrations/podcasts", h.Owner(a.changePodcastGrant))
 	h.Mux.HandleFunc("GET /_internal/podcasts/status", a.podcastServiceStatus)
 	h.Mux.HandleFunc("POST /_internal/podcasts/speech", a.podcastSpeech)
+	h.Mux.HandleFunc("GET /api/integrations/wonderpal", h.Owner(a.wonderVoice.status))
+	h.Mux.HandleFunc("POST /api/integrations/wonderpal", h.Owner(a.wonderVoice.changeGrant))
+	h.Mux.HandleFunc("DELETE /api/integrations/wonderpal", h.Owner(a.wonderVoice.changeGrant))
+	h.Mux.HandleFunc("POST /v1/audio/speech", a.wonderVoice.speak)
 	h.BackupPaths = append(h.BackupPaths, "models", "projects")
 	return a, nil
 }
@@ -149,6 +155,9 @@ func (a *App) signal() {
 	}
 }
 func (a *App) Run(ctx context.Context) error {
+	voiceDone := make(chan struct{})
+	go func() { defer close(voiceDone); a.wonderVoice.run(ctx) }()
+	defer func() { <-voiceDone }()
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
 	for {

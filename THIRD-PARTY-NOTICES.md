@@ -11,6 +11,7 @@ No model weights or personal reference recordings are bundled in the executable.
 | Lucide | 0.577.0 | ISC; licenses/web |
 | Codedia AUI compiler | 0.2.1, build tool | MIT; licenses/web |
 | Pocket native Rust CPU runtime | official v4.0.1 archive, CLI3.3.0; baseline x86-64 build of the same pinned source | MIT; licenses/Pocket-MIT.txt |
+| Gradium Phonon Python bindings | ptts 0.7.1, upstream commit `5f9522b3e245846d312caaeb460d3dcae5d1a991` | MIT or Apache-2.0, with upstream wheel licence texts and CycloneDX dependency inventory. See `phonon-runtime-corresponding-source.zip` on the release for upstream source and the included MPL-2.0 crates. |
 | MOSS CPU runtime source | 8b7bcc9341b3b4ef3a3a58ba1338a7d85ff133eb | Apache-2.0; licenses/MOSS-Apache-2.0.txt |
 | CPython embedded x64 | 3.12.10 | PSF and incorporated notices; licenses/Python-3.12.txt |
 | NumPy | 2.4.4 | BSD and incorporated numerical-library notices; licenses/python |

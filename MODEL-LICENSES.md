@@ -47,3 +47,9 @@ private. A model comparison creates a separate voice and preserves the original.
 Qwen sources: https://github.com/QwenLM/Qwen3-TTS;
 https://huggingface.co/mradermacher/Qwen3-TTS-12Hz-0.6B-Base-GGUF;
 https://huggingface.co/ggml-org/Qwen3-TTS-12Hz-1.7B-Base-GGUF.
+## WonderPal read-aloud model
+
+[Phonon 31M English](https://huggingface.co/gradium/phonon-31m-en) is Apache-2.0.
+My Voice verifies the Q8 model, tokenizer, configuration and default voice at
+the pinned revision before starting the resident worker. Model files remain in
+the private app data directory and are excluded from the release binary.

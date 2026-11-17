@@ -395,6 +395,19 @@ Page Voice
                 Text variant=caption "Copy this credential into My Podcasts → Connections → Narration, then save connections."
                 Text variant=caption $podcastCredential
                 Button action=copy-podcast-credential label="Copy credential" variant=secondary
+            Card
+              Heading level=2 "WonderPal read-aloud"
+              Text "Enable WonderPal speech on this PC. My Voice downloads the 65 MB Phonon English model once and keeps it loaded while the service is running."
+              Text variant=caption $wonderStatus
+              Text variant=caption $wonderOrigin
+              Row
+                Button action=issue-wonderpal-credential label="Issue WonderPal credential" variant=primary disabled=$wonderChanging
+                If condition=$wonderConnected
+                  Button action=revoke-wonderpal-credential label="Disable WonderPal voice" variant=secondary disabled=$wonderChanging
+              If condition=$wonderCredential
+                Text variant=caption "Save this as the protected voice service token in WonderPal's Hosting project. It is displayed once."
+                Text variant=caption $wonderCredential
+                Button action=copy-wonderpal-credential label="Copy credential" variant=secondary
           Card
             Heading level=2 "Performance & privacy"
             Input name=threads label="CPU threads (1–8)" type=number min=1 max=8

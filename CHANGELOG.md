@@ -1,5 +1,12 @@
 # Changes
 
+## 0.1.0-preview.11
+
+WonderPal can pair with the Workspace voice app on the same PC for English
+read-aloud. The owner-issued credential enables a supervised Phonon worker that
+keeps the model in memory and streams PCM across replies. Existing Podcast and
+studio connections retain their respective models and credentials.
+
 ## 0.1.0-preview.10
 
 Pocket TTS installations include separate Marius and Alba presets for My Podcasts.

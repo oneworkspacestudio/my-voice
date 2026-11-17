@@ -104,6 +104,10 @@ func loopbackAddress(address string) bool {
 
 // This is a direct local service, separate from the authenticated web app.
 func (a *App) podcastAuthorized(r *http.Request) bool {
+	return a.localVoiceGrant(r, podcastGrantKey)
+}
+
+func (a *App) localVoiceGrant(r *http.Request, key string) bool {
 	if !loopbackAddress(r.Host) || !loopbackAddress(r.RemoteAddr) || r.URL.RawQuery != "" {
 		return false
 	}
@@ -118,7 +122,7 @@ func (a *App) podcastAuthorized(r *http.Request) bool {
 		return false
 	}
 	var want string
-	if a.H.DB.QueryRow("SELECT body FROM preferences WHERE owner='' AND key=?", podcastGrantKey).Scan(&want) != nil {
+	if a.H.DB.QueryRow("SELECT body FROM preferences WHERE owner='' AND key=?", key).Scan(&want) != nil {
 		return false
 	}
 	got := sha256.Sum256([]byte(token))

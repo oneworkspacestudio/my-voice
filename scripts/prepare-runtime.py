@@ -42,6 +42,7 @@ url='https://raw.githubusercontent.com/OpenMOSS/MOSS-TTS-Nano/'+lock['mossSource
 if not source.exists():source.write_bytes(urllib.request.urlopen(url,timeout=60).read())
 if hashlib.sha256(source.read_bytes()).hexdigest()!=lock['mossRuntimeSHA256']:raise RuntimeError('MOSS runtime source digest mismatch')
 shutil.copyfile(source,runtime/'ort_cpu_runtime.py');shutil.copyfile(repo/'runtime-src/worker.py',runtime/'worker.py')
+shutil.copyfile(repo/'runtime-src/phonon_service.py',runtime/'phonon_service.py')
 with zipfile.ZipFile(repo/'internal/app/payload.zip','w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
  for p in sorted(stage.rglob('*')):
   if not p.is_file() or '__pycache__' in p.parts:continue
