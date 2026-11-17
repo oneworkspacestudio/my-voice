@@ -82,14 +82,42 @@ func (v *residentVoice) available(id string) bool {
 }
 
 func (v *residentVoice) changeModel(w http.ResponseWriter, r *http.Request) {
+	v.selectModel(w, r, false)
+}
+
+// The scoped local grant can select only this service's stock model allowlist.
+// It does not expose owner sessions, private voices, downloads or configuration.
+func (v *residentVoice) modelControl(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPatch {
+		v.selectModel(w, r, true)
+		return
+	}
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	if !v.app.localVoiceGrant(r, wonderGrantKey) {
+		apphost.Problem(w, 401, "A direct local WonderPal voice credential is required")
+		return
+	}
+	w.Header().Set("Cache-Control", "no-store")
+	state := v.modelState()
+	state["protocol"] = 1
+	apphost.JSON(w, 200, state)
+}
+
+func (v *residentVoice) selectModel(w http.ResponseWriter, r *http.Request, local bool) {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	if local && !v.app.localVoiceGrant(r, wonderGrantKey) {
+		apphost.Problem(w, 401, "A direct local WonderPal voice credential is required")
+		return
+	}
+	r.Body = http.MaxBytesReader(w, r.Body, 4096)
 	var in struct {
 		Model string `json:"model"`
 	}
 	if !apphost.Decode(w, r, &in) {
 		return
 	}
-	v.mu.Lock()
-	defer v.mu.Unlock()
 	if residentModelName(in.Model) == "" {
 		apphost.Problem(w, 400, "Choose a supported WonderPal speech model")
 		return
@@ -112,8 +140,13 @@ func (v *residentVoice) changeModel(w http.ResponseWriter, r *http.Request) {
 		case v.changed <- struct{}{}:
 		default:
 		}
-		v.app.H.Audit(uid(r), "wonderpal-speech-model", in.Model)
+		actor := uid(r)
+		if local {
+			actor = "wonderpal"
+		}
+		v.app.H.Audit(actor, "wonderpal-speech-model", in.Model)
 	}
+	w.Header().Set("Cache-Control", "no-store")
 	apphost.JSON(w, 200, map[string]string{"model": in.Model})
 }
 
@@ -127,11 +160,19 @@ func (v *residentVoice) status(w http.ResponseWriter, _ *http.Request) {
 	v.mu.Lock()
 	defer v.mu.Unlock()
 	w.Header().Set("Cache-Control", "no-store")
+	state := v.modelState()
+	state["connected"] = v.enabled()
+	state["origin"] = "http://" + v.app.H.Config.Listen
+	apphost.JSON(w, 200, state)
+}
+
+// Caller holds mu. This is the complete safe stock-model control response.
+func (v *residentVoice) modelState() map[string]any {
 	choices := []map[string]any{}
 	for _, id := range []string{"phonon", "pocket18", "pocket7", "moss", "qwen06"} {
 		choices = append(choices, map[string]any{"value": id, "label": residentModelName(id), "installed": v.available(id)})
 	}
-	apphost.JSON(w, 200, map[string]any{"connected": v.enabled(), "status": v.state, "model": v.selected(), "choices": choices, "ready": v.worker != nil && v.worker.url != "", "origin": "http://" + v.app.H.Config.Listen})
+	return map[string]any{"status": v.state, "model": v.selected(), "choices": choices, "ready": v.worker != nil && v.worker.url != ""}
 }
 
 func (v *residentVoice) changeGrant(w http.ResponseWriter, r *http.Request) {

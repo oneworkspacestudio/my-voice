@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-var version = "0.1.0-preview.12"
+var version = "0.1.0-preview.13"
 
 func main() {
 	// Portable launchers still keep private state outside replaceable programs.

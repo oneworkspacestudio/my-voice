@@ -285,3 +285,13 @@ and found no JavaScript errors. Mobile presentation is browser emulation. Go
 tests, Go vet, 19 frontend regressions and the AUI production build passed.
 Public update, recovery and installation receipts are recorded separately in
 the repository history. No owner installation or personal voice was used.
+
+## Preview.13 parent model selection
+
+Go tests verify the local model control's direct grant, browser/proxy denial,
+allowlist, missing-model rejection, private-field omission, worker cancellation,
+credential continuity and revocation. The parent picker was tested against real
+synthetic NTFS My Voice: Pocket → Phonon → Pocket, reload persistence, approved
+PCM playback and Stop. Repeated native Pocket first PCM was 45/34 ms on this
+host. Desktop/mobile choice/error/retry checks and 18 existing app/DeepSeek
+browser tests passed. No owner installation/voice was used as a feature fixture.

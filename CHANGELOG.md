@@ -1,5 +1,12 @@
 # Changes
 
+## 0.1.0-preview.13
+
+WonderPal's parent area can list installed stock voice models and switch the
+resident engine through its existing same-PC scoped connection. Private voices,
+downloads and owner settings stay behind the owner session. My Voice's own
+selector follows that choice without status polling changing editor draft fields.
+
 ## 0.1.0-preview.12
 
 WonderPal read-aloud can use Pocket TTS 18M or 7M, MOSS TTS Nano, Qwen3 TTS

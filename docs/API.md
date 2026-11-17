@@ -127,3 +127,13 @@ the authenticated owner's stored selection controls the engine. It cannot be
 used to start a different model or access private cloned voices. Output format
 stays the same across engines, so existing WonderPal integrations need no relay
 change. CPU settings apply when the resident worker next starts.
+
+Preview.13 adds direct `GET /v1/audio/models` and `PATCH /v1/audio/models` using
+the same local WonderPal credential and rejection of browser, cookie, query and
+forwarded requests. GET returns protocol 1, selected model, stock choices with
+installed flags, readiness and status. It exposes no credential, origin, private
+voices or management settings. PATCH accepts only a supported installed stock
+model (or the existing automatic Phonon choice), retains the grant and cancels
+the previous worker. It cannot install or remove models. WonderPal relays these
+operations only for an unlocked parent, keeping the grant on its server. No
+Workspace public proxy exemption was added.

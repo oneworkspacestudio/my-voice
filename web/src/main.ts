@@ -33,19 +33,22 @@ function App(){
 
  const [podcastCredential,setPodcastCredential]=useState(''),[podcastChanging,setPodcastChanging]=useState(false);
  const [wonderCredential,setWonderCredential]=useState(''),[wonderChanging,setWonderChanging]=useState(false),[wonderStatus,setWonderStatus]=useState<any>({});
+ const [wonderModel,setWonderModel]=useState('');
  useEffect(()=>{if(page!=='settings'||me?.user?.role!=='owner')setPodcastCredential('');},[page,me?.user?.id]);
  useEffect(()=>{
   if(page!=='settings'||me?.user?.role!=='owner'){setWonderCredential('');setWonderStatus({});return}
   let active=true;
-  const load=()=>void api('integrations/wonderpal').then(status=>{if(active){setWonderStatus(status);setFields((f:any)=>({...f,wonderModel:f.wonderModel||status.model}))}}).catch(()=>{});
+  let previousModel='';
+  const load=()=>void api('integrations/wonderpal').then(status=>{if(active){const previous=previousModel;previousModel=status.model;setWonderStatus(status);setWonderModel(current=>!current||current===previous?status.model:current)}}).catch(()=>{});
   load();const timer=setInterval(load,2000);
-  return ()=>{active=false;clearInterval(timer);setWonderCredential('');setFields((f:any)=>({...f,wonderModel:''}))};
+  return ()=>{active=false;clearInterval(timer);setWonderCredential('');setWonderModel('')};
  },[page,me?.user?.id]);
  state.current={fields,me,job,previewJob,segments,segmentMode,showDialogue,defaultRules,models};
 
  const go=(p:string)=>{if(p==='dialogue'){if(!state.current.segments.length)split(true);else setDialogue(true);p='speech'};if(p==='batch'){setBatch(true);p='speech'};setPage(p);location.hash=p;setError('');document.body.classList.remove('nav-open')};
 
  const setField=(name:string,value:any)=>{
+  if(name==='wonderModel'){setWonderModel(value);return}
   if(name==='script'){undo.current.push(state.current.fields.script);if(undo.current.length>100)undo.current.shift();redo.current=[]}
   if(name==='voice'||name==='model'){
    const current=voices.find(v=>v.id===state.current.fields.voice),target=state.current.models.find((m:any)=>m.id===value);
@@ -177,7 +180,7 @@ function App(){
   if(id==='copy-wonderpal-credential'&&wonderCredential){await navigator.clipboard.writeText(wonderCredential);setSaved('Credential copied');}
   if(id==='save-wonderpal-model'){
    setWonderChanging(true);
-   try{await api('integrations/wonderpal','PATCH',{model:fields.wonderModel});setWonderStatus(await api('integrations/wonderpal'));setSaved('WonderPal speech model saved');}
+   try{await api('integrations/wonderpal','PATCH',{model:wonderModel});setWonderStatus(await api('integrations/wonderpal'));setSaved('WonderPal speech model saved');}
    finally{setWonderChanging(false);}
   }
   if(id==='save-settings'){await api('settings','PATCH',{threads:Number(fields.threads)});await refresh();setSaved('Settings saved')}
@@ -306,7 +309,7 @@ function App(){
 
  };
 
- return h(Bindings.Provider,{value:{fields,setField,item,widgets,action}},h(React.Fragment,{},h(Voice,{data,onAction:action}),h('input',{type:'file',accept:'.txt,.md',hidden:true,ref:fileInput,onChange:async(e:any)=>{const file=e.target.files?.[0];if(!file)return;if(file.size>200000){setError('Import a text file smaller than 200 KB');return};setField('script',await file.text());setField('projectName',file.name.replace(/\.(txt|md)$/i,''));setSegments([]);setDialogue(false);setSegmentMode(false)}})));
+ return h(Bindings.Provider,{value:{fields:{...fields,wonderModel},setField,item,widgets,action}},h(React.Fragment,{},h(Voice,{data,onAction:action}),h('input',{type:'file',accept:'.txt,.md',hidden:true,ref:fileInput,onChange:async(e:any)=>{const file=e.target.files?.[0];if(!file)return;if(file.size>200000){setError('Import a text file smaller than 200 KB');return};setField('script',await file.text());setField('projectName',file.name.replace(/\.(txt|md)$/i,''));setSegments([]);setDialogue(false);setSegmentMode(false)}})));
 
 }
 

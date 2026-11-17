@@ -141,6 +141,41 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	if code != 200 || json.Unmarshal(wonderGrant, &wonderCredential) != nil || len(wonderCredential.Credential) != 64 {
 		t.Fatal("WonderPal grant issuance failed", code)
 	}
+	controlCall := func(method, body string, headers map[string]string) (int, []byte) {
+		req, _ := http.NewRequest(method, server.URL+"/v1/audio/models", strings.NewReader(body))
+		req.Host = host.Config.Listen
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", "Bearer "+wonderCredential.Credential)
+		for key, value := range headers {
+			req.Header.Set(key, value)
+		}
+		res, err := server.Client().Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer res.Body.Close()
+		var data bytes.Buffer
+		data.ReadFrom(res.Body)
+		return res.StatusCode, data.Bytes()
+	}
+	for _, headers := range []map[string]string{{"Origin": "https://wonderpal.example"}, {"X-Forwarded-For": "203.0.113.1"}, {"Cookie": cookie}, {"Authorization": "Bearer invalid"}} {
+		for _, method := range []string{"GET", "PATCH"} {
+			if code, _ := controlCall(method, `{"model":"phonon"}`, headers); code != 401 {
+				t.Fatal("model control accepted browser, proxy or invalid credential", method, code)
+			}
+		}
+	}
+	if code, data := controlCall("GET", "", nil); code != 200 || !bytes.Contains(data, []byte(`"protocol":1`)) || !bytes.Contains(data, []byte(`"model":"pocket18"`)) || bytes.Contains(data, []byte(wonderCredential.Credential)) || bytes.Contains(data, []byte(`"origin"`)) || bytes.Contains(data, []byte("privatevoice")) {
+		t.Fatal("scoped stock model discovery failed or disclosed private configuration", code)
+	}
+	for _, invalid := range []struct {
+		model string
+		code  int
+	}{{"qwen17", 400}, {"moss", 409}} {
+		if code, _ := controlCall("PATCH", `{"model":"`+invalid.model+`"}`, nil); code != invalid.code {
+			t.Fatal("native model control accepted an invalid or unavailable model", code)
+		}
+	}
 	if code, _, _ := call("DELETE", "/api/models/pocket18", "", cookie, session.CSRF); code != 409 {
 		t.Fatal("active resident model removal was allowed", code)
 	}
@@ -149,7 +184,7 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	}
 	workerCtx, stopWorker := context.WithCancel(context.Background())
 	a.wonderVoice.worker = &residentWorker{ctx: workerCtx, stop: stopWorker, model: "pocket18"}
-	if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"phonon"}`, cookie, session.CSRF); code != 200 || workerCtx.Err() == nil {
+	if code, _ := controlCall("PATCH", `{"model":"phonon"}`, nil); code != 200 || workerCtx.Err() == nil {
 		t.Fatal("model switch did not cancel the previous resident worker", code)
 	}
 	request := httptest.NewRequest("POST", "http://"+host.Config.Listen+"/v1/audio/speech", nil)
@@ -163,6 +198,9 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	}
 	if code, _, _ := call("DELETE", "/api/integrations/wonderpal", "", cookie, session.CSRF); code != 200 || a.localVoiceGrant(request, wonderGrantKey) {
 		t.Fatal("resident speech revocation failed", code)
+	}
+	if code, _ := controlCall("GET", "", nil); code != 401 {
+		t.Fatal("revoked credential retained model control", code)
 	}
 	if code, _, _ := call("POST", "/api/integrations/podcasts", "", cookie, ""); code != 403 {
 		t.Fatal("credential issuance accepted without CSRF", code)
