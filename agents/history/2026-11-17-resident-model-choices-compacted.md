@@ -50,3 +50,34 @@ audio from the released binary; first relay PCM was 28–39ms with two threads,
 same worker across replies, browser playback/Stop and revocation passed. Artifacts
 are under the local wonderpal-voice-options-20261117 tooling folder. Owner
 installation/pairing is pending; Android remains deferred per the user's choice.
+
+## Authorized PC2 installation and Hosting pairing
+
+User then requested installation and hosting. Under that authorization, PC2 used
+the normal preview.140 Updates surface for a Voice-only 10→12 update. All nine stages
+completed, including checksum verification, 116.5 MB checked recovery and
+retained recovery `update-20261117T211611-dd668e17e066`. Ordinary cleanup retired
+one eligible older automatic recovery (645.2 MB). Comparing 44 installed app
+entries shows only Voice changed; the public health endpoint reports all 46
+services running. Authenticated served JS/CSS match the accepted release build.
+Remote evidence is the supported updater, authenticated assets and actual app
+behavior, not an independent remote-filesystem binary audit.
+
+Pocket 18M and MOSS were already installed. The owner approved Qwen 0.6B's licence
+and 1 GB download; the normal My Voice installer completed its audio readiness
+check and reports Installed/Ready. Existing Qwen17 and saved private voices were
+left in place. Pocket 18M is selected, enabled and loaded for WonderPal. A dedicated
+grant was saved only as encrypted production Hosting values alongside its
+same-PC loopback origin. No credential is in source, captures or these notes.
+
+WonderPal 0.2.3 deployment 96abb38c1316dbf2a0c5ee8265bcb741 rebuilt the retained
+verified ZIP with current protected settings and published at 21:27:19 UTC.
+Previous production 5cf3a2d77b730d4c073302c52ddd4965 remains recoverable. Live
+status advertises Workspace Voice with DeepSeek/read-aloud retained. An actual
+live reply and replay returned HTTP 200 mono PCM; first data 152/194 ms after their
+speech requests, with complete nonempty streams and working Stop. Owner voice
+references were not used. The owner Studio tab was not navigated. Temporary
+administration tabs/helper were closed; the new live WonderPal page is delivered.
+Local privacy-filtered receipts/screenshots are under the tooling task's
+`owner-pc2` folder. PC2 delivery is complete; Android and other PCs were not
+updated in this request.
