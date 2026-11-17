@@ -1,5 +1,14 @@
 # Changes
 
+## 0.1.0-preview.12
+
+WonderPal read-aloud can use Pocket TTS 18M or 7M, MOSS TTS Nano, Qwen3 TTS
+0.6B, or Phonon. Select the installed model in My Voice Settings. The selected
+engine stays loaded across sentences and streams PCM as it is produced. Changing
+models cancels the old worker without changing the paired credential. Android
+remains on-device and is unchanged in this Workspace-first release.
+
+
 ## 0.1.0-preview.11
 
 WonderPal can pair with the Workspace voice app on the same PC for English

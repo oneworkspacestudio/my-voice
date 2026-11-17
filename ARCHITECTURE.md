@@ -47,7 +47,7 @@ job, allowing a lost generation response to be retried without duplicate work.
 
 Pronunciation is exact text replacement, account rules followed by project rules.
 Speed/pitch/volume are explicitly post-processing controls. No unsupported SSML,
-phoneme control, network audio streaming or progress-to-first-audio is implied.
+phoneme control or streaming of studio jobs is implied.
 
 My Drive uses its actual signed-in browser API and verifies OIDC subject equality
 before writing. Exports use a deterministic job-specific path, never overwrite,
@@ -59,3 +59,17 @@ The suite registry owns `/voice`, base-port+38, the app's OIDC callback, its
 private working directory, every `voice-*` package, selection, recovery, shared
 picker and update group. Installer integration7 and `native-voice-v1` prevent
 older managers accepting an incomplete native integration.
+
+WonderPal uses a separate owner-granted resident stock-voice service. Selection
+is private app state and keeps one engine loaded until switched, revoked or
+stopped. Pocket uses its bundled Rust streaming server on a random internal
+loopback port, supervised inside the same Windows Job Object. That upstream
+child listener has no bearer authentication; it contains only the stock preset
+and is never proxied or published. The credentialed Python facade exposes only
+bounded speech through the authenticated Go listener. MOSS retains ONNX sessions
+and decodes incremental frames. Qwen retains model, codec and context through a
+small C++ adapter to the exact pinned llama.cpp C ABI. Its public flush operation
+emits every eight frames while retaining codec state. Model state resets between
+requests. The adapter builds natively with MSVC C++17 and the pinned upstream
+headers; executable dependencies remain embedded and hash-verified at extraction.
+No user speech or returned PCM is persisted by this service.

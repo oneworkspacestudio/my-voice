@@ -2,7 +2,7 @@
 Native development/build tooling only; ordinary app startup never fetches code.
 Usage: python scripts/prepare-runtime.py I:/Projects/tooling/my-voice-runtime
 """
-import hashlib,json,sys,urllib.request,zipfile,shutil
+import hashlib,json,sys,urllib.request,zipfile,shutil,subprocess
 from pathlib import Path
 repo=Path(__file__).resolve().parents[1];cache=Path(sys.argv[1]).resolve();cache.mkdir(parents=True,exist_ok=True)
 lock=json.loads((repo/'runtime.lock.json').read_text(encoding='utf-8'))
@@ -27,6 +27,15 @@ with zipfile.ZipFile(fetch(lock['qwenRuntime'],'qwen-runtime.zip')) as z:
   base=Path(name).name
   needed=(base in ['llama-tts.exe','llama.dll','llama-common.dll','mtmd.dll','libomp.dll','LICENSE-LLVM-OpenMP'] or (base.startswith('ggml') and base.endswith('.dll') and 'rpc' not in base))
   if needed:(qwen/base).write_bytes(z.read(name))
+# Build the small resident adapter against the same pinned public C headers.
+pin=lock['qwenRuntime']
+headers=cache/'qwen-headers';headers.mkdir(exist_ok=True)
+with zipfile.ZipFile(fetch({'url':pin['sourceURL'],'sha256':pin['sourceSHA256']},'qwen-source.zip')) as z:
+ for name in z.namelist():
+  if name.endswith('.h') and ('/ggml/include/' in name or name.endswith(('/include/llama.h','/mtmd.h','/mtmd-helper.h'))):
+   (headers/Path(name).name).write_bytes(z.read(name))
+subprocess.run(['powershell','-NoProfile','-ExecutionPolicy','Bypass','-File',str(repo/'scripts/build-resident-qwen.ps1'),
+                '-Headers',str(headers),'-Output',str(qwen/'myvoice-qwen.dll')],check=True)
 # App-local release CRT from the pinned official Microsoft redistributable.
 with zipfile.ZipFile(fetch(lock['qwenCRT'],'qwen-crt.vsix')) as z:
  for name in lock['qwenCRT']['members']:
@@ -43,6 +52,7 @@ if not source.exists():source.write_bytes(urllib.request.urlopen(url,timeout=60)
 if hashlib.sha256(source.read_bytes()).hexdigest()!=lock['mossRuntimeSHA256']:raise RuntimeError('MOSS runtime source digest mismatch')
 shutil.copyfile(source,runtime/'ort_cpu_runtime.py');shutil.copyfile(repo/'runtime-src/worker.py',runtime/'worker.py')
 shutil.copyfile(repo/'runtime-src/phonon_service.py',runtime/'phonon_service.py')
+shutil.copyfile(repo/'runtime-src/resident_engines.py',runtime/'resident_engines.py')
 with zipfile.ZipFile(repo/'internal/app/payload.zip','w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
  for p in sorted(stage.rglob('*')):
   if not p.is_file() or '__pycache__' in p.parts:continue

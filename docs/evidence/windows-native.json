@@ -398,7 +398,7 @@
           "Downloading 93%",
           "Ready",
           "Downloading 88%",
-          "Preparing cloning model\u2026",
+          "Preparing cloning model…",
           "Downloading 94%",
           "Downloading 0%"
         ],
@@ -572,5 +572,85 @@
     "physicalMicrophoneCaptureTested": false,
     "humanBlindSimilarityStudyPerformed": false,
     "availableRamGuidanceIsEstimate": true
+  },
+  "residentModelChoicesPreview12": {
+    "date": "2026-11-17",
+    "threads": 4,
+    "native": {
+      "syntheticNTFS": true,
+      "models": {
+        "pocket18": {
+          "renders": [
+            {
+              "firstPCMSeconds": 0.037,
+              "totalSeconds": 0.173,
+              "audioSeconds": 2.2,
+              "chunks": 16
+            },
+            {
+              "firstPCMSeconds": 0.039,
+              "totalSeconds": 0.147,
+              "audioSeconds": 2.28,
+              "chunks": 16
+            }
+          ]
+        },
+        "moss": {
+          "renders": [
+            {
+              "firstPCMSeconds": 0.286,
+              "totalSeconds": 1.882,
+              "audioSeconds": 3.36,
+              "chunks": 21
+            },
+            {
+              "firstPCMSeconds": 0.299,
+              "totalSeconds": 2.165,
+              "audioSeconds": 3.92,
+              "chunks": 25
+            }
+          ]
+        },
+        "qwen06": {
+          "renders": [
+            {
+              "firstPCMSeconds": 3.394,
+              "totalSeconds": 13.824,
+              "audioSeconds": 2.72,
+              "chunks": 17
+            },
+            {
+              "firstPCMSeconds": 2.826,
+              "totalSeconds": 13.125,
+              "audioSeconds": 2.72,
+              "chunks": 17
+            }
+          ]
+        },
+        "phonon": {
+          "renders": [
+            {
+              "firstPCMSeconds": 0.057,
+              "totalSeconds": 0.27,
+              "audioSeconds": 2.4,
+              "chunks": 16
+            },
+            {
+              "firstPCMSeconds": 0.019,
+              "totalSeconds": 0.237,
+              "audioSeconds": 2.4,
+              "chunks": 17
+            }
+          ]
+        }
+      },
+      "passed": true,
+      "sameWorker": true,
+      "revoked": true,
+      "directOnly": true,
+      "selectionRestored": true
+    },
+    "ownerInstallationUsed": false,
+    "androidChanged": false
   }
 }

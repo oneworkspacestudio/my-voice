@@ -105,9 +105,15 @@ existing owner session.
 ## WonderPal read-aloud
 
 An authenticated owner can issue, rotate or revoke a dedicated credential under
-**Settings → WonderPal read-aloud** (`GET`, `POST`, `DELETE /api/integrations/wonderpal`).
-Issuing a credential installs the pinned Apache-2.0 Phonon English Q8 model and
-starts a supervised resident worker. My Voice restores the worker at startup while
+**Settings → WonderPal read-aloud** (`GET`, `POST`, `PATCH`, `DELETE /api/integrations/wonderpal`).
+`PATCH` accepts `{"model":"pocket18"}` (or `pocket7`, `moss`, `qwen06`, `phonon`).
+The owner must install Pocket, MOSS or Qwen through Models first; an unavailable
+choice returns 409. GET reports the selected `model`, `choices`, `status` and
+`ready`. The default remains Phonon for existing pairings. Issuing a credential
+starts the selected engine; Phonon downloads its pinned English Q8 files when needed.
+Changing selection cancels the old worker and its stream, preserving the paired
+credential. Removing the active model is blocked until disabled or deselected.
+My Voice restores the worker and selection at startup while
 the grant is enabled. Revocation stops the worker and cancels any ongoing stream.
 
 WonderPal Hosting uses the direct same-machine loopback origin and bearer
@@ -115,3 +121,9 @@ credential to call `POST /v1/audio/speech`. Request `input` (up to 1,600 UTF-8
 bytes), `voice: "default"`, and `response_format: "pcm"`. The response streams
 signed 16-bit little-endian mono PCM at 24 kHz. HTTP 503 means the model is still
 loading and HTTP 429 means the worker is speaking. Each reply is ephemeral.
+
+The JSON `model` field on the speech request is an OpenAI compatibility alias;
+the authenticated owner's stored selection controls the engine. It cannot be
+used to start a different model or access private cloned voices. Output format
+stays the same across engines, so existing WonderPal integrations need no relay
+change. CPU settings apply when the resident worker next starts.

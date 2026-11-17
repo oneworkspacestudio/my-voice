@@ -19,6 +19,7 @@ import (
 )
 
 const wonderGrantKey = "wonderpal-speech-grant"
+const wonderModelKey = "wonderpal-speech-model"
 const phononModelURL = "https://huggingface.co/gradium/phonon-31m-en/resolve/92741c5b07d085ff840e26fea8ce43110b87852f/"
 
 var phononAssets = []Asset{
@@ -48,6 +49,72 @@ type residentWorker struct {
 	stop   context.CancelFunc
 	url    string
 	secret string
+	model  string
+}
+
+func (v *residentVoice) selected() string {
+	var model string
+	_ = v.app.H.DB.QueryRow("SELECT body FROM preferences WHERE owner='' AND key=?", wonderModelKey).Scan(&model)
+	if model == "" {
+		return "phonon"
+	}
+	return model
+}
+
+func residentModelName(id string) string {
+	switch id {
+	case "phonon":
+		return "Phonon 31M"
+	case "pocket18":
+		return "Pocket TTS 18M"
+	case "pocket7":
+		return "Pocket TTS 7M"
+	case "moss":
+		return "MOSS TTS Nano"
+	case "qwen06":
+		return "Qwen3 TTS 0.6B"
+	}
+	return ""
+}
+
+func (v *residentVoice) available(id string) bool {
+	return id == "phonon" || (residentModelName(id) != "" && v.app.Engines[id] != nil && v.app.Engines[id].Available())
+}
+
+func (v *residentVoice) changeModel(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Model string `json:"model"`
+	}
+	if !apphost.Decode(w, r, &in) {
+		return
+	}
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	if residentModelName(in.Model) == "" {
+		apphost.Problem(w, 400, "Choose a supported WonderPal speech model")
+		return
+	}
+	if !v.available(in.Model) {
+		apphost.Problem(w, 409, "Download this model in Settings → Models first")
+		return
+	}
+	if in.Model != v.selected() {
+		if _, err := v.app.H.DB.Exec("INSERT INTO preferences(owner,key,body) VALUES('',?,?) ON CONFLICT(owner,key) DO UPDATE SET body=excluded.body", wonderModelKey, in.Model); err != nil {
+			v.app.H.DBError(w, err)
+			return
+		}
+		if v.worker != nil {
+			v.worker.stop()
+			v.worker = nil
+		}
+		v.state = ""
+		select {
+		case v.changed <- struct{}{}:
+		default:
+		}
+		v.app.H.Audit(uid(r), "wonderpal-speech-model", in.Model)
+	}
+	apphost.JSON(w, 200, map[string]string{"model": in.Model})
 }
 
 func (v *residentVoice) enabled() bool {
@@ -60,7 +127,11 @@ func (v *residentVoice) status(w http.ResponseWriter, _ *http.Request) {
 	v.mu.Lock()
 	defer v.mu.Unlock()
 	w.Header().Set("Cache-Control", "no-store")
-	apphost.JSON(w, 200, map[string]any{"connected": v.enabled(), "status": v.state, "ready": v.worker != nil && v.worker.url != "", "origin": "http://" + v.app.H.Config.Listen})
+	choices := []map[string]any{}
+	for _, id := range []string{"phonon", "pocket18", "pocket7", "moss", "qwen06"} {
+		choices = append(choices, map[string]any{"value": id, "label": residentModelName(id), "installed": v.available(id)})
+	}
+	apphost.JSON(w, 200, map[string]any{"connected": v.enabled(), "status": v.state, "model": v.selected(), "choices": choices, "ready": v.worker != nil && v.worker.url != "", "origin": "http://" + v.app.H.Config.Listen})
 }
 
 func (v *residentVoice) changeGrant(w http.ResponseWriter, r *http.Request) {
@@ -106,10 +177,11 @@ func (v *residentVoice) run(ctx context.Context) {
 		v.mu.Lock()
 		var worker *residentWorker
 		if v.enabled() {
+			model := v.selected()
 			child, stop := context.WithCancel(ctx)
-			worker = &residentWorker{ctx: child, stop: stop, secret: rand.Text()}
+			worker = &residentWorker{ctx: child, stop: stop, secret: rand.Text(), model: model}
 			v.worker = worker
-			v.state = "Preparing Phonon model"
+			v.state = "Loading " + residentModelName(model)
 		}
 		v.mu.Unlock()
 		if worker != nil {
@@ -118,7 +190,7 @@ func (v *residentVoice) run(ctx context.Context) {
 			v.mu.Lock()
 			if v.worker == worker {
 				v.worker = nil
-				v.state = "Phonon stopped. Retrying"
+				v.state = residentModelName(worker.model) + " is unavailable. Check its download in Models; retrying"
 			}
 			v.mu.Unlock()
 		}
@@ -133,17 +205,25 @@ func (v *residentVoice) run(ctx context.Context) {
 
 func (v *residentVoice) serve(worker *residentWorker) {
 	a := v.app
-	model := a.modelDir("phonon-wonderpal")
+	model := a.modelDir(worker.model)
+	if worker.model == "phonon" {
+		model = a.modelDir("phonon-wonderpal")
+	}
+	if !v.available(worker.model) {
+		return
+	}
 	if os.MkdirAll(model, 0700) != nil || os.MkdirAll(a.path("tmp"), 0700) != nil {
 		return
 	}
 	client := &http.Client{Timeout: 4 * time.Minute}
-	for _, asset := range phononAssets {
-		file := filepath.Join(model, asset.Path)
-		if !verifiedModelFile(file, asset) {
-			asset.URL = phononModelURL + asset.Path
-			if downloadModelAsset(worker.ctx, client, asset, file, func(int64) {}) != nil {
-				return
+	if worker.model == "phonon" {
+		for _, asset := range phononAssets {
+			file := filepath.Join(model, asset.Path)
+			if !verifiedModelFile(file, asset) {
+				asset.URL = phononModelURL + asset.Path
+				if downloadModelAsset(worker.ctx, client, asset, file, func(int64) {}) != nil {
+					return
+				}
 			}
 		}
 	}
@@ -162,13 +242,13 @@ func (v *residentVoice) serve(worker *residentWorker) {
 	done := make(chan struct{})
 	go func() {
 		defer close(done)
-		_ = apphost.Service(worker.ctx, python, tmp, []string{script, model, marker}, []string{
+		_ = apphost.Service(worker.ctx, python, tmp, []string{script, worker.model, model, marker, a.threads()}, []string{
 			"HF_HUB_OFFLINE=1", "HF_HOME=" + a.path("models", "hf"), "USERPROFILE=" + a.H.Config.Data,
-			"RAYON_NUM_THREADS=" + a.threads(), "MYVOICE_WORKER_TOKEN=" + worker.secret,
+			"RAYON_NUM_THREADS=" + a.threads(), "OMP_NUM_THREADS=" + a.threads(), "MYVOICE_WORKER_TOKEN=" + worker.secret,
 		}, io.Discard)
 	}()
 	defer func() { worker.stop(); <-done }()
-	start := time.NewTimer(45 * time.Second)
+	start := time.NewTimer(90 * time.Second)
 	defer start.Stop()
 	poll := time.NewTicker(50 * time.Millisecond)
 	defer poll.Stop()
@@ -192,7 +272,7 @@ func (v *residentVoice) serve(worker *residentWorker) {
 			v.mu.Lock()
 			if v.worker == worker {
 				worker.url = "http://127.0.0.1:" + strconv.FormatUint(port, 10) + "/speech"
-				v.state = "Phonon is loaded and ready"
+				v.state = residentModelName(worker.model) + " is loaded and ready"
 			}
 			v.mu.Unlock()
 			select {

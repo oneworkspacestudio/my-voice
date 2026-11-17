@@ -136,6 +136,7 @@ func New(h *apphost.Host) (*App, error) {
 	h.Mux.HandleFunc("POST /_internal/podcasts/speech", a.podcastSpeech)
 	h.Mux.HandleFunc("GET /api/integrations/wonderpal", h.Owner(a.wonderVoice.status))
 	h.Mux.HandleFunc("POST /api/integrations/wonderpal", h.Owner(a.wonderVoice.changeGrant))
+	h.Mux.HandleFunc("PATCH /api/integrations/wonderpal", h.Owner(a.wonderVoice.changeModel))
 	h.Mux.HandleFunc("DELETE /api/integrations/wonderpal", h.Owner(a.wonderVoice.changeGrant))
 	h.Mux.HandleFunc("POST /v1/audio/speech", a.wonderVoice.speak)
 	h.BackupPaths = append(h.BackupPaths, "models", "projects")

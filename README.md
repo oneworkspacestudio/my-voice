@@ -38,6 +38,13 @@ Only clone a voice you own or have explicit permission to use. Keep a clear
 
 ## Guides
 
+For WonderPal on Workspace, open **Settings → WonderPal read-aloud** and select
+Pocket TTS, MOSS TTS Nano, Qwen3 TTS 0.6B or Phonon. Download the chosen model
+in Models first, then enable the connection and save its origin and one-time
+credential in WonderPal Hosting. My Voice keeps the selected engine loaded.
+Pocket had the lowest first-audio latency on the tested Windows CPU; larger
+models take longer. This service release does not change Android's local voices.
+
 [Architecture](ARCHITECTURE.md) · [API](docs/API.md) ·
 [Model licences](MODEL-LICENSES.md) · [Native test report](TEST-REPORT-WINDOWS.md) ·
 [Security](SECURITY.md) · [Changes](CHANGELOG.md)

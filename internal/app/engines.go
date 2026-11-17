@@ -309,6 +309,13 @@ func (a *App) installModel(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 404, "Unknown model")
 		return
 	}
+	a.wonderVoice.mu.Lock()
+	resident := a.wonderVoice.enabled() && a.wonderVoice.selected() == id
+	a.wonderVoice.mu.Unlock()
+	if resident {
+		apphost.Problem(w, 409, "Disable WonderPal voice or select another speech model before reinstalling this one")
+		return
+	}
 	var p struct {
 		License bool   `json:"license"`
 		Token   string `json:"token"`
@@ -455,6 +462,12 @@ func (a *App) downloadModel(ctx context.Context, m Model, token string, cloning 
 }
 func (a *App) removeModel(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
+	a.wonderVoice.mu.Lock()
+	defer a.wonderVoice.mu.Unlock()
+	if a.wonderVoice.enabled() && a.wonderVoice.selected() == id {
+		apphost.Problem(w, 409, "Disable WonderPal voice or select another speech model before removing this one")
+		return
+	}
 	if a.Engines[id] == nil {
 		apphost.Problem(w, 404, "Unknown model")
 		return

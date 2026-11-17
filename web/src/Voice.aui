@@ -397,7 +397,10 @@ Page Voice
                 Button action=copy-podcast-credential label="Copy credential" variant=secondary
             Card
               Heading level=2 "WonderPal read-aloud"
-              Text "Enable WonderPal speech on this PC. My Voice downloads the 65 MB Phonon English model once and keeps it loaded while the service is running."
+              Text "Choose the voice model for WonderPal on this PC. My Voice keeps the selected model loaded while enabled and streams each reply as audio becomes available."
+              Select name=wonderModel label="WonderPal speech model" options=$wonderModels disabled=$wonderChanging
+              Button action=save-wonderpal-model label="Use this speech model" variant=primary disabled=$wonderChanging
+              Text variant=caption "Download Pocket, MOSS or Qwen in Models above before selecting them. Phonon downloads automatically when enabled. Larger models may respond more slowly on this PC."
               Text variant=caption $wonderStatus
               Text variant=caption $wonderOrigin
               Row

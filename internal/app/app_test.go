@@ -122,6 +122,48 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	_, raw, _ := call("GET", "/api/me", "", cookie, "")
 	var session apphost.Session
 	_ = json.Unmarshal(raw, &session)
+	if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"pocket18"}`, cookie, ""); code != 403 {
+		t.Fatal("speech selection accepted without CSRF", code)
+	}
+	for _, invalid := range []struct {
+		model string
+		code  int
+	}{{"unknown", 400}, {"qwen17", 400}, {"moss", 409}} {
+		if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"`+invalid.model+`"}`, cookie, session.CSRF); code != invalid.code {
+			t.Fatal("speech selection accepted unsupported or missing model", invalid.model, code)
+		}
+	}
+	if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"pocket18"}`, cookie, session.CSRF); code != 200 || a.wonderVoice.selected() != "pocket18" {
+		t.Fatal("resident speech model was not saved", code)
+	}
+	code, wonderGrant, _ := call("POST", "/api/integrations/wonderpal", "", cookie, session.CSRF)
+	var wonderCredential struct{ Credential string }
+	if code != 200 || json.Unmarshal(wonderGrant, &wonderCredential) != nil || len(wonderCredential.Credential) != 64 {
+		t.Fatal("WonderPal grant issuance failed", code)
+	}
+	if code, _, _ := call("DELETE", "/api/models/pocket18", "", cookie, session.CSRF); code != 409 {
+		t.Fatal("active resident model removal was allowed", code)
+	}
+	if code, _, _ := call("POST", "/api/models/pocket18/install", `{"license":true}`, cookie, session.CSRF); code != 409 {
+		t.Fatal("active resident model reinstall was allowed", code)
+	}
+	workerCtx, stopWorker := context.WithCancel(context.Background())
+	a.wonderVoice.worker = &residentWorker{ctx: workerCtx, stop: stopWorker, model: "pocket18"}
+	if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"phonon"}`, cookie, session.CSRF); code != 200 || workerCtx.Err() == nil {
+		t.Fatal("model switch did not cancel the previous resident worker", code)
+	}
+	request := httptest.NewRequest("POST", "http://"+host.Config.Listen+"/v1/audio/speech", nil)
+	request.RemoteAddr = "127.0.0.1:12345"
+	request.Header.Set("Authorization", "Bearer "+wonderCredential.Credential)
+	if !a.localVoiceGrant(request, wonderGrantKey) {
+		t.Fatal("model switch invalidated the paired credential")
+	}
+	if code, status, _ := call("GET", "/api/integrations/wonderpal", "", cookie, ""); code != 200 || bytes.Contains(status, []byte(wonderCredential.Credential)) || !bytes.Contains(status, []byte(`"model":"phonon"`)) {
+		t.Fatal("speech status leaked the grant or lost selection", code)
+	}
+	if code, _, _ := call("DELETE", "/api/integrations/wonderpal", "", cookie, session.CSRF); code != 200 || a.localVoiceGrant(request, wonderGrantKey) {
+		t.Fatal("resident speech revocation failed", code)
+	}
 	if code, _, _ := call("POST", "/api/integrations/podcasts", "", cookie, ""); code != 403 {
 		t.Fatal("credential issuance accepted without CSRF", code)
 	}

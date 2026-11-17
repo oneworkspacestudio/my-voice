@@ -537,7 +537,10 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                     </Card>
                     <Card>
                       <Heading level={2}>WonderPal read-aloud</Heading>
-                      <Text>Enable WonderPal speech on this PC. My Voice downloads the 65 MB Phonon English model once and keeps it loaded while the service is running.</Text>
+                      <Text>Choose the voice model for WonderPal on this PC. My Voice keeps the selected model loaded while enabled and streams each reply as audio becomes available.</Text>
+                      <Select name="wonderModel" label="WonderPal speech model" options={data.wonderModels} disabled={data.wonderChanging} />
+                      <Button onClick={() => onAction("save-wonderpal-model")} label="Use this speech model" variant="primary" disabled={data.wonderChanging} />
+                      <Text variant="caption">Download Pocket, MOSS or Qwen in Models above before selecting them. Phonon downloads automatically when enabled. Larger models may respond more slowly on this PC.</Text>
                       <Text variant="caption">{data.wonderStatus}</Text>
                       <Text variant="caption">{data.wonderOrigin}</Text>
                       <Row>

@@ -511,3 +511,9 @@ Elle s’applique également, même si Microsoft connaissait ou devrait connaît
 EFFET JURIDIQUE. Le présent contrat décrit certains droits juridiques. Vous pourriez avoir d’autres droits prévus par les lois de votre pays. Le présent contrat ne modifie pas les droits que vous confèrent les lois de votre pays si celles-ci ne le permettent pas.
 
 EULA ID: Cpp_v14_ENU.1033
+
+The My Voice resident Qwen adapter is application source under this repository's
+licence. It uses public C headers from the same pinned llama.cpp revision as the
+bundled native runtime. Its source and native MSVC build recipe are included in
+my-voice-source.zip. The unchanged llama.cpp corresponding source remains in
+qwen-runtime-corresponding-source.zip. No model weights are included.

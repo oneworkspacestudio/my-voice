@@ -260,3 +260,28 @@ Jamie with the pinned Alba preset. The direct endpoint reported the pair
 and produced valid mono 24 kHz PCM for both using the same test text. The
 signed-out Podcasts worker produced three scheduled WAVs with the pair
 and synthetic writing. MOSS still rendered with the single-preset fallback.
+
+## Preview.12 resident model choices
+
+A synthetic NTFS account exercised the packaged Windows service with real,
+pinned Pocket 18M, MOSS Nano, Qwen3 TTS 0.6B Q8 and Phonon stock models. Each
+produced two non-silent mono 24 kHz PCM replies using the same resident Python
+worker for that model. Owner selection stopped the previous worker and retained
+the paired credential. Missing and unsupported models were rejected. Active
+model removal was denied; revocation stopped the worker and denied further
+speech. The saved Pocket selection and enabled grant restored after app restart.
+The owner/CSRF regression also checks cancellation on switch and protection
+against reinstalling a model while it is resident.
+
+On this i9-11900K Windows CPU, with four threads and model loading excluded,
+warm first PCM was 39 ms for Pocket 18M, 299 ms for MOSS, 2.826 s for Qwen 0.6B,
+and 19 ms for Phonon. Qwen's eight-frame flush starts playback before synthesis
+finishes, with roughly 13 seconds total for the short test reply. These are local
+measurements, not a cross-device latency or pronunciation-quality guarantee.
+Pocket 7M uses the same native resident adapter; this run measured Pocket 18M.
+
+Browser checks saved model switches through Settings, verified all five choices
+and found no JavaScript errors. Mobile presentation is browser emulation. Go
+tests, Go vet, 19 frontend regressions and the AUI production build passed.
+Public update, recovery and installation receipts are recorded separately in
+the repository history. No owner installation or personal voice was used.

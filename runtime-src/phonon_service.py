@@ -1,4 +1,4 @@
-"""Private Phonon worker supervised by My Voice. Input and audio are ephemeral."""
+"""Private resident worker supervised by My Voice. Input and audio are ephemeral."""
 
 from hmac import compare_digest
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -8,7 +8,7 @@ from pathlib import Path
 import sys
 
 import numpy as np
-import ptts
+from resident_engines import load_engine
 
 
 class SpeechHandler(BaseHTTPRequestHandler):
@@ -38,17 +38,40 @@ class SpeechHandler(BaseHTTPRequestHandler):
             self.send_error(400)
             return
         try:
-            with engine.stream(text) as audio:
+            started = False
+            sample_count = 0
+
+            def emit(samples, rate):
+                nonlocal started, sample_count
+                # Engines expose mono float32 at 24 kHz or MOSS 48 kHz. Keep
+                # decimation aligned across chunks; never change speech speed.
+                if rate not in (24000, 48000):
+                    raise RuntimeError("Unexpected sample rate")
+                samples = np.asarray(samples).reshape(-1)
+                if rate == 48000:
+                    source_count = len(samples)
+                    samples = samples[sample_count % 2::2]
+                    sample_count += source_count
+                pcm = (np.clip(samples, -1.0, 32767 / 32768) * 32768).astype("<i2")
+                if not pcm.nbytes:
+                    return
+                if not started:
+                    start_response()
+                    started = True
+                self.wfile.write(f"{pcm.nbytes:x}\r\n".encode("ascii") + pcm.tobytes() + b"\r\n")
+                self.wfile.flush()
+
+            def start_response():
                 self.send_response(200)
                 self.send_header("Content-Type", "audio/pcm")
                 self.send_header("Transfer-Encoding", "chunked")
                 self.send_header("Connection", "close")
                 self.end_headers()
-                for samples in audio:
-                    pcm = (np.clip(samples, -1.0, 32767 / 32768) * 32768).astype("<i2")
-                    if pcm.nbytes:
-                        self.wfile.write(f"{pcm.nbytes:x}\r\n".encode("ascii") + pcm.tobytes() + b"\r\n")
-                self.wfile.write(b"0\r\n\r\n")
+            engine.speak(text, emit)
+            if not started:
+                self.send_error(502)
+                return
+            self.wfile.write(b"0\r\n\r\n")
         except (BrokenPipeError, ConnectionResetError, TimeoutError):
             pass
         except Exception:
@@ -60,11 +83,11 @@ class SpeechHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    model, marker = map(Path, sys.argv[1:])
+    name = sys.argv[1]
+    model, marker = map(Path, sys.argv[2:4])
+    threads = int(sys.argv[4])
     secret = ("Bearer " + os.environ.pop("MYVOICE_WORKER_TOKEN")).encode("ascii")
-    engine = ptts.TTS(str(model), lang="en", quant="q8", voice_catalog="")
-    if engine.sample_rate != 24000:
-        raise RuntimeError("Unexpected Phonon sample rate")
+    engine = load_engine(name, model, threads)
     with HTTPServer(("127.0.0.1", 0), SpeechHandler) as server:
         pending = marker.with_suffix(".tmp")
         pending.write_text(str(server.server_port), encoding="ascii")
