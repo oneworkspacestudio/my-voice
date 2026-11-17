@@ -38,3 +38,9 @@ Owner Settings confirms preview.13, existing active grant and resident Pocket18.
 MOSS/Qwen06 remain installed. WonderPal 0.2.4 published on existing Hosting as
 ba351e994f5ca5d0b0b5ed4936068eaf at 23:05:22 UTC. Public hashes/health and
 pairing passed; actual parent selection awaits its user-controlled lock.
+
+Follow-up live parent verification complete: production WonderPal directly
+selected MOSS, Qwen06 and Pocket18 through the existing grant. Refresh retains
+selection. Qwen06 and restored Pocket18 reported loaded/ready. MOSS selection
+saved but was still loading when changed; no new MOSS readiness claim.
+Pocket18 remains selected and warm. No credentials were rotated or recorded.

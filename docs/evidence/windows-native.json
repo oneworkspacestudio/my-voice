@@ -682,7 +682,11 @@
       "liveSpeechHTTP": 200,
       "contentType": "audio/pcm",
       "liveStop": true,
-      "parentPicker": "synthetic native desktop/mobile passed; live area remains user-locked"
+      "parentPicker": "live production parent selection and refresh passed",
+      "qwenReady": true,
+      "pocketRestoredReady": true,
+      "mossSelectionSaved": true,
+      "mossReadyObserved": false
     }
   }
 }
