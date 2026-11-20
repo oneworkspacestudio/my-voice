@@ -16,3 +16,9 @@ other generic speech requests use the installed stock CPU engines.
 Use synthetic NTFS fixtures and the existing 116-payload managed update group.
 Runtime payload SHA256 matches preview.13. No owner grants or installations
 are part of verification. See docs/API.md.
+
+Preview.14 published from be8ec7e and promoted in Workspace 084ae8d. Native
+Windows checks generated real Alba/Marius PCM with two API keys and confirmed
+forwarded denial and key revocation isolation. Go tests/vet and 19 frontend
+tests passed. Anonymous downloads verified all 116 managed files. Owner
+installation and a fresh managed upgrade were not exercised.
