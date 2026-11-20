@@ -3,8 +3,6 @@ package app
 import (
 	"context"
 	"crypto/rand"
-	"crypto/sha256"
-	"encoding/hex"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -36,12 +34,14 @@ var phononHTTP = &http.Client{
 }
 
 type residentVoice struct {
-	app     *App
-	changed chan struct{}
-	mu      sync.Mutex
-	render  sync.Mutex
-	worker  *residentWorker
-	state   string
+	app        *App
+	changed    chan struct{}
+	mu         sync.Mutex
+	render     sync.Mutex
+	worker     *residentWorker
+	state      string
+	fixedModel string
+	requested  bool
 }
 
 type residentWorker struct {
@@ -53,6 +53,9 @@ type residentWorker struct {
 }
 
 func (v *residentVoice) selected() string {
+	if v.fixedModel != "" {
+		return v.fixedModel
+	}
 	var model string
 	_ = v.app.H.DB.QueryRow("SELECT body FROM preferences WHERE owner='' AND key=?", wonderModelKey).Scan(&model)
 	if model == "" {
@@ -73,6 +76,8 @@ func residentModelName(id string) string {
 		return "MOSS TTS Nano"
 	case "qwen06":
 		return "Qwen3 TTS 0.6B"
+	case "qwen17":
+		return "Qwen3 TTS 1.7B"
 	}
 	return ""
 }
@@ -81,15 +86,11 @@ func (v *residentVoice) available(id string) bool {
 	return id == "phonon" || (residentModelName(id) != "" && v.app.Engines[id] != nil && v.app.Engines[id].Available())
 }
 
-func (v *residentVoice) changeModel(w http.ResponseWriter, r *http.Request) {
-	v.selectModel(w, r, false)
-}
-
 // The scoped local grant can select only this service's stock model allowlist.
 // It does not expose owner sessions, private voices, downloads or configuration.
 func (v *residentVoice) modelControl(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPatch {
-		v.selectModel(w, r, true)
+		v.selectModel(w, r)
 		return
 	}
 	v.mu.Lock()
@@ -104,10 +105,10 @@ func (v *residentVoice) modelControl(w http.ResponseWriter, r *http.Request) {
 	apphost.JSON(w, 200, state)
 }
 
-func (v *residentVoice) selectModel(w http.ResponseWriter, r *http.Request, local bool) {
+func (v *residentVoice) selectModel(w http.ResponseWriter, r *http.Request) {
 	v.mu.Lock()
 	defer v.mu.Unlock()
-	if local && !v.app.localVoiceGrant(r, wonderGrantKey) {
+	if !v.app.localVoiceGrant(r, wonderGrantKey) {
 		apphost.Problem(w, 401, "A direct local WonderPal voice credential is required")
 		return
 	}
@@ -118,7 +119,7 @@ func (v *residentVoice) selectModel(w http.ResponseWriter, r *http.Request, loca
 	if !apphost.Decode(w, r, &in) {
 		return
 	}
-	if residentModelName(in.Model) == "" {
+	if residentModelName(in.Model) == "" || in.Model == "qwen17" {
 		apphost.Problem(w, 400, "Choose a supported WonderPal speech model")
 		return
 	}
@@ -140,30 +141,46 @@ func (v *residentVoice) selectModel(w http.ResponseWriter, r *http.Request, loca
 		case v.changed <- struct{}{}:
 		default:
 		}
-		actor := uid(r)
-		if local {
-			actor = "wonderpal"
-		}
-		v.app.H.Audit(actor, "wonderpal-speech-model", in.Model)
+		v.app.H.Audit("legacy-speech", "speech-model", in.Model)
 	}
 	w.Header().Set("Cache-Control", "no-store")
 	apphost.JSON(w, 200, map[string]string{"model": in.Model})
 }
 
 func (v *residentVoice) enabled() bool {
+	if v.fixedModel != "" {
+		return v.requested
+	}
 	var enabled bool
 	_ = v.app.H.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM preferences WHERE owner='' AND key=?)", wonderGrantKey).Scan(&enabled)
 	return enabled
 }
 
-func (v *residentVoice) status(w http.ResponseWriter, _ *http.Request) {
+func (v *residentVoice) reset() {
 	v.mu.Lock()
 	defer v.mu.Unlock()
-	w.Header().Set("Cache-Control", "no-store")
-	state := v.modelState()
-	state["connected"] = v.enabled()
-	state["origin"] = "http://" + v.app.H.Config.Listen
-	apphost.JSON(w, 200, state)
+	if v.worker != nil {
+		v.worker.stop()
+		v.worker = nil
+	}
+	v.state = ""
+	v.wake()
+}
+
+func (v *residentVoice) wake() {
+	select {
+	case v.changed <- struct{}{}:
+	default:
+	}
+}
+
+func (v *residentVoice) startFixed() {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	if !v.requested {
+		v.requested = true
+		v.wake()
+	}
 }
 
 // Caller holds mu. This is the complete safe stock-model control response.
@@ -173,44 +190,6 @@ func (v *residentVoice) modelState() map[string]any {
 		choices = append(choices, map[string]any{"value": id, "label": residentModelName(id), "installed": v.available(id)})
 	}
 	return map[string]any{"status": v.state, "model": v.selected(), "choices": choices, "ready": v.worker != nil && v.worker.url != ""}
-}
-
-func (v *residentVoice) changeGrant(w http.ResponseWriter, r *http.Request) {
-	v.mu.Lock()
-	defer v.mu.Unlock()
-	w.Header().Set("Cache-Control", "no-store")
-	response := map[string]any{"connected": r.Method != http.MethodDelete}
-	if r.Method == http.MethodDelete {
-		if _, err := v.app.H.DB.Exec("DELETE FROM preferences WHERE owner='' AND key=?", wonderGrantKey); err != nil {
-			v.app.H.DBError(w, err)
-			return
-		}
-		v.app.H.Audit(uid(r), "wonderpal-speech-revoked", "voice")
-	} else {
-		var random [32]byte
-		if _, err := rand.Read(random[:]); err != nil {
-			apphost.Problem(w, 500, "Unable to issue a WonderPal voice credential")
-			return
-		}
-		secret := hex.EncodeToString(random[:])
-		digest := sha256.Sum256([]byte(secret))
-		if _, err := v.app.H.DB.Exec("INSERT INTO preferences(owner,key,body) VALUES('',?,?) ON CONFLICT(owner,key) DO UPDATE SET body=excluded.body", wonderGrantKey, hex.EncodeToString(digest[:])); err != nil {
-			v.app.H.DBError(w, err)
-			return
-		}
-		response["credential"] = secret
-		v.app.H.Audit(uid(r), "wonderpal-speech-issued", "voice")
-	}
-	if v.worker != nil {
-		v.worker.stop()
-		v.worker = nil
-	}
-	v.state = ""
-	select {
-	case v.changed <- struct{}{}:
-	default:
-	}
-	apphost.JSON(w, 200, response)
 }
 
 func (v *residentVoice) run(ctx context.Context) {
@@ -326,21 +305,10 @@ func (v *residentVoice) serve(worker *residentWorker) {
 }
 
 func (v *residentVoice) speak(w http.ResponseWriter, r *http.Request) {
-	v.mu.Lock()
 	if !v.app.localVoiceGrant(r, wonderGrantKey) {
-		v.mu.Unlock()
 		apphost.Problem(w, 401, "A direct local WonderPal voice credential is required")
 		return
 	}
-	worker := v.worker
-	if worker == nil || worker.url == "" {
-		v.mu.Unlock()
-		apphost.Problem(w, 503, "The WonderPal voice model is warming up")
-		return
-	}
-	url := worker.url
-	v.mu.Unlock()
-
 	r.Body = http.MaxBytesReader(w, r.Body, 8192)
 	var in struct {
 		Model  string `json:"model"`
@@ -355,6 +323,25 @@ func (v *residentVoice) speak(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 400, "Send text of up to 1600 bytes with default voice and pcm output")
 		return
 	}
+	v.stream(w, r, in.Input)
+}
+
+func (v *residentVoice) stream(w http.ResponseWriter, r *http.Request, input string) {
+	v.mu.Lock()
+	if v.fixedModel == "" && !v.app.localVoiceGrant(r, wonderGrantKey) {
+		v.mu.Unlock()
+		apphost.Problem(w, 401, "A direct local speech credential is required")
+		return
+	}
+	worker := v.worker
+	if worker == nil || worker.url == "" {
+		v.mu.Unlock()
+		w.Header().Set("Retry-After", "2")
+		apphost.Problem(w, 503, "The speech model is warming up")
+		return
+	}
+	url := worker.url
+	v.mu.Unlock()
 	if !v.render.TryLock() {
 		apphost.Problem(w, 429, "Workspace Voice is speaking another reply")
 		return
@@ -367,7 +354,7 @@ func (v *residentVoice) speak(w http.ResponseWriter, r *http.Request) {
 	if worker.ctx.Err() != nil {
 		return
 	}
-	body, _ := json.Marshal(map[string]string{"input": in.Input})
+	body, _ := json.Marshal(map[string]string{"input": input})
 	request, _ := http.NewRequestWithContext(ctx, "POST", url, strings.NewReader(string(body)))
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+worker.secret)

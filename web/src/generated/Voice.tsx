@@ -515,49 +515,31 @@ export function Voice({ data, onAction }: { data: any; onAction: (name: string) 
                     )}
                   </Card>
                 ))}
-                {data.podcastOwner && (
-                  <>
-                    <Card>
-                      <Heading level={2}>Podcasts narration</Heading>
-                      <Text>Let My Podcasts use an installed speech model on this PC. It wakes the model when a turn is ready. Install or reinstall Pocket TTS in Models to add separate male and female voices for Alex and Jamie.</Text>
-                      <Text variant="caption">{data.podcastStatus}</Text>
-                      <Row>
-                        <Button onClick={() => onAction("issue-podcast-credential")} label="Issue Podcasts credential" variant="primary" disabled={data.podcastChanging} />
-                        {data.podcastConnected && (
-                          <Button onClick={() => onAction("revoke-podcast-credential")} label="Revoke Podcasts credential" variant="secondary" disabled={data.podcastChanging} />
-                        )}
+                {data.owner && (
+                  <Card>
+                    <Heading level={2}>API keys</Heading>
+                    <Text>Create a key for each local app. Set its model and voice in that app.</Text>
+                    <Text variant="caption">{data.speechOrigin}</Text>
+                    <Input name="speechKeyLabel" label="Key label" placeholder="Local app" />
+                    <Button onClick={() => onAction("issue-speech-key")} label="Create API key" variant="primary" disabled={data.issueKeyDisabled} />
+                    {data.speechKey && (
+                      <>
+                        <Text variant="caption">Copy this key now. You can only see it once.</Text>
+                        <Text variant="caption">{data.speechKey}</Text>
+                        <Row>
+                          <Button onClick={() => onAction("copy-speech-key")} label="Copy API key" variant="secondary" />
+                          <Button onClick={() => onAction("hide-speech-key")} label="Hide key" variant="secondary" />
+                        </Row>
+                      </>
+                    )}
+                    {data.speechKeys.map((item, i) => (
+                      <Row key={i}>
+                        <Text>{item.label}</Text>
+                        <Spacer />
+                        <Button onClick={() => onAction("revoke-speech-key")} item={item.id} label="Revoke key" variant="secondary" disabled={data.keyBusy} />
                       </Row>
-                      {data.podcastCredential && (
-                        <>
-                          <Text variant="caption">Copy this credential into My Podcasts → Connections → Narration, then save connections.</Text>
-                          <Text variant="caption">{data.podcastCredential}</Text>
-                          <Button onClick={() => onAction("copy-podcast-credential")} label="Copy credential" variant="secondary" />
-                        </>
-                      )}
-                    </Card>
-                    <Card>
-                      <Heading level={2}>WonderPal read-aloud</Heading>
-                      <Text>Choose the voice model for WonderPal on this PC. My Voice keeps the selected model loaded while enabled and streams each reply as audio becomes available.</Text>
-                      <Select name="wonderModel" label="WonderPal speech model" options={data.wonderModels} disabled={data.wonderChanging} />
-                      <Button onClick={() => onAction("save-wonderpal-model")} label="Use this speech model" variant="primary" disabled={data.wonderChanging} />
-                      <Text variant="caption">Download Pocket, MOSS or Qwen in Models above before selecting them. Phonon downloads automatically when enabled. Larger models may respond more slowly on this PC.</Text>
-                      <Text variant="caption">{data.wonderStatus}</Text>
-                      <Text variant="caption">{data.wonderOrigin}</Text>
-                      <Row>
-                        <Button onClick={() => onAction("issue-wonderpal-credential")} label="Issue WonderPal credential" variant="primary" disabled={data.wonderChanging} />
-                        {data.wonderConnected && (
-                          <Button onClick={() => onAction("revoke-wonderpal-credential")} label="Disable WonderPal voice" variant="secondary" disabled={data.wonderChanging} />
-                        )}
-                      </Row>
-                      {data.wonderCredential && (
-                        <>
-                          <Text variant="caption">Save this as the protected voice service token in WonderPal's Hosting project. It is displayed once.</Text>
-                          <Text variant="caption">{data.wonderCredential}</Text>
-                          <Button onClick={() => onAction("copy-wonderpal-credential")} label="Copy credential" variant="secondary" />
-                        </>
-                      )}
-                    </Card>
-                  </>
+                    ))}
+                  </Card>
                 )}
                 <Card>
                   <Heading level={2}>Performance & privacy</Heading>

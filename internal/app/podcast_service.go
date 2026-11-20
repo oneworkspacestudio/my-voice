@@ -2,10 +2,8 @@ package app
 
 import (
 	"context"
-	"crypto/rand"
 	"crypto/sha256"
 	"crypto/subtle"
-	"database/sql"
 	"encoding/hex"
 	"errors"
 	"net"
@@ -21,20 +19,31 @@ import (
 const podcastGrantKey = "podcasts-speech-grant"
 const pocketPodcastCast = "marius-alba-v1"
 
-func (a *App) podcastModel() (model, cast string, voice Voice) {
+func (a *App) hasMarius(model string) bool {
+	engine, ok := a.Engines[model].(*PocketEngine)
+	if !ok || !engine.Available() {
+		return false
+	}
 	for _, m := range modelList() {
-		engine, ok := a.Engines[m.ID].(*PocketEngine)
-		if !ok || !engine.Available() {
+		if m.ID != model {
 			continue
 		}
 		for _, asset := range m.Assets {
-			if !asset.PodcastPreset {
-				continue
+			if asset.PodcastPreset {
+				info, err := os.Stat(filepath.Join(a.modelDir(model), asset.Path))
+				if err == nil && info.Mode().IsRegular() && info.Size() == asset.Size {
+					return true
+				}
 			}
-			info, err := os.Stat(filepath.Join(a.modelDir(m.ID), asset.Path))
-			if err == nil && info.Mode().IsRegular() && info.Size() == asset.Size {
-				return m.ID, pocketPodcastCast, Voice{ID: "alba", Engine: "pocket", Language: "en", Preset: true}
-			}
+		}
+	}
+	return false
+}
+
+func (a *App) podcastModel() (model, cast string, voice Voice) {
+	for _, m := range modelList() {
+		if a.hasMarius(m.ID) {
+			return m.ID, pocketPodcastCast, Voice{ID: "alba", Engine: "pocket", Language: "en", Preset: true}
 		}
 	}
 	for _, model := range []string{"pocket18", "pocket7", "moss", "qwen06", "qwen17"} {
@@ -51,52 +60,6 @@ func (a *App) podcastModel() (model, cast string, voice Voice) {
 	return "", "", Voice{}
 }
 
-func (a *App) podcastGrantStatus(w http.ResponseWriter, r *http.Request) {
-	var digest string
-	err := a.H.DB.QueryRow("SELECT body FROM preferences WHERE owner='' AND key=?", podcastGrantKey).Scan(&digest)
-	if err != nil && err != sql.ErrNoRows {
-		a.H.DBError(w, err)
-		return
-	}
-	model, cast, _ := a.podcastModel()
-	w.Header().Set("Cache-Control", "no-store")
-	apphost.JSON(w, 200, map[string]any{"connected": digest != "", "model": model, "cast": cast})
-}
-
-func (a *App) changePodcastGrant(w http.ResponseWriter, r *http.Request) {
-	a.podcastMu.Lock()
-	defer a.podcastMu.Unlock()
-	w.Header().Set("Cache-Control", "no-store")
-	if r.Method == http.MethodDelete {
-		if _, err := a.H.DB.Exec("DELETE FROM preferences WHERE owner='' AND key=?", podcastGrantKey); err != nil {
-			a.H.DBError(w, err)
-			return
-		}
-		if a.podcastCancel != nil {
-			a.podcastCancel()
-		}
-		a.H.Audit(uid(r), "podcasts-speech-revoked", "voice")
-		apphost.JSON(w, 200, map[string]bool{"connected": false})
-		return
-	}
-	var key [32]byte
-	if _, err := rand.Read(key[:]); err != nil {
-		apphost.Problem(w, 500, "Unable to issue a local speech credential")
-		return
-	}
-	token := hex.EncodeToString(key[:])
-	digest := sha256.Sum256([]byte(token))
-	if _, err := a.H.DB.Exec("INSERT INTO preferences(owner,key,body) VALUES('',?,?) ON CONFLICT(owner,key) DO UPDATE SET body=excluded.body", podcastGrantKey, hex.EncodeToString(digest[:])); err != nil {
-		a.H.DBError(w, err)
-		return
-	}
-	if a.podcastCancel != nil {
-		a.podcastCancel()
-	}
-	a.H.Audit(uid(r), "podcasts-speech-issued", "voice")
-	apphost.JSON(w, 201, map[string]any{"connected": true, "credential": token})
-}
-
 func loopbackAddress(address string) bool {
 	host, _, err := net.SplitHostPort(address)
 	return err == nil && net.ParseIP(host).IsLoopback()
@@ -108,23 +71,33 @@ func (a *App) podcastAuthorized(r *http.Request) bool {
 }
 
 func (a *App) localVoiceGrant(r *http.Request, key string) bool {
+	token := directSpeechToken(r)
+	return token != "" && a.voiceKeyMatches(token, key)
+}
+
+func directSpeechToken(r *http.Request) string {
 	if !loopbackAddress(r.Host) || !loopbackAddress(r.RemoteAddr) || r.URL.RawQuery != "" {
-		return false
+		return ""
 	}
 	for k := range r.Header {
 		name := strings.ToLower(k)
 		if name == "origin" || name == "forwarded" || name == "cookie" || strings.HasPrefix(name, "x-forwarded-") || strings.HasPrefix(name, "sec-fetch-") {
-			return false
+			return ""
 		}
 	}
 	token, ok := strings.CutPrefix(r.Header.Get("Authorization"), "Bearer ")
 	if !ok || len(token) != 64 {
-		return false
+		return ""
 	}
+	return token
+}
+
+func (a *App) voiceKeyMatches(token, key string) bool {
 	var want string
 	if a.H.DB.QueryRow("SELECT body FROM preferences WHERE owner='' AND key=?", key).Scan(&want) != nil {
 		return false
 	}
+	want, _, _ = strings.Cut(want, " ")
 	got := sha256.Sum256([]byte(token))
 	return subtle.ConstantTimeCompare([]byte(want), []byte(hex.EncodeToString(got[:]))) == 1
 }
@@ -185,7 +158,14 @@ func (a *App) podcastSpeech(w http.ResponseWriter, r *http.Request) {
 	if cast == pocketPodcastCast && in.Speaker == "Alex" {
 		voice.ID = "marius"
 	}
-	b, err := a.recordPodcastTurn(ctx, model, voice, in.Speaker, in.Text, cast)
+	style := Script{Speed: 1.02, Pitch: 1, Volume: 1}
+	if in.Speaker == "Jamie" {
+		style.Speed, style.Pitch = 0.96, -1.5
+	}
+	if cast == pocketPodcastCast {
+		style.Speed, style.Pitch = 1, 0
+	}
+	b, err := a.recordStockSpeech(ctx, model, voice, in.Text, style)
 	if err != nil {
 		apphost.Problem(w, 502, "My Voice could not render this turn. Check the installed model and retry")
 		return
@@ -196,12 +176,12 @@ func (a *App) podcastSpeech(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(b)
 }
 
-func (a *App) recordPodcastTurn(ctx context.Context, model string, voice Voice, speaker, text, cast string) ([]byte, error) {
+func (a *App) recordStockSpeech(ctx context.Context, model string, voice Voice, text string, style Script) ([]byte, error) {
 	root := a.path("tmp")
 	if err := os.MkdirAll(root, 0700); err != nil {
 		return nil, err
 	}
-	dir, err := os.MkdirTemp(root, "podcast-turn-")
+	dir, err := os.MkdirTemp(root, "stock-speech-")
 	if err != nil {
 		return nil, err
 	}
@@ -209,13 +189,6 @@ func (a *App) recordPodcastTurn(ctx context.Context, model string, voice Voice, 
 	raw, wav := filepath.Join(dir, "raw.wav"), filepath.Join(dir, "pcm.wav")
 	if err := a.Engines[model].Generate(ctx, text, voice, "en", raw); err != nil {
 		return nil, err
-	}
-	style := Script{Speed: 1.02, Pitch: 1, Volume: 1}
-	if speaker == "Jamie" {
-		style.Speed, style.Pitch = 0.96, -1.5
-	}
-	if cast == pocketPodcastCast {
-		style.Speed, style.Pitch = 1, 0
 	}
 	if err := a.processAudio(ctx, raw, wav, style); err != nil {
 		return nil, err

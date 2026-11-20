@@ -382,35 +382,24 @@ Page Voice
                   Button action=remove-model item=$item.id icon=Trash2 label="Remove model" variant=icon
               If condition=$item.status
                 Text variant=caption $item.status
-          If condition=$podcastOwner
+          If condition=$owner
             Card
-              Heading level=2 "Podcasts narration"
-              Text "Let My Podcasts use an installed speech model on this PC. It wakes the model when a turn is ready. Install or reinstall Pocket TTS in Models to add separate male and female voices for Alex and Jamie."
-              Text variant=caption $podcastStatus
-              Row
-                Button action=issue-podcast-credential label="Issue Podcasts credential" variant=primary disabled=$podcastChanging
-                If condition=$podcastConnected
-                  Button action=revoke-podcast-credential label="Revoke Podcasts credential" variant=secondary disabled=$podcastChanging
-              If condition=$podcastCredential
-                Text variant=caption "Copy this credential into My Podcasts → Connections → Narration, then save connections."
-                Text variant=caption $podcastCredential
-                Button action=copy-podcast-credential label="Copy credential" variant=secondary
-            Card
-              Heading level=2 "WonderPal read-aloud"
-              Text "Choose the voice model for WonderPal on this PC. My Voice keeps the selected model loaded while enabled and streams each reply as audio becomes available."
-              Select name=wonderModel label="WonderPal speech model" options=$wonderModels disabled=$wonderChanging
-              Button action=save-wonderpal-model label="Use this speech model" variant=primary disabled=$wonderChanging
-              Text variant=caption "Download Pocket, MOSS or Qwen in Models above before selecting them. Phonon downloads automatically when enabled. Larger models may respond more slowly on this PC."
-              Text variant=caption $wonderStatus
-              Text variant=caption $wonderOrigin
-              Row
-                Button action=issue-wonderpal-credential label="Issue WonderPal credential" variant=primary disabled=$wonderChanging
-                If condition=$wonderConnected
-                  Button action=revoke-wonderpal-credential label="Disable WonderPal voice" variant=secondary disabled=$wonderChanging
-              If condition=$wonderCredential
-                Text variant=caption "Save this as the protected voice service token in WonderPal's Hosting project. It is displayed once."
-                Text variant=caption $wonderCredential
-                Button action=copy-wonderpal-credential label="Copy credential" variant=secondary
+              Heading level=2 "API keys"
+              Text "Create a key for each local app. Set its model and voice in that app."
+              Text variant=caption $speechOrigin
+              Input name=speechKeyLabel label="Key label" placeholder="Local app"
+              Button action=issue-speech-key label="Create API key" variant=primary disabled=$issueKeyDisabled
+              If condition=$speechKey
+                Text variant=caption "Copy this key now. You can only see it once."
+                Text variant=caption $speechKey
+                Row
+                  Button action=copy-speech-key label="Copy API key" variant=secondary
+                  Button action=hide-speech-key label="Hide key" variant=secondary
+              For each=$speechKeys
+                Row
+                  Text $item.label
+                  Spacer
+                  Button action=revoke-speech-key item=$item.id label="Revoke key" variant=secondary disabled=$keyBusy
           Card
             Heading level=2 "Performance & privacy"
             Input name=threads label="CPU threads (1–8)" type=number min=1 max=8

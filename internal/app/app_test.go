@@ -3,6 +3,8 @@ package app
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"github.com/oneworkspacestudio/one-workspace/pkg/apphost"
 	"net/http"
@@ -122,24 +124,16 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	_, raw, _ := call("GET", "/api/me", "", cookie, "")
 	var session apphost.Session
 	_ = json.Unmarshal(raw, &session)
-	if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"pocket18"}`, cookie, ""); code != 403 {
-		t.Fatal("speech selection accepted without CSRF", code)
-	}
-	for _, invalid := range []struct {
-		model string
-		code  int
-	}{{"unknown", 400}, {"qwen17", 400}, {"moss", 409}} {
-		if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"`+invalid.model+`"}`, cookie, session.CSRF); code != invalid.code {
-			t.Fatal("speech selection accepted unsupported or missing model", invalid.model, code)
+	seedLegacy := func(key, token string) {
+		digest := sha256.Sum256([]byte(token))
+		if _, err := host.DB.Exec("INSERT INTO preferences(owner,key,body) VALUES('',?,?)", key, hex.EncodeToString(digest[:])); err != nil {
+			t.Fatal(err)
 		}
 	}
-	if code, _, _ := call("PATCH", "/api/integrations/wonderpal", `{"model":"pocket18"}`, cookie, session.CSRF); code != 200 || a.wonderVoice.selected() != "pocket18" {
-		t.Fatal("resident speech model was not saved", code)
-	}
-	code, wonderGrant, _ := call("POST", "/api/integrations/wonderpal", "", cookie, session.CSRF)
-	var wonderCredential struct{ Credential string }
-	if code != 200 || json.Unmarshal(wonderGrant, &wonderCredential) != nil || len(wonderCredential.Credential) != 64 {
-		t.Fatal("WonderPal grant issuance failed", code)
+	wonderCredential := struct{ Credential string }{strings.Repeat("b", 64)}
+	seedLegacy(wonderGrantKey, wonderCredential.Credential)
+	if _, err := host.DB.Exec("INSERT INTO preferences(owner,key,body) VALUES('',?,?)", wonderModelKey, "pocket18"); err != nil {
+		t.Fatal(err)
 	}
 	controlCall := func(method, body string, headers map[string]string) (int, []byte) {
 		req, _ := http.NewRequest(method, server.URL+"/v1/audio/models", strings.NewReader(body))
@@ -193,23 +187,14 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	if !a.localVoiceGrant(request, wonderGrantKey) {
 		t.Fatal("model switch invalidated the paired credential")
 	}
-	if code, status, _ := call("GET", "/api/integrations/wonderpal", "", cookie, ""); code != 200 || bytes.Contains(status, []byte(wonderCredential.Credential)) || !bytes.Contains(status, []byte(`"model":"phonon"`)) {
-		t.Fatal("speech status leaked the grant or lost selection", code)
-	}
-	if code, _, _ := call("DELETE", "/api/integrations/wonderpal", "", cookie, session.CSRF); code != 200 || a.localVoiceGrant(request, wonderGrantKey) {
+	if code, _, _ := call("DELETE", "/api/speech-keys/legacy-1", "", cookie, session.CSRF); code != 200 || a.localVoiceGrant(request, wonderGrantKey) {
 		t.Fatal("resident speech revocation failed", code)
 	}
 	if code, _ := controlCall("GET", "", nil); code != 401 {
 		t.Fatal("revoked credential retained model control", code)
 	}
-	if code, _, _ := call("POST", "/api/integrations/podcasts", "", cookie, ""); code != 403 {
-		t.Fatal("credential issuance accepted without CSRF", code)
-	}
-	code, grant, _ := call("POST", "/api/integrations/podcasts", "", cookie, session.CSRF)
-	var credential struct{ Credential string }
-	if code != 201 || json.Unmarshal(grant, &credential) != nil || len(credential.Credential) != 64 {
-		t.Fatal("owner credential issuance failed", code)
-	}
+	credential := struct{ Credential string }{strings.Repeat("c", 64)}
+	seedLegacy(podcastGrantKey, credential.Credential)
 	speechStatus := func(proxy bool) int {
 		req, _ := http.NewRequest("GET", server.URL+"/_internal/podcasts/status", nil)
 		req.Host = host.Config.Listen
@@ -227,11 +212,55 @@ func TestOwnerScopeCSRFQueueAndRevocation(t *testing.T) {
 	if speechStatus(false) != 200 || speechStatus(true) != 401 {
 		t.Fatal("direct authorization or proxy rejection failed")
 	}
-	if code, status, _ := call("GET", "/api/integrations/podcasts", "", cookie, session.CSRF); code != 200 || bytes.Contains(status, []byte(credential.Credential)) {
-		t.Fatal("credential status disclosed the secret", code)
-	}
-	if code, _, _ := call("DELETE", "/api/integrations/podcasts", "", cookie, session.CSRF); code != 200 || speechStatus(false) != 401 {
+	if code, _, _ := call("DELETE", "/api/speech-keys/legacy-2", "", cookie, session.CSRF); code != 200 || speechStatus(false) != 401 {
 		t.Fatal("credential revocation did not stop access", code)
+	}
+	if code, _, _ := call("GET", "/api/speech-keys", "", "", ""); code != 401 {
+		t.Fatal("anonymous key listing", code)
+	}
+	if code, _, _ := call("POST", "/api/speech-keys", `{"label":"Client A"}`, cookie, ""); code != 403 {
+		t.Fatal("key issuance accepted without CSRF", code)
+	}
+	issue := func(label string) string {
+		body, _ := json.Marshal(map[string]string{"label": label})
+		code, data, _ := call("POST", "/api/speech-keys", string(body), cookie, session.CSRF)
+		var grant struct{ Credential string }
+		if code != 201 || json.Unmarshal(data, &grant) != nil || len(grant.Credential) != 64 {
+			t.Fatal("API key issuance failed", code)
+		}
+		return grant.Credential
+	}
+	firstKey, secondKey := issue("Client A"), issue("Client B")
+	direct := func(method, route, token, body string, forwarded bool) int {
+		req, _ := http.NewRequest(method, server.URL+route, strings.NewReader(body))
+		req.Host = host.Config.Listen
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", "Bearer "+token)
+		if forwarded {
+			req.Header.Set("X-Forwarded-For", "203.0.113.1")
+		}
+		res, err := server.Client().Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer res.Body.Close()
+		return res.StatusCode
+	}
+	if code, keys, _ := call("GET", "/api/speech-keys", "", cookie, ""); code != 200 || bytes.Contains(keys, []byte(firstKey)) || bytes.Contains(keys, []byte(secondKey)) || !bytes.Contains(keys, []byte("Client B")) {
+		t.Fatal("key listing omitted labels or exposed secrets", code)
+	}
+	const genericModels = "/v2/audio/models"
+	if direct("GET", genericModels, firstKey, "", false) != 200 || direct("GET", genericModels, firstKey, "", true) != 401 {
+		t.Fatal("direct generic authorization failed")
+	}
+	if direct("PATCH", genericModels, firstKey, `{"model":"moss"}`, false) == 200 || a.wonderVoice.selected() != "phonon" {
+		t.Fatal("generic key changed a global model")
+	}
+	if direct("POST", "/v2/audio/speech", firstKey, `{"model":"pocket18","input":"Hello","voice":"privatevoice","response_format":"pcm"}`, false) != 400 {
+		t.Fatal("API key could access a private voice")
+	}
+	if code, _, _ := call("DELETE", "/api/speech-keys/"+firstKey[:24], "", cookie, session.CSRF); code != 200 || direct("GET", genericModels, firstKey, "", false) != 401 || direct("GET", genericModels, secondKey, "", false) != 200 {
+		t.Fatal("revocation affected the wrong key", code)
 	}
 	_, raw, _ = call("GET", "/api/models", "", cookie, "")
 	var models []Model

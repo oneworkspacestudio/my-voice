@@ -60,9 +60,10 @@ private working directory, every `voice-*` package, selection, recovery, shared
 picker and update group. Installer integration7 and `native-voice-v1` prevent
 older managers accepting an incomplete native integration.
 
-WonderPal uses a separate owner-granted resident stock-voice service. Selection
-is private app state and keeps one engine loaded until switched, revoked or
-stopped. Pocket uses its bundled Rust streaming server on a random internal
+Calling apps supply a model and stock voice for each speech request. The owner
+manages API keys and installed models in My Voice. Phonon starts on demand and
+stays loaded across requests. Older callers retain a separate compatibility
+path for their saved selections. Pocket uses its bundled Rust streaming server on a random internal
 loopback port, supervised inside the same Windows Job Object. That upstream
 child listener has no bearer authentication; it contains only the stock preset
 and is never proxied or published. The credentialed Python facade exposes only

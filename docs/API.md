@@ -82,58 +82,25 @@ connector (voice list, generation, history, job status). This adds no blanket LA
 bearer token or arbitrary HTTP proxy. General external token issuance is not
 included. Model installation/settings remain owner-controlled.
 
-## My Podcasts narration
+## Local speech API
 
-Issue a dedicated bearer credential in My Voice **Settings → Podcasts narration**.
-The issue response shows the token once. Rotation and revocation cancel active
-requests. The direct listener accepts GET /_internal/podcasts/status and
-POST /_internal/podcasts/speech only from a literal loopback address, with a
-matching local Host, the bearer grant, and no proxy or browser headers.
+Create a labelled key in **Settings → API keys**. The owner can list labels and
+revoke individual keys. A new key is shown once. Send it as
+`Authorization: Bearer <key>` from the same PC. The loopback listener rejects
+browser, cookie and forwarded requests.
 
-Status returns protocol version, readiness and the selected stock model.
-When a Pocket installation contains both presets, status includes the
-marius-alba-v1 cast. Pass the cast to speech to pin the speaker mapping for
-each turn. Alex uses Marius and Jamie uses Alba. An absent cast remains
-compatible with the earlier request format.
-Speech accepts model, speaker (Alex or Jamie) and up to 3,500 UTF-8 bytes of
-text. It returns signed 16-bit mono PCM with X-Voice-Sample-Rate set to 24000.
-The request wakes an installed model. HTTP 429 means the shared engine is busy.
-Only one integration request can render at a time. The contract exposes stock
-narration and keeps private voices, histories and model management behind the
-existing owner session.
+- `GET /v2/audio/models` lists stock models, availability and preset IDs.
+- `POST /v2/audio/speech` takes `model`, `input`, `voice` and
+  `response_format: "pcm"`. Specify a stock preset ID or `default`. The request
+  may include `speed` (0.5 to 2) and `pitch` (−12 to +12 semitones). Text is
+  bounded to 3,500 UTF-8 bytes. Phonon accepts up to 1,600 bytes with its default
+  preset, normal speed and no pitch shift.
+- Successful audio is signed 16-bit little-endian mono PCM at 24 kHz. HTTP 409
+  means the selected model is unavailable, 429 means the engine is busy and
+  503 means Phonon is warming up. Retry 429/503 using the indicated delay.
+  Phonon downloads its pinned files on its first request.
 
-## WonderPal read-aloud
-
-An authenticated owner can issue, rotate or revoke a dedicated credential under
-**Settings → WonderPal read-aloud** (`GET`, `POST`, `PATCH`, `DELETE /api/integrations/wonderpal`).
-`PATCH` accepts `{"model":"pocket18"}` (or `pocket7`, `moss`, `qwen06`, `phonon`).
-The owner must install Pocket, MOSS or Qwen through Models first; an unavailable
-choice returns 409. GET reports the selected `model`, `choices`, `status` and
-`ready`. The default remains Phonon for existing pairings. Issuing a credential
-starts the selected engine; Phonon downloads its pinned English Q8 files when needed.
-Changing selection cancels the old worker and its stream, preserving the paired
-credential. Removing the active model is blocked until disabled or deselected.
-My Voice restores the worker and selection at startup while
-the grant is enabled. Revocation stops the worker and cancels any ongoing stream.
-
-WonderPal Hosting uses the direct same-machine loopback origin and bearer
-credential to call `POST /v1/audio/speech`. Request `input` (up to 1,600 UTF-8
-bytes), `voice: "default"`, and `response_format: "pcm"`. The response streams
-signed 16-bit little-endian mono PCM at 24 kHz. HTTP 503 means the model is still
-loading and HTTP 429 means the worker is speaking. Each reply is ephemeral.
-
-The JSON `model` field on the speech request is an OpenAI compatibility alias;
-the authenticated owner's stored selection controls the engine. It cannot be
-used to start a different model or access private cloned voices. Output format
-stays the same across engines, so existing WonderPal integrations need no relay
-change. CPU settings apply when the resident worker next starts.
-
-Preview.13 adds direct `GET /v1/audio/models` and `PATCH /v1/audio/models` using
-the same local WonderPal credential and rejection of browser, cookie, query and
-forwarded requests. GET returns protocol 1, selected model, stock choices with
-installed flags, readiness and status. It exposes no credential, origin, private
-voices or management settings. PATCH accepts only a supported installed stock
-model (or the existing automatic Phonon choice), retains the grant and cancels
-the previous worker. It cannot install or remove models. WonderPal relays these
-operations only for an unlocked parent, keeping the grant on its server. No
-Workspace public proxy exemption was added.
+The catalog is read-only. Each caller stores its own selection. API keys grant
+stock speech only. They cannot inspect private voices or install models.
+Existing keys are listed as read-aloud and narration keys and also work
+on the new API. Older callers retain their direct legacy routes and behavior.
